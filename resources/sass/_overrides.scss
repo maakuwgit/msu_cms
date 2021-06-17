@@ -1,0 +1,156 @@
+#suspended {
+	+ small {
+		span.unchecked {
+			color: $secondary;
+		}
+		
+		span.checked {
+			color: $red;
+		}
+	}
+
+	&[checked] + small span.checked, 
+	+ small span.unchecked {
+		display: inline;
+	}
+
+	&[checked] + small span.unchecked, 
+	+ small span.checked {
+		display: none;
+	}
+}
+
+.dropdown-toggle::after {
+	border: none;
+	background-size: cover;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8cG9seWdvbiBmaWxsPSIjMDZBRUQ1IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3Ljg4NTkwOSwgOC4xNzYwMDApIHNjYWxlKC0xLCAtMSkgcm90YXRlKC05MC4wMDAwMDApIHRyYW5zbGF0ZSgtNy44ODU5MDksIC04LjE3NjAwMCkgIiBwb2ludHM9IjMuMzk3MjcyNzMgMTMuOTQwNzA1OSA4Ljk2NTQ1NDU1IDguMTc2IDMuMzk3MjcyNzMgMi40MTEyOTQxMiA1LjEwMTgxODE4IDAuNjQ2NTg4MjM1IDEyLjM3NDU0NTUgOC4xNzYgNS4xMDE4MTgxOCAxNS43MDU0MTE4Ij48L3BvbHlnb24+Cjwvc3ZnPg==);
+    width: rem-calc(12);
+    height: rem-calc(12);
+}
+
+.dropdown {
+	&:not(.show) [data-show] {
+		display: none
+	}
+	&.show [data-hide] {
+		display: none;
+	}
+
+	.dropdown-item {
+		font-weight: $font-weight-bold;
+		border-top: solid 1px $tertiary;
+		&:first-child {
+			border-top: none;
+		}
+	}
+
+	.dropdown-menu.show {
+		box-shadow: 0 0 #{rem-calc(10)} 1px rgba($black,0.1);
+	}
+}
+
+.modal-dialog {
+	//height: calc(100% - #{rem-calc(56)});
+    //display: flex;
+    //align-items: center;
+	input[type=text],
+	input[type=url] {
+		border-color: $smoke;
+		border-radius: 0;
+		&:read-only {
+			border-color: $battleship;
+			color: $battleship;
+			background-color: transparent;
+			pointer-events: none;
+		}
+	}
+
+	label {
+		&:not(.small) {
+			margin-bottom: rem-calc(5);
+			color: $secondary;
+			font-weight: $font-weight-bold;
+			text-transform: uppercase;
+		}
+		&.small {
+			font-size: rem-calc(10)
+		}
+	}
+}
+
+h1, .h1 {
+    @include font-size($h1-font-size);
+}
+
+h2, .h2 {
+    @include font-size($h2-font-size);
+}
+
+h3, .h3 {
+    @include font-size($h3-font-size);
+}
+
+h4, .h4 {
+    @include font-size($h4-font-size);
+}
+
+h5, .h5 {
+    @include font-size($h5-font-size);
+}
+
+h6, .h6 {
+    @include font-size($h6-font-size);
+}
+
+.ant-table-cell.inline-list a:after {
+	content: ',';
+    margin-right: rem-calc(5);
+    display: inline;
+}
+
+button:focus,
+input[type=radio],
+input[type=checkbox] {
+	outline: none;
+}
+
+input[type=checkbox],
+input[type=radio] {
+	appearance: none;
+	border: solid 1px $primary;
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: auto;
+    margin-bottom: auto;
+	&:focus {
+		box-shadow: 0 0 0 0.2rem $seafoam;
+	}
+	&:checked {
+		border-color: $secondary;
+		background-color: $secondary;
+	}
+}
+
+::selection {
+	background-color: $seafoam;
+}
+
+:host, #detach-button-host {
+	display: none;
+}
+
+[data-navigation] nav {
+	bottom: 0;
+	height: auto;
+	max-height: 19.6875rem;
+	left: 100%;
+	overflow: hidden;
+}
+
+#navigation__country {
+	overflow: hidden;
+}
+
+.ant-drawer-bottom.ant-drawer-open {
+	bottom: rem-calc(100);
+}

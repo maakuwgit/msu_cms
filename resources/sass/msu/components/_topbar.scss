@@ -1,0 +1,20 @@
+[data-topbar] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: rem-calc(32);
+  padding: rem-calc(4);
+  color: $white;
+  background-color: goldenrod;
+  a {
+      color: $white;
+  }
+  + main {
+    padding-top: rem-calc(32);
+    [data-header] {
+      top: rem-calc(32);
+    }
+  }
+}

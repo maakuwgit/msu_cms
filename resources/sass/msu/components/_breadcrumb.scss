@@ -1,0 +1,26 @@
+[data-breadcrumb] {
+  top: 0;
+  z-index: 1;
+  padding: #{rem-calc(16)} #{rem-calc(20)};
+  h1,h2,h3 {
+    text-transform: uppercase;
+    font-weight: $font-weight-normal;
+    line-height: 1;
+    color: $list-item;
+    white-space: nowrap;
+    > span,
+    a:nth-of-type(n+2) span {
+      font-weight: $font-weight-bold;
+      &:before {
+        content: '/';
+        margin-right: rem-calc(15);
+        margin-left: rem-calc(15);
+        font-weight: normal;
+        opacity: 0.3;
+      }
+    }
+    a + span {
+      color: $primary;
+    }
+  }
+}

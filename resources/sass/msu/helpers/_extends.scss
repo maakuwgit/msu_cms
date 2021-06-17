@@ -1,0 +1,12 @@
+%fixed_navigation {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  width: 100vw;
+}
+
+%headline {
+  text-transform: uppercase;
+  color: $primary;
+}

@@ -1,0 +1,11 @@
+[data-scrollable] {
+    position: absolute;
+    padding-top: 10rem;
+    padding-bottom: 14rem;
+    height: 100vh;
+    overflow: scroll;
+
+    p {
+        @include font-size($h3-font-size);
+    }
+}

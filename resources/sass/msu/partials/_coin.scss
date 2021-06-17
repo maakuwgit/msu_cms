@@ -1,0 +1,9 @@
+.coin {
+  display: flex;
+  border-radius: rem-calc(200);
+  overflow: hidden;
+  width: rem-calc(24);
+  height: rem-calc(24);
+  align-items: center;
+  justify-content: center;
+}

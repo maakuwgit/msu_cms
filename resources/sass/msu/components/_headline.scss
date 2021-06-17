@@ -1,0 +1,5 @@
+[data-headline] {
+  h1,h2,p {
+    @extend %headline;
+  }
+}

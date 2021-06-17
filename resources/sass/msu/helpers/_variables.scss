@@ -1,0 +1,289 @@
+// Typography
+@font-face {
+    font-family: 'Gotham';
+    src: url('~/fonts/gotham400i.woff2') format('woff2'),
+         url('~/fonts/gotham400i.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('~/fonts/gotham400.woff2') format('woff2'),
+         url('~/fonts/gotham400.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('~/fonts/gotham300i.woff2') format('woff2'),
+         url('~/fonts/gotham300i.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('~/fonts/gotham300.woff2') format('woff2'),
+         url('~/fonts/gotham300.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+$rem-base:                  16 !default;
+$font-family-sans-serif:    'Gotham', Helvtica, Arial, sans-serif;
+$font-family-serif:         Times, serif;
+$headings-font-family:      $font-family-sans-serif;
+$font-size-base:            1rem;
+$line-height-base:          1.125;
+
+.gotham {
+    font-family: $font-family-sans-serif;
+}
+
+// Project colors (ordered the greys by lightness from lightest to darkest)
+/* Theme */
+$seafoam    : #C9E3D8;
+$lime       : #0DB14B;
+$pine       : #18453B;
+/* UI */
+$yellow     : #FAEB5C;
+$red        : #FF5142;
+$danger     : $red;
+$warning    : $yellow;
+$success    : $lime; 
+/* Grey */
+$white: white;
+$aluminum: #f6f7f6;
+$battleship: #b6b6b6;
+$smoke: #4e4e4e;
+$black: black;
+
+//Theme Colors
+$primary    : $pine;
+$secondary  : $lime;
+$tertiary   : #d0dad7;//rgba($pine, 0.2);
+$list-item  : rgba($pine, 0.6);
+
+// Font Weights
+$font-weight-normal: 400;
+$font-weight-bold: 600;
+
+// Media queries
+$screen-xxl: 3840px;//120em
+$screen-xl:  2560px;//120em
+$screen-lg:  1920px;//100em
+$screen-md:  1024px;
+$screen-sm:  960px;
+
+// Media query variables
+$screen-xxl-maximum: $screen-xxl - 1;
+$screen-xl-maximum:  $screen-xl - 1;
+$screen-lg-maximum:  $screen-lg - 1;
+$screen-md-maximum:  $screen-md - 1;
+$screen-sm-maximum:  $screen-sm - 1;
+
+$screen-sm-min: $screen-sm;
+$screen-md-min: $screen-md;
+$screen-lg-min: $screen-lg;
+$screen-xl-min: $screen-xl;
+$screen-xxl-min: $screen-xxl;
+
+//Padding Options [Legacy]
+$padding-medium: rem-calc(50) !default;
+$padding-large: rem-calc(100) !default;
+$padding-xlarge: $padding-medium + $padding-large;
+
+/*
+ * Bootstrap Variable Overrides
+ */
+ //Grid
+ $grid-gutter-width: 0.625rem;
+ $grid-breakpoints: (
+  xs: 0,
+  sm: $screen-sm,
+  md: $screen-md,
+  lg: $screen-lg,
+  xl: $screen-xl
+);
+
+$container-max-widths: (
+    md: $screen-lg-maximum,
+    lg: $screen-xl-maximum,
+    xl: $screen-xxl-maximum
+);
+
+ //Colors
+$theme-colors: (
+    'primary'       : $primary,
+    'secondary'     : $secondary, 
+    'tertiary'      : $tertiary, 
+    'aluminum'      : $aluminum, 
+    'battleship'    : $battleship, 
+    'smoke'         : $smoke,  
+    'pine'          : $pine,
+    'seafoam'       : $seafoam,
+    'white'         : $white,
+    'lime'          : $lime, 
+    'list-item'     : $list-item, 
+    'success'       : $success,
+    'danger'        : $red,
+    'warning'       : $yellow
+);
+
+//Margins & Padding
+$spacer: 1.25rem;
+$spacers: (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3)
+);
+
+$highlights: (
+    1: 90%,
+    2: 85%,
+    3: 80%,
+    4: 75%,
+    5: 70%,
+    6: 65%,
+    7: 60%,
+    8: 55%,
+    9: 50%,
+    10: 45%,
+    11: 40%,
+    12: 35%,
+    13: 30%,
+    14: 25%,
+    15: 20%,
+    16: 15%,
+    17: 10%
+);
+
+// Body
+$body-color :                        $black;
+$body-bg    :                        $white;
+
+//Headings
+$h1-font-size:                      3.25rem;
+$h2-font-size:                      2.75rem;
+$h3-font-size:                      2rem;
+$h4-font-size:                      1.5rem;
+$h5-font-size:                      1.125rem;
+$h6-font-size:                      1rem;
+
+$display-font-sizes: (
+    1:                      4rem,
+    2:                      3.5rem,
+    3:                      3rem,
+    4:                      2.625rem,
+    5:                      2.25rem,
+    6:                      2rem
+);
+  
+// Navbar
+$navbar-dark-color:                 $white;
+$navbar-dark-color:                 $secondary;
+$navbar-dark-active-color:          $battleship;
+$navbar-dark-toggler-border-color:  $white;
+
+$navbar-light-color:                $primary;
+$navbar-light-color:                $primary;
+$navbar-light-active-color:         $primary;
+$navbar-light-disabled-color:       $battleship;
+$navbar-light-toggler-border-color: $primary;
+
+$navbar-light-brand-color:          $primary;
+$navbar-light-brand-color:          $primary;
+$navbar-dark-brand-color:           $white;
+$navbar-dark-brand-color:           $white;
+
+$navbar-brand-font-size:            1.5rem;
+
+$navbar-padding-x:                  1.25rem;
+
+//Buttons & Inputs
+$input-border-color:                $battleship;
+$input-border-radius:               0;
+$input-group-addon-bg:              $white;
+$input-placeholder-color:           $tertiary;
+$link-color:                        $secondary;
+$link-decoration:                   none;
+$btn-font-family:                   $headings-font-family;
+$btn-font-weight:                   $font-weight-bold;
+$btn-font-size:                     $h6-font-size;
+$btn-padding-y:                      8px;
+$btn-padding-x:                      12px;
+
+$component-active-color:            $white;
+$component-active-bg:               $primary;
+
+//List Groups
+$list-group-color:                  $secondary;
+$list-group-border-radius:          0;
+$list-group-active-bg:              $primary;
+$list-group-action-color:     $white;
+$list-group-disabled-color:         $battleship;
+$list-group-bg:                     transparent;
+$list-group-bg:               $secondary;
+
+//Badge
+$badge-font-weight:                 $font-weight-normal;
+$badge-padding-y:                   10px;
+$badge-padding-x:                   30px;
+
+//Thumbnail
+$thumbnail-height:                  rem-calc(170) !default;//LEGACY Do not remove!
+$thumbnail-bg:                      $aluminum;
+$thumbnail-border-color:            $aluminum;
+$thumbnail-box-shadow:              none;
+
+//Hero
+$hero_height:                       33vh;
+$hero_height--lg:                   50vw;
+
+//Table
+$table-border-width:                0;
+$table-border-color:                $aluminum;
+$table-accent-bg:                   $aluminum;
+$table-striped-order:               even;
+$table-cell-padding:                1.0625rem;
+$table-cell-padding-sm:             0.5875rem;
+
+// Modals
+
+// Padding applied to the modal body
+$modal-inner-padding:               1rem !default;
+
+// Margin between elements in footer, must be lower than or equal to 2 * $modal-inner-padding
+$modal-footer-margin-between:       .5rem;
+
+$modal-dialog-margin:               .5rem;
+$modal-dialog-margin-y-sm-up:       1.75rem;
+
+$modal-content-color:               $battleship;
+$modal-content-bg:                  $white;
+$modal-content-border-color:        transparent;
+$modal-content-border-width:        0;
+$modal-content-border-radius:       10px;
+$modal-content-inner-border-radius: 0;
+$modal-content-box-shadow-xs:       none;
+$modal-content-box-shadow-sm-up:    none;
+
+$modal-backdrop-bg:                 $list-item;
+$modal-backdrop-opacity:            1;
+$modal-header-border-color:         transparent;
+$modal-header-border-width:         0;
+$modal-header-padding-y:            #{map-get($spacers, 3)};
+$modal-header-padding-x:            #{map-get($spacers, 2)};
+
+$modal-xl:                          50vw;
+$modal-lg:                          $modal-xl;
+$modal-md:                          $modal-xl;
+$modal-sm:                          calc(100vw - #{map-get($spacers, 1)});
+
+$modal-fade-transform:              scale(1.01);
+$modal-show-transform:              scale(1);

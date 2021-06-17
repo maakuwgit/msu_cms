@@ -1,0 +1,45 @@
+/*
+* Global or General Animations
+*/
+//Animate every attribute at 'normal' speed
+a,
+[data-backgrounder] {
+  transition: all 200ms ease-in-out;
+  &:hover {
+    transition: all 200ms ease-in-out;
+  }
+}
+
+[data-map] {
+  transition: transform 500ms ease-out;
+}
+
+[data-country] path,
+[data-country] polygon {
+  transition: all 150ms ease-out;
+}
+
+//Animate every attribute at 'fast' speed w/hover at 'hyper' speed
+.btn,
+button,
+.button svg,
+input[type="submit"] {
+  transition: all 150ms ease-out;
+  &:hover {
+    transition: all 50ms ease-out;
+  }
+}
+
+/*
+ * OnLoad Animations
+ */
+body.loaded {
+  //Buttons
+  a.btn {
+    span,
+    svg {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

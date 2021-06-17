@@ -1,0 +1,233 @@
+{
+  "routes": ["world","continents","countries","programs","galleries","settings"],
+  "settings": {
+    "slug": "settings",
+    "label": "Settings", 
+    "headline": "Settings",
+    "description": "View all the current application settings", 
+    "is_dev": true, 
+    "options": [
+      {
+        "name": "title",
+        "value": "Michigan State University"
+      },{
+        "name": "department",
+        "value": "Broad College of Business"
+      },{
+        "name": "program",
+        "value": "Education Abroad"
+      },{
+        "name": "instagram",
+        "value": "https://instagram.com.msuabroad"
+      },{
+        "name": "background",
+        "value": "/img/background-lg.jpg"
+      },{
+        "name": "version",
+        "value": "1.0.0"
+      },{
+        "name": "logo",
+        "value" : "logo__michigan_stage_university.svg"
+      },{
+        "name": "greeting",
+        "value": "Touch a country to continue"
+      }
+    ],
+    "firebase": {
+      "url": "https://firebasestorage.googleapis.com/v0/b/msu-study-abroad.appspot.com/o/",
+      "api_key": "AIzaSyBDX1AoSQ35d7aPlPHfqunkLpL_MSip0NY",
+      "auth_domain": "msu-study-abroad.firebaseapp.com",
+      "project_id": "msu-study-abroad",
+      "storage_bucket": "msu-study-abroad.appspot.com",
+      "messaging_sender_id": "101022326580",
+      "app_id": "1:101022326580:web:b404b091b59d4f4b3a4f61",
+      "measurement_id": "G-0R88Z11R7S"
+    }
+  },
+  "theme": {
+    "primary": "Pine",
+    "secondary": "Seafoam",
+    "tertiary": "Aluminum",
+    "article": "container ml-0 bg-white"
+  },
+  "components": {
+    "headline": {
+      "style": "sticky sticky-top col-12 mb-2 pt-4 px-2 pb-0"
+    },
+    "table": {
+      "style": "px-3 mb-3"
+    }
+  }, 
+  "continents": { 
+    "slug": "continents",
+    "label": "Continents",
+    "description": "View all continents in a table, and all their corresponding countries", 
+    "headline": "Continents & Archipelagos",
+    "unfiltered" : [
+      {
+        "id": 0,
+        "name": "Africa",
+        "slug": "africa",
+        "countries_id": []
+      },
+      {
+        "id": 1,
+        "name": "Antartica",
+        "slug": "antartica",
+        "countries_id": []
+      },
+      {
+        "id": 2,
+        "name": "Asia",
+        "slug": "asia",
+        "countries_id": []
+      },
+      {
+        "id": 3,
+        "name": "Australia",
+        "slug": "oceania",
+        "countries_id": []
+      },
+      {
+        "id": 4,
+        "name": "Europe",
+        "slug": "europe",
+        "countries_id": []
+      },
+      {
+        "id": 5,
+        "name": "North America",
+        "slug": "north-america",
+        "countries_id": []
+      },
+      {
+        "id": 6,
+        "name": "South America",
+        "slug": "south-america",
+        "countries_id": [1,2,3,4,5,6]
+      }
+    ]
+  },
+  "countries": { 
+    "slug": "countries",
+    "label": "Countries",
+    "headline": "All Countries", 
+    "description": "View all countries in an alphabetical list", 
+    "modal": {
+      "reinstate": "Reinstating a Country enables its highlight color and the ability to tap/click it on the map",
+      "suspend": "Suspending a Country retains it's programs, but removes its highlight and the ability to tap/click it on the map. Useful, for example, when travel to a country has been suspended/limited"
+    },
+    "unfiltered" : []
+  },
+  "filters": {
+    "": "Everywhere",
+    "countries--active": "Active Countries Only",
+    "countries--programs": "Countries with Programs",
+    "continents": "Continents",
+    "islands-archipelagos": "Islands"
+  },
+  "gallery": {
+    "title": "Gallery"
+  },
+  "galleries": {
+    "slug":"galleries",
+    "headline": "All Galleries", 
+    "description": "View all galleries, by Country", 
+    "label":"Galleries"
+  },
+  "greeting": {
+    "headline": "Touch a highlighted region to begin"
+  },
+  "qrcode": {
+    "title": "QR Code",
+    "description": "link to the an existing website detailing the selected countries programs and an image gallery"
+  },
+  "programs": {
+    "slug": "programs",
+    "label": "Programs",
+    "headline": "All Programs", 
+    "description": "View all Programs in a table with multiple pages", 
+    "unfiltered": []
+  },
+  "upload": {
+      "btn": {
+          "label": "Upload"
+      },
+      "prefix": "Upload a new",
+      "label": "Click or drag file to here to upload", 
+      "suffix": "file",
+      "supports": "Supports file upload", 
+      "types": {
+          "csv": [".csv"],
+          "spreadsheet": [".xlsx",".xls"]
+      }
+  },
+  "world": {
+    "slug": "", 
+    "headline": "Everywhere", 
+    "description": "Edit programs, galleries, and countries from a map view", 
+    "label": "World",
+    "coordinates": {
+    "africa": {
+      "scale": 2,
+      "originX": 0,
+      "originY":  -12,
+      "countries": {
+        "scale": 2,
+        "originX": -10,
+        "originY":  -12
+      }
+    },
+    "asia": {
+      "scale": 1.5,
+      "originX": -18,
+      "originY":  7,
+      "countries": {
+        "scale": 1.5,
+        "originX": -42,
+        "originY":  10
+      }
+    },
+    "europe": {
+      "scale": 2.5,
+      "originX": 2, 
+      "originY":  14,
+      "countries": {
+        "scale": 2.5,
+        "originX": -11, 
+        "originY":  14
+      }
+    },
+    "oceania": {
+      "scale": 2.5,
+      "originX": -29, 
+      "originY":  -25,
+      "countries": {
+        "scale": 2.5,
+        "originX": -44, 
+        "originY":  -25
+      }
+    },
+    "north_america": {
+      "scale": 1.75,
+      "originX": 31, 
+      "originY":  11,
+      "countries": {
+        "scale": 1.75,
+        "originX": 13, 
+        "originY":  15
+      }
+    },
+    "south_america": {
+      "scale": 2,
+      "originX": 23, 
+      "originY":  -24,
+      "countries": {
+        "scale": 2,
+        "originX": 4, 
+        "originY":  -24
+      }
+    }
+    }
+  }
+}

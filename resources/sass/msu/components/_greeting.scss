@@ -1,0 +1,6 @@
+[data-greeting] {
+  bottom: rem-calc(100);
+  top: auto;
+  min-height: rem-calc(100);
+  border-top: solid #{rem-calc(4)} $secondary;
+}
