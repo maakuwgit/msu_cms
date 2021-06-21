@@ -59,6 +59,7 @@ class CountriesTableSeeder extends Seeder
         DB::table('countries')->insert([
             'name' => 'Argentina',
             'slug' => 'argentina',
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1473%5D=1473&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 7
@@ -73,13 +74,15 @@ class CountriesTableSeeder extends Seeder
         DB::table('countries')->insert([
             'name' => 'Australia',
             'slug' => 'australia',
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1474%5D=1474&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 4
         ]);
         DB::table('countries')->insert([
             'name' => 'Austria',
-            'slug' => 'austria',
+            'slug' => 'austria', 
+            'code' => '',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -128,7 +131,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Belgium',
-            'slug' => 'belgium',
+            'slug' => 'belgium', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1475%5D=1475&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -177,6 +181,7 @@ class CountriesTableSeeder extends Seeder
         DB::table('countries')->insert([
             'name' => 'Brazil',
             'slug' => 'brazil', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1476%5D=1476&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 7
@@ -233,6 +238,7 @@ class CountriesTableSeeder extends Seeder
         DB::table('countries')->insert([
             'name' => 'Canada',
             'slug' => 'canada',
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1477%5D=1477&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 6
@@ -267,7 +273,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'China',
-            'slug' => 'china',
+            'slug' => 'china', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1478%5D=1478&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 3
@@ -435,7 +442,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'France',
-            'slug' => 'france',
+            'slug' => 'france', 
+            'code' => '',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -463,7 +471,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Germany',
-            'slug' => 'germany',
+            'slug' => 'germany', 
+            'code' => '',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -477,7 +486,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Greece',
-            'slug' => 'greece',
+            'slug' => 'greece', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1481%5D=1481&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -492,6 +502,7 @@ class CountriesTableSeeder extends Seeder
         DB::table('countries')->insert([
             'name' => 'Guatemala',
             'slug' => 'guatemala',
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1482%5D=1482&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 6
@@ -533,7 +544,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Hungary',
-            'slug' => 'hungary',
+            'slug' => 'hungary', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1483%5D=1483&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -547,7 +559,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'India',
-            'slug' => 'india',
+            'slug' => 'india', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1484%5D=1484&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 3
@@ -582,7 +595,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Israel',
-            'slug' => 'israel',
+            'slug' => 'israel', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1485%5D=1485&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 3
@@ -596,7 +610,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Italy',
-            'slug' => 'italy',
+            'slug' => 'italy', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1486%5D=1486&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -610,7 +625,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Japan',
-            'slug' => 'japan',
+            'slug' => 'japan', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1487%5D=1487&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 3
@@ -757,7 +773,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Malaysia',
-            'slug' => 'malaysia',
+            'slug' => 'malaysia', 
+            'code' => '',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 3
@@ -883,14 +900,16 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Netherlands',
-            'slug' => 'netherlands',
+            'slug' => 'netherlands', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1488%5D=1488&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
         ]);
         DB::table('countries')->insert([
             'name' => 'New Zealand',
-            'slug' => 'new-zealand',
+            'slug' => 'new-zealand', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1489%5D=1489&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 4
@@ -918,7 +937,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Norway',
-            'slug' => 'norway',
+            'slug' => 'norway', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1490%5D=1490&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -988,7 +1008,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Portugal',
-            'slug' => 'portugal',
+            'slug' => 'portugal', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1491%5D=1491&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -1009,7 +1030,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Russian Federation',
-            'slug' => 'russia',
+            'slug' => 'russia', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1492%5D=1492&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 3
@@ -1073,6 +1095,7 @@ class CountriesTableSeeder extends Seeder
         DB::table('countries')->insert([
             'name' => 'Senegal',
             'slug' => 'senegal',
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1493%5D=1493&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 1
@@ -1100,7 +1123,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Singapore',
-            'slug' => 'singapore',
+            'slug' => 'singapore', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1494%5D=1494&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 3
@@ -1136,6 +1160,7 @@ class CountriesTableSeeder extends Seeder
         DB::table('countries')->insert([
             'name' => 'South Africa',
             'slug' => 'south-africa',
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1495%5D=1495&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 1
@@ -1150,6 +1175,7 @@ class CountriesTableSeeder extends Seeder
         DB::table('countries')->insert([
             'name' => 'Spain',
             'slug' => 'spain',
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1496%5D=1496&filterType=OR&submit=Submit', 
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -1191,7 +1217,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Switzerland',
-            'slug' => 'switzerland',
+            'slug' => 'switzerland', 
+            'code' => '',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -1219,7 +1246,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Thailand',
-            'slug' => 'thailand',
+            'slug' => 'thailand', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1498%5D=1498&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 3
@@ -1296,7 +1324,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'United Kingdom',
-            'slug' => 'united-kingdom',
+            'slug' => 'united-kingdom', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1499%5D=1499&filterType=OR&submit=Submit',
             'color' => rand(4,10), 
             'enabled' => 'on', 
             'continent_id' => 5
@@ -1415,7 +1444,8 @@ class CountriesTableSeeder extends Seeder
         ]);
         DB::table('countries')->insert([
             'name' => 'Hong Kong',
-            'slug' => 'hong-kong',
+            'slug' => 'hong-kong', 
+            'code' => 'https://broad.msu.edu/education-abroad/programs/?term%5B%27term%27%5D=All&subject%5B%27subject%27%5D=All&program%5B%27program%27%5D=All&region%5B%27region%27%5D=All&country%5B1478%5D=1478&filterType=OR&submit=Submit', 
             'enabled' => 'on', 
             'color' => rand(4,10), 
             'continent_id' => 3
