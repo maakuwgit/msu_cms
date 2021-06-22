@@ -65,7 +65,7 @@ class CountriesProgramsTableSeeder extends Seeder
         ]);
         DB::table('countries_programs')->insert([
             'programs_id' => 13,
-            'countries_id' => 77
+            'countries_id' => 173
         ]);
         DB::table('countries_programs')->insert([
             'programs_id' => 14,
@@ -101,7 +101,7 @@ class CountriesProgramsTableSeeder extends Seeder
         ]);
         DB::table('countries_programs')->insert([
             'programs_id' => 22,
-            'countries_id' => 9
+            'countries_id' => 107
         ]);
         DB::table('countries_programs')->insert([
             'programs_id' => 23,
@@ -201,7 +201,7 @@ class CountriesProgramsTableSeeder extends Seeder
         ]);
         DB::table('countries_programs')->insert([
             'programs_id' => 47,
-            'countries_id' => 184
+            'countries_id' => 9
         ]);
         DB::table('countries_programs')->insert([
             'programs_id' => 48,
@@ -225,7 +225,15 @@ class CountriesProgramsTableSeeder extends Seeder
         ]);
         DB::table('countries_programs')->insert([
             'programs_id' => 52,
+            'countries_id' => 22
+        ]);
+        DB::table('countries_programs')->insert([
+            'programs_id' => 52,
             'countries_id' => 61
+        ]);
+        DB::table('countries_programs')->insert([
+            'programs_id' => 53,
+            'countries_id' => 9
         ]);
     }
 }

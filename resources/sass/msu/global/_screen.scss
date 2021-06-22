@@ -34,12 +34,12 @@ html[data-screen]{
       width: 50vw;
       padding-top: 8.25rem;
       padding-bottom: 12.5rem;
-      background-image: url(../../../img/foreground.png);
+      background-image: url(../../../images/foreground.png);
     }
 
     &:before {
       width: 100vw;
-      background-image: url(../../../img/background-lg.jpg);
+      background-image: url(../../../images/background-lg.jpg);
     }
 
     [data-map] {

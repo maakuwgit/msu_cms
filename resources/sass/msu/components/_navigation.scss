@@ -112,9 +112,12 @@ $slider-btn-width: rem-calc(40);
 
       .icon {
         position: absolute;
-        top: calc(50% - 0.5em);
-        left: calc(50% - 0.5em);
-        color: white;
+        top: calc(50% - 1.5rem);
+        left: calc(50% - 1.5rem);
+        width: 3rem;
+        height: 3rem;
+        color: $white;
+        pointer-events: none;
       }
     }
 

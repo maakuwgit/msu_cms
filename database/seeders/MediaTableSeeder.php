@@ -142,7 +142,6 @@ class MediaTableSeeder extends Seeder
         ]);
         DB::table('media')->insert([
             'type'       => 2,
-            'poster'     => env('FIREBASE_URL_PREFIX', 'Laravel') . "business_and_culture_in_japan.png" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
             'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "business_and_culture_in_japan.mp4" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
             'gallery_id' => 4
         ]);
@@ -449,17 +448,17 @@ class MediaTableSeeder extends Seeder
         DB::table('media')->insert([
             'type'       => 1,
             'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "marketing-and-international-comparative-dimensions-of-business-in-europe.png" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
-            'gallery_id' => 25
+            'gallery_id' => 22
         ]);
         DB::table('media')->insert([
             'type'       => 1,
             'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "marketing-and-international-comparative-dimensions-of-business-in-europe-2.png" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
-            'gallery_id' => 25
+            'gallery_id' => 22
         ]);
         DB::table('media')->insert([
             'type'       => 2,
             'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "marketing_and_international_comparative_dimensions_of_business_in_europe.mp4" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
-            'gallery_id' => 25
+            'gallery_id' => 22
         ]);
         //France
         DB::table('media')->insert([

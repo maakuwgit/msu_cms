@@ -163,16 +163,19 @@ class Modal extends Component {
     let nStyle = this.nStyle + ' ' + (this.props.nStyle ? this.props.nStyle : 'justify-content-end')
     let btn = (
       <button type="button" className="ms-4 btn btn-battleship btn-square py-1 px-2 rounded-0 text-white" 
-      data-bs-dismiss="modal" aria-label="Close" onClick={()=>{
-        setTimeout(this.props.resetModal, 300)
-      }}>
+      data-bs-dismiss="modal" aria-label="Close">
       <svg className="icon">
         <use xlinkHref="#icon__math--multiply"/>
       </svg>
     </button>
     )
     return (
-      <aside className="modal fade" id={this.id} tabIndex="-1" role="dialog" aria-labelledby={`${this.id}__label`} aria-hidden="true">
+      <aside className="modal fade" id={this.id} tabIndex="-1" 
+       role="dialog" aria-labelledby={`${this.id}__label`} aria-hidden="true"
+       onClick={(event) => {
+           let tag = event.target
+           if(tag.tagName === "ASIDE" || tag.tagName === "BUTTON") this.props.resetModal()
+         }}>
         <div className={`modal-dialog ${this.mStyle}`} role="document">
           <section className="modal-content p-1">
             { this.props.headline &&
@@ -240,7 +243,7 @@ class Modal extends Component {
               : this.props.type === 'preview' ?
               <>
               { this.props.image.search('.mp4') > 0 ?
-              <video className="w-100 h-auto" width="100%" controls={true} autoPlay={true}>
+              <video id="modal__video" className="w-100 h-auto" width="100%" controls={true} autoPlay={true}>
                 <source src={this.props.image} type="video/mp4"/>
               </video>
               :
@@ -266,13 +269,11 @@ class Modal extends Component {
             </div>
             { this.props.type === 'preview' &&
             <button type="button" className="position-absolute btn bg-white btn-lg text-primary" 
-              data-bs-dismiss="modal" aria-label="Close" onClick={()=>{
-                setTimeout(this.props.resetModal, 300)
-              }} style={{bottom:0,right:0,borderTopLeftRadius:'2rem',borderBottomRightRadius:'2rem'}}>
-              <svg className="icon">
+              data-bs-dismiss="modal" aria-label="Close" style={{bottom:0,right:0,borderTopLeftRadius:'2rem',borderBottomRightRadius:'2rem'}}>
+              <svg className="icon" style={{pointerEvents:'none'}}>
                 <use xlinkHref="#icon__math--multiply"/>
               </svg>
-              <span>CLOSE</span>
+              <span style={{pointerEvents:'none'}}>CLOSE</span>
             </button>
             }
           </section>

@@ -22,7 +22,7 @@
     <body class="{{$route_name}}">
         <x-sprite/>
         <x-header/>
-        <main class="d-flex flex-wrap" style="background:url({{ asset('img/background-lg.jpg') }}) no-repeat center;background-size:cover">
+        <main class="d-flex flex-wrap" style="background:url({{ asset('images/background-lg.jpg') }}) no-repeat center;background-size:cover">
             <article class="d-flex m-0 px-0 align-items-stretch justify-content-stretch h-100 w-100 flex-column" style="padding-top: 5.875rem">
                 @yield('content')
             </article>

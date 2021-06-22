@@ -50,8 +50,6 @@ class Navigation extends Component {
   render() {
     let linkStyle = "d-flex h1 text-uppercase fw-bold px-5 my-0 align-items-center"
 
-    this.props.levels.length > 1 && console.log(this.props.levels[1])
-
     if( this.props.levels.length > 0 ) {
       return(
       <nav 
@@ -117,28 +115,18 @@ class Navigation extends Component {
                       }
                       speed={0} slidesToShow={3} slidesToScroll={1} swipe={false}> 
                       { this.props.levels[1].gallery.media.map(m => {
-                        if(m.url.search('.mp4') > 0) {
-                          //Video
                           return (
-                            <figure key={m.id} className="mb-0 h-100">
-                              <div style={{backgroundImage:`url(${m.poster})`}} data-backgrounder>
-                                <video title={m.name} src={m.url} poster={m.poster}/>
+                            <picture key={m.id}>
+                              <div style={{backgroundImage:`url(${m.url.search('.mp4') > 0 ? ( m.poster ? m.poster : 'images/poster.png') : m.url})`}} data-backgrounder>
+                                <img alt={m.name} src={m.url}/>
+                                { m.url.search('.mp4') > 0 &&
                                 <svg className="icon">
                                   <use xlinkHref="#icon__play"/>
                                 </svg>
-                              </div>
-                            </figure>
-                          )
-                        }else{
-                          //Image
-                          return (
-                            <picture key={m.id}>
-                              <div style={{backgroundImage:`url(${m.url})`}} data-backgrounder>
-                                <img alt={m.name} src={m.url}/>
+                                }
                               </div>
                             </picture>
                           )
-                        }
                       }) }
                     </Slider>
                     }

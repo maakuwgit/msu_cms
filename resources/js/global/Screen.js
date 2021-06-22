@@ -57,6 +57,12 @@ class Screen extends Component {
     this.setModal         = this.setModal.bind(this)
   }
 
+  //Clear out the modal in the state object for this or a child component
+  resetModal(){
+    let video = document.getElementById('modal_video')
+    if( video ) video.pause()
+    this.setState({modal: {}})
+  }
 
   //Set the modal in the state object from this or a child component (modal is reusable)
   setModal(type='edit', headline='', copy='', ctas=false, inputs=[], on_submit=false, image=''){
@@ -90,11 +96,6 @@ class Screen extends Component {
     program.id = parseFloat(program.id)
     program.country_id = parseFloat(program.country_id)
     return program
-  }
-
-  //Clear out the modal in the state object for this or a child component
-  resetModal(){
-    this.setState({modal: {}})
   }
 
   //Set the alert window to its original state
