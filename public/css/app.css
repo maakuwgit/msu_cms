@@ -10735,10 +10735,12 @@ html[data-screen] [data-world]:before, html[data-screen] [data-world]:after {
   pointer-events: none;
 }
 html[data-screen] [data-world]:after {
-  width: 50vw;
+  width: 70vh;
   padding-top: 8.25rem;
   padding-bottom: 12.5rem;
   background-image: url(/images/foreground.png?0a09dfba41c8c679da46bde972a9cad0);
+  background-size: 100% auto;
+  background-position: bottom right;
 }
 html[data-screen] [data-world]:before {
   width: 100vw;

@@ -31,10 +31,12 @@ html[data-screen]{
     }
 
     &:after {
-      width: 50vw;
+      width: 70vh;
       padding-top: 8.25rem;
       padding-bottom: 12.5rem;
       background-image: url(../../../images/foreground.png);
+      background-size: 100% auto;
+      background-position: bottom right;
     }
 
     &:before {
