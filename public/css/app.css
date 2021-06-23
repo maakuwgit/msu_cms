@@ -11161,7 +11161,8 @@ body.admin [data-world] [data-country] text {
   width: calc(55vw - 15.75rem);
   bottom: 6.25rem;
   max-height: calc(100vh - 26.9375rem);
-  overflow: hidden;
+  /*overflow: hidden; Dev Note: we use this setting for our custom scrollbar. For now, we'll show the overflow*/
+  overflow: scroll;
 }
 [data-navigation] .ant-table-tbody > tr {
   background-color: transparent;
