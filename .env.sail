@@ -13,7 +13,7 @@ FIREBASE_URL_SUFFIX=?alt=media
 DB_CONNECTION=mysql
 DB_HOST=mysql
 DB_PORT=3306
-DB_DATABASE=msu__cms__updated
+DB_DATABASE=msu__cms
 DB_USERNAME=sail
 DB_PASSWORD=password
 
