@@ -102,5 +102,33 @@ class GalleriesTableSeeder extends Seeder
         DB::table('galleries')->insert([
             'countries_id' => 32
         ]);
+        //23 Hong Kong
+        DB::table('galleries')->insert([
+            'countries_id' => 201
+        ]);
+        //24 Hungary
+        DB::table('galleries')->insert([
+            'countries_id' => 75
+        ]);
+        //25 France
+        DB::table('galleries')->insert([
+            'countries_id' => 61
+        ]);
+        //26 Thailand
+        DB::table('galleries')->insert([
+            'countries_id' => 173
+        ]);
+        //27 Austria
+        DB::table('galleries')->insert([
+            'countries_id' => 10
+        ]);
+        //28 Switzerland
+        DB::table('galleries')->insert([
+            'countries_id' => 169
+        ]);
+        //29 Netherlands
+        DB::table('galleries')->insert([
+            'countries_id' => 125
+        ]);
     }
 }
