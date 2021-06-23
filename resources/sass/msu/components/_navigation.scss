@@ -38,8 +38,8 @@ $slider-btn-width: rem-calc(40);
     width: $panel-width;
     bottom: 6.25rem;
     max-height: calc(100vh - #{rem-calc(431)});
-    /*overflow: hidden; Dev Note: we use this setting for our custom scrollbar. For now, we'll show the overflow*/
-    overflow: scroll;
+    overflow: hidden;
+    overflow-x: scroll;/* Dev Note: we use this setting for our custom scrollbar. For now, we'll show the overflow*/
   }
 
   .ant-table-tbody > tr {
