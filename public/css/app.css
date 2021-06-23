@@ -11535,9 +11535,6 @@ body.admin [data-world] [data-country] text {
   padding: 1rem 0.75rem;
 }
 
-.ant-table-content {
-  overflow-x: scroll;
-}
 .ant-table-content .ant-table-thead > tr > th {
   font-size: 0.75rem;
   font-weight: 600;
