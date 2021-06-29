@@ -1,0 +1,236 @@
+//Resets first...
+main {
+  opacity: 1;
+  width: 100%;
+  height: 100vh;
+}
+
+label input + .icon {
+  position: absolute;
+  fill: $aluminum;
+  background: transparent;
+}
+
+//Now elements by data attribute (so we can override them with OOP styles!)
+[data-backgrounder] {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  .feature {
+	visibility: hidden;
+	height: 0;
+	width: 0;
+  }
+}
+
+[data-breadcrumb] {
+  top: 0;
+  z-index: 1;
+  padding: #{rem-calc(16)} #{rem-calc(20)};
+  h1,h2,h3 {
+    text-transform: uppercase;
+    font-weight: $font-weight-normal;
+    line-height: 1;
+    color: $list-item;
+    white-space: nowrap;
+    > span,
+    a:nth-of-type(n+2) span {
+      font-weight: $font-weight-bold;
+      &:before {
+        content: '/';
+        margin-right: rem-calc(15);
+        margin-left: rem-calc(15);
+        font-weight: normal;
+        opacity: 0.3;
+      }
+    }
+    a + span {
+      color: $primary;
+    }
+  }
+}
+
+[data-clickthrough], 
+[role="button"] {
+  cursor: pointer;
+  > * {
+    pointer-events: none;
+  }
+  [data-dismiss] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+  }
+}
+
+[data-error] {
+  @extend %fixed_navigation;
+  top: unset;
+  bottom: 0;
+  height: unset;
+}
+
+[data-footer] {
+  bottom: 0;
+  @extend %fixed_navigation;
+  min-height: $footer-height;
+  background: rgba($white, 0.8);
+}
+
+[data-greeting] {
+  bottom: $greeting-height + $greeting-border-height - $footer-height;
+  top: auto;
+  min-height: $greeting-height;
+  border-top: solid $greeting-border-height $greeting-border-color;
+}
+
+[data-header] {
+  top: 0;
+  @extend %fixed_navigation;
+  min-height: rem-calc(90);
+  background: rgba($white, 0.8);
+
+  .navbar-brand {
+    svg {
+      height: rem-calc(60);
+    }
+  }
+
+  body:not(.dashboard) & {
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      box-shadow:0 #{rem-calc(4)} #{rem-calc(4)} rgba($black, 0.25);
+    }
+  }
+
+  .navbar-toggler {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    height: 100%;
+    box-shadow: none;
+    .navbar-toggler-icon {
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+
+[data-headline] {
+  h1,h2,p {
+    @extend %headline;
+  }
+}
+
+[data-navigation] {
+  nav {
+    bottom: 0;
+    height: auto;
+    max-height: 19.6875rem;
+    left: 100%;
+    overflow: hidden;
+  }
+}
+
+[data-scrollable] {
+  position: absolute;
+  padding-top: 10rem;
+  padding-bottom: 14rem;
+  height: 100vh;
+  overflow: scroll;
+
+  p {
+      font-size: $h3-font-size;
+  }
+}
+
+[data-search] {
+  input, label {
+    font-size: rem-calc(14);
+  }
+}
+
+[data-sidebar] {
+  width: rem-calc(200);
+  right: 0;
+  z-index: 100;
+  position: fixed;
+  background-color: $tertiary;
+  &.collapsing, 
+  &.show {
+      & ~ * {
+          max-width: calc(100% - #{rem-calc(200)});
+      }
+  }
+}
+
+[data-subheadline] {
+  @extend %headline;
+}
+
+[data-topbar] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: rem-calc(32);
+  padding: rem-calc(4);
+  color: $white;
+  background-color: goldenrod;
+  a {
+      color: $white;
+  }
+  + main {
+    padding-top: rem-calc(32);
+    [data-header] {
+      top: rem-calc(32);
+    }
+  }
+}
+
+//VERY specific styles, targetted by ID
+#suspended {
+	+ small {
+		span.unchecked {
+			color: $secondary;
+		}
+		
+		span.checked {
+			color: $red;
+		}
+	}
+
+	&[checked] + small span.checked, 
+	+ small span.unchecked {
+		display: inline;
+	}
+
+	&[checked] + small span.unchecked, 
+	+ small span.checked {
+		display: none;
+	}
+}
+
+//Anything loose, applicable to any DOM element
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+  .disabled & {
+    opacity: 0.3
+  }
+}

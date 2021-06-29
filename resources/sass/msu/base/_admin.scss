@@ -1,0 +1,52 @@
+article.container {
+  position: relative;
+  z-index: 1;
+  padding-top: rem-calc(90);
+}
+
+#navbar--countries {
+  position: absolute;
+  top: rem-calc(90);
+  left: 0;
+  height: calc(100vh - #{rem-calc(90)});
+	overflow: hidden;
+  background-color: $aluminum;
+  box-shadow: #{rem-calc(-2)} 0 #{rem-calc(2)} 0 rgba($black, 0.05) inset;
+  a {
+    margin-top: 0.1vh;
+    margin-bottom: 0.1vh;
+    padding: rem-calc(5) rem-calc(8);
+    font-family: $font-family-sans-serif;
+    font-size: rem-calc(14);
+    font-weight: $font-weight-bold;
+  }
+}
+
+dl {
+  dt {
+    border-bottom: solid #{rem-calc(1)} $battleship;
+    a {
+      color: $smoke;
+      &:hover, 
+      &:focus {
+        color: $secondary;
+      }
+    }
+  }
+
+  &:last-of-type {
+    dt:last-of-type {
+      border-bottom-width: 0;
+    }
+  }
+}
+
+[data-spy] {
+  max-height: calc(100% - #{rem-calc(128)});
+}
+
+[data-spy], 
+article.container {
+  overflow-y: scroll;
+  height: 100%;
+}

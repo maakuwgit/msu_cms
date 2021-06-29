@@ -1,37 +1,28 @@
-//!Responsive Font Sizing (bootstrap)
-//@import "~rfs/scss";
-
 @import "../../node_modules/antd/dist/antd.min.css";
 
-//!Helpers
-@import "helpers/functions";
-@import "helpers/variables";
+/*
+* Helpers
+* This is where you put anything that is part of the will be needed for functional, organizational, or flourish for the core styles
+*/
 @import "helpers/mixins";
 @import "helpers/extends";
 @import "helpers/animations";
 
-//!Base
-@import "base/cms";
+/*
+* Base
+* This is where you put the core code for the site. This should leverage variables and be totally solid without using ANY important tags and few loose styles
+* This is to allow flexibility and easy override from the CMS without causing structural breakage
+* @usage: Only add Components that are loaded by the React app.js here.
+*/
+@import "base/admin";
+@import "base/global";
+@import "base/screen";
 
-//!Global
-@import "global/global";
-@import "global/footer";
-@import "global/sidebar";
-@import "global/header";
-@import "global/screen";
-
-//!Components
+/*
+* Components
+* Base components, or components that are too unweildy to cram into the global.scss
+* @example: "world" and "breadcrumb are the 2 base components that make up the CMS. "navigation" is the base component of the Screen.
+*/
 @import "components/breadcrumb";
-@import "components/greeting";
-@import "components/headline";
-@import "components/map";
+@import "components/world";
 @import "components/navigation";
-@import "components/scrollable";
-@import "components/search";
-@import "components/subheadline";
-@import "components/topbar";
-
-//!Partials
-@import "partials/ant";
-@import "partials/icon";
-@import "partials/switch";

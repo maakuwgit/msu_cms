@@ -1,7 +1,46 @@
+//Reset adds some crap to the css. We wanna get rid of that
 fieldset {
 	display: block;
 }
 
+figure {
+	margin-bottom: unset;
+}
+
+button:focus,
+input[type=radio],
+input[type=checkbox] {
+	outline: none;
+}
+
+//Align the default styles for DOM elements to the styleguide
+input[type=checkbox],
+input[type=radio] {
+	appearance: none;
+	border: solid 1px $primary;
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: auto;
+    margin-bottom: auto;
+	&:focus {
+		box-shadow: 0 0 0 0.2rem $seafoam;
+	}
+	&:checked {
+		border-color: $secondary;
+		background-color: $secondary;
+	}
+}
+
+::selection {
+	background-color: $seafoam;
+}
+
+//If they have a video detach button (for pushing videos into the corner) hide that
+:host, #detach-button-host {
+	display: none;
+}
+
+//Bootstrap has some loopholes with the font assignments. Close those
 h1, .h1 {
     font-size: $h1-font-size;
 }
@@ -24,28 +63,9 @@ h5, .h5 {
 
 h6, .h6 {
     font-size: $h6-font-size;
-}#suspended {
-	+ small {
-		span.unchecked {
-			color: $secondary;
-		}
-		
-		span.checked {
-			color: $red;
-		}
-	}
-
-	&[checked] + small span.checked, 
-	+ small span.unchecked {
-		display: inline;
-	}
-
-	&[checked] + small span.unchecked, 
-	+ small span.checked {
-		display: none;
-	}
 }
 
+//Make Bootstrap dropdowns fit the styleguide
 .dropdown-toggle::after {
 	border: none;
 	background-size: cover;
@@ -75,10 +95,8 @@ h6, .h6 {
 	}
 }
 
+//Style the Bootstrap Modal to match the design
 .modal-dialog {
-	//height: calc(100% - #{rem-calc(56)});
-    //display: flex;
-    //align-items: center;
 	input[type=text],
 	input[type=url] {
 		border-color: $smoke;
@@ -104,53 +122,409 @@ h6, .h6 {
 	}
 }
 
+//Ant Design styles realigned to match the comp
 .ant-table-cell.inline-list a:after {
 	content: ',';
     margin-right: rem-calc(5);
     display: inline;
 }
 
-button:focus,
-input[type=radio],
-input[type=checkbox] {
-	outline: none;
+.ant-table-tbody > tr > td,
+.ant-table-summary > tr > td, 
+.ant-table-footer .ant-table-tbody > tr > td {
+  border-right: #{rem-calc(1)} solid $battleship;
+  &:first-child {
+    border-left: #{rem-calc(1)} solid $battleship;
+  }
 }
 
-input[type=checkbox],
-input[type=radio] {
-	appearance: none;
-	border: solid 1px $primary;
-    width: 1.25em;
-    height: 1.25em;
-    margin-top: auto;
-    margin-bottom: auto;
-	&:focus {
-		box-shadow: 0 0 0 0.2rem $seafoam;
-	}
-	&:checked {
-		border-color: $secondary;
-		background-color: $secondary;
-	}
+.ant-table-cell.inline-list {
+  span, a {
+    display: block;
+    &:after {
+      content: ',';
+      margin-right: rem-calc(5);
+      display: inline;
+    }
+    &:last-child:after {
+      content: unset;
+      margin-right:unset;
+    }
+  }
 }
 
-::selection {
-	background-color: $seafoam;
+.ant-slider-handle-dragging.ant-slider-handle-dragging.ant-slider-handle-dragging, 
+.ant-slider-handle:focus {
+    border-color: $seafoam;
+	  background-color: $white;
+    box-shadow: 0 0 0 #{rem-calc(5)} $seafoam;
 }
 
-:host, #detach-button-host {
-	display: none;
+.ant-select-single {
+  &.ant-select-show-arrow {
+    .ant-select-selection-item, 
+    .ant-select-selection-placeholder {
+      padding-right: rem-calc(20)
+    }
+  }
+
+  .ant-select-selector {
+    .ant-select-selection-item, 
+    .ant-select-selection-placeholder {
+      line-height: 1;
+    }
+  }
 }
 
-[data-navigation] nav {
-	bottom: 0;
-	height: auto;
-	max-height: 19.6875rem;
-	left: 100%;
-	overflow: hidden;
+.ant-select {
+  font-size: rem-calc(14);
 }
 
-#navigation__country {
-	overflow: hidden;
+//Drag-and-Drop Form
+.ant-upload-btn {
+  padding: $padding-large;
+}
+
+.ant-upload-list-item-thumbnail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+[data-upload] span {
+  display: block;
+}
+
+//Sorters
+.ant-table-column-sorters {
+  align-items: center;
+  font-size: rem-calc(12);
+  padding: rem-calc(12) rem-calc(12);
+}
+
+.ant-table-column-sorter {
+  display: flex;
+  margin-top: unset !important;
+  margin-left: rem-calc(8);
+}
+.ant-table-column-sorter-down, 
+.ant-table-column-sorter-up {
+  font-size: rem-calc(11);
+}
+
+//Pagination
+.ant-pagination-options {
+  margin-left: rem-calc(15);
+}
+
+.ant-pagination-item-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  > div {
+    width: 100%;
+    height: 100%;
+    > span {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+    }
+    .ant-pagination-item-ellipsis {
+      width: rem-calc(32);
+      height: rem-calc(32);
+      line-height: 2.5;
+    }
+  }
+}
+
+.ant-pagination-jump-next,
+.ant-pagination-jump-prev {
+  .ant-pagination-item-container .ant-pagination-item-link-icon {
+    font-size: rem-calc(12);
+  }
+}
+
+.ant-pagination-item, 
+.ant-pagination-total-text, 
+.ant-pagination-jump-next, 
+.ant-pagination-jump-prev, 
+.ant-pagination-prev {
+  margin-right: rem-calc(8);
+}
+
+.ant-pagination-jump-next, 
+.ant-pagination-jump-prev, 
+.ant-pagination-next, 
+.ant-pagination-prev, 
+.ant-pagination-item {
+  min-width: rem-calc(32);
+}
+
+.ant-pagination-item, 
+.ant-pagination-total-text,
+.ant-pagination-jump-next, 
+.ant-pagination-jump-prev, 
+.ant-pagination-next, 
+.ant-pagination-prev, 
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  height: rem-calc(32);
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  padding: $btn-padding-y-sm $btn-padding-x-sm;
+}
+
+.ant-pagination-item, 
+.ant-pagination-total-text,
+.ant-pagination {
+  font-size: rem-calc(14);
+}
+
+.ant-pagination-next, 
+.ant-pagination-prev {
+  .ant-pagination-item-link {
+    font-size: rem-calc(12);
+  }
+}
+
+.ant-pagination-item, 
+.ant-pagination-next .ant-pagination-item-link, 
+.ant-pagination-prev .ant-pagination-item-link, 
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-width: $btn-border-width;
+  border-radius: $btn-border-radius;
+  border-color: $list-item
+}
+
+.ant-pagination-item-active {
+  border-color: $secondary;
+  color: $white;
+  font-weight: initial;
+  background-color: $secondary;
+}
+
+.ant-pagination-jump-next, 
+.ant-pagination-jump-prev, 
+.ant-pagination-next, 
+.ant-pagination-prev, 
+.ant-pagination-item, 
+.ant-pagination-total-text, 
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  line-height: 1;
+}
+
+//Table
+.ant-table {
+  font-size: rem-calc(16);
+  background-color: transparent;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+}
+
+//Global Ant Table
+.ant-table-tbody,
+.ant-table-thead, 
+.ant-table tfoot { 
+  > tr {
+    > td,
+    > th {
+      padding: rem-calc(16) rem-calc(12);
+    }
+  }
+}
+
+.ant-table-content {
+  .ant-table-thead > tr > th {
+    font-size: rem-calc(12);
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    color: $white;
+    background: $secondary;
+    border-width: rem-calc(1);
+    border-top-width: 0;
+    border-left-width: rem-calc(1);
+    border-style: solid;
+    border-color: $list-item;
+    &:first-child {
+      border-right-width: rem-calc(1);
+    }
+    &.ant-table-column-has-sorters:hover {
+      background: darken($secondary, 10%);
+    }
+  }
+}
+
+.ant-checkbox {
+  .ant-checkbox-inner {
+    border-color: $secondary;
+    border-radius: 0;
+  }
+
+  &.ant-checkbox-checked .ant-checkbox-inner {
+    border-color: $primary;
+    background-color: $primary;
+  }
+}
+
+.ant-upload-list-picture-card {
+  .ant-upload-list-item-info {
+    .ant-upload-list-item-thumbnail {
+      &, & img {
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.ant-upload-picture-card-wrapper {
+  .ant-upload-list-picture-card, 
+  .ant-upload-list-picture {
+    .ant-upload-list-item {
+      padding: rem-calc(5);
+      border: 0;
+      border-radius: 0;
+      background-color: $white;
+    }
+  }
+}
+
+.ant-upload-list-picture-card-container {
+  &:hover, &:focus {
+    .ant-upload-list-picture-card .ant-upload-list-item, 
+    .ant-upload-list-picture .ant-upload-list-item {
+      padding: rem-calc(2);
+    }
+    .ant-upload-list-picture-card .ant-upload-list-item-info:before{
+      background: rgba($secondary, 0.6)
+    }
+  }
+}
+
+.ant-slider {
+  &:hover {
+    .ant-slider-rail {
+      background-color: darken($tertiary,50%);
+    }
+    .ant-slider-track {
+      background-color: $secondary;
+    }
+  }
+}
+
+/*Dev note: Band-aids a weird box issue where the dragger is 200% the width of the container*/
+.ant-slider-mark,
+.ant-slider-step {
+  max-width: 50%;
+}
+
+.ant-slider-rail {
+  background-color: $tertiary;
+}
+
+.ant-slider-track {
+  background-color: $primary;
+}
+
+.ant-slider-dot {
+  width: rem-calc(12);
+  height: rem-calc(12);
+  border-color: #C9E3D8;
+  background-color: $aluminum;
+  &, &:first-child, &:last-child {
+    margin-top: rem-calc(-2);
+    margin-left: rem-calc(-4);
+  }
+  
+  &.ant-slider-dot-active {
+    border-color: $primary;
+  }  
+}
+.ant-slider-vertical .ant-slider-handle {
+  width: rem-calc(4);
+}
+
+.ant-slider-handle,
+.ant-slider-handle-dragging.ant-slider-handle-dragging.ant-slider-handle-dragging, 
+.ant-slider-handle:focus {
+  border:none ;
+  border-radius: 0;
+  background-color: $primary;
+}
+
+.ant-upload-list {
+  display: flex;
+  flex-wrap: wrap;
+  .ant-upload-list-picture-card-container {
+    order: 2;
+  }
+  .ant-upload.ant-upload-select-picture-card {
+    order: 1;
+    border-color: $list-item;
+    border-width: 2px;
+    font-size: rem-calc(64);
+    font-weight: normal;
+    background-color: transparent;
+    &:hover, &:focus {
+      border-color: $secondary;
+      .icon {
+        fill: $secondary;
+      }
+    }
+  }
+}
+
+// Odd Even Stripes
+.ant-table-tbody {
+  > tr {
+    background-color: $white;
+
+    &.ant-table-row {
+      &.ant-table-row-selected {
+        > td {
+          background: lighten($primary, 50%);
+          color: $body-color;
+        }
+      }
+      
+      &.suspended {
+        &, &:hover, &focus {
+          > td {
+            color: $battleship;
+            background: $aluminum;
+          }
+        }
+      }
+      
+      &.ant-table-clickable:hover {
+        color: $primary;
+        cursor: pointer;
+        > td {
+          background: rgba($seafoam,0.3);
+        }
+      }
+    }
+
+    .ant-table-cell-fix-left, 
+    .ant-table-cell-fix-right {
+      background-color: inherit;
+    }
+    
+    > td {
+      padding: rem-calc(16) rem-calc(12);
+      border-bottom: #{rem-calc(1)} solid $battleship;
+    }
+  }
 }
 
 .ant-drawer-bottom.ant-drawer-open {

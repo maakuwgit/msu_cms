@@ -1,14 +1,10 @@
-$panel-width: calc(55vw - #{rem-calc(252)});
-$nav-width: rem-calc(800);
-$slider-btn-width: rem-calc(40);
-
 [data-navigation] {
   position: fixed;
   z-index: 10;
   top: auto;
-  bottom: rem-calc(200);
   left: 0;
-  min-height: rem-calc(100);
+  bottom: $navigation-bottom;
+  min-height: $navigation-height;
   a, span {
     border-left: solid 1px $smoke;
     color: $primary;
@@ -25,17 +21,17 @@ $slider-btn-width: rem-calc(40);
 
   span {
     &:nth-child(3) {
-      min-width: $panel-width;
+      min-width: $navigation-panel-width;
     }
   }
 
   nav {
-    min-width: $nav-width;
+    min-width: $navigation-width;
   }
 
   [data-panel] {
     left: 0;
-    width: $panel-width;
+    width: $navigation-panel-width;
     bottom: 6.25rem;
     max-height: calc(100vh - #{rem-calc(431)});
     overflow: hidden;
@@ -48,7 +44,7 @@ $slider-btn-width: rem-calc(40);
   
   .ant-table-content .ant-table-thead {
     > tr > th {
-      font-size: $h2-font-size;
+      font-size: $h3-font-size;
       padding-left: map-get($spacers, 5);
       padding-right: map-get($spacers, 5);
       border-right: none;
@@ -59,7 +55,7 @@ $slider-btn-width: rem-calc(40);
   }
   .ant-table-tbody {
     > tr > td {
-      font-size: $h3-font-size;
+      font-size: $h4-font-size;
       font-weight: normal;
       text-transform: none;
       padding-left: map-get($spacers, 5);
@@ -70,6 +66,20 @@ $slider-btn-width: rem-calc(40);
       background-color: transparent;
       pointer-events: none;
     }
+  }
+
+  .ant-slider {
+    &:hover {
+      .ant-slider-rail,
+      .ant-slider-track {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .ant-slider-rail,
+  .ant-slider-track {
+    background-color: transparent;
   }
 
   .slick-slider[dir] {
@@ -160,18 +170,18 @@ $slider-btn-width: rem-calc(40);
 
   .slick-prev, 
   .slick-next {
-    top: calc(100% + #{$slider-btn-width * 2});
+    top: calc(100% + #{$navigation-slider-btn-width * 2});
     width: auto;
-    min-width: $slider-btn-width;
+    min-width: $navigation-slider-btn-width;
     height: auto;
     min-height: 1.25rem;
   }
 
   .slick-prev {
-    left: calc(50% - #{$slider-btn-width * 2});
+    left: calc(50% - #{$navigation-slider-btn-width * 2});
   }
 
   .slick-next {
-    right: calc(50% - #{$slider-btn-width * 2});
+    right: calc(50% - #{$navigation-slider-btn-width * 2});
   }
 }

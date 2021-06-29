@@ -15,6 +15,8 @@ class Navigation extends Component {
       scrollCoordinates: 0
     }
 
+    this.linkStyle          = "d-flex h1 text-uppercase fw-bold px-5 my-0 align-items-center"
+
     this.resetContinent     = this.resetContinent.bind(this)
     this.resetCountry       = this.resetCountry.bind(this)
     this.setHome            = this.setHome.bind(this)
@@ -43,13 +45,11 @@ class Navigation extends Component {
 
   mouseMoveHandler(value){
     let target = document.getElementById('navigation__country')
-    target.scrollTop = Math.floor(target.scrollHeight*(value * 0.01))//, 10*(Math.ceil(10*(target.scrollHeight - target.scrollTop)/target.scrollHeight)))
+    target.scrollTop = Math.floor(target.scrollHeight*(value * 0.01))
     this.setState({scrollCoordinates:value})
   }
 
   render() {
-    let linkStyle = "d-flex h1 text-uppercase fw-bold px-5 my-0 align-items-center"
-
     if( this.props.levels.length > 0 ) {
       return(
       <nav 
@@ -58,11 +58,11 @@ class Navigation extends Component {
         className="d-flex align-items-stretch bg-white">
         <div className="d-flex">
           <>
-            <a className={linkStyle} key={`navigation__home`} onClick={this.resetContinent}>{this.state.name}</a>
+            <a className={this.linkStyle} key={`navigation__home`} onClick={this.resetContinent}>{this.state.name}</a>
             { this.props.levels.length > 1 ?
             <>
-            <a className={linkStyle} key={`navigation__continent`} onClick={this.resetCountry}>{this.props.levels[0].name}</a>
-            <span className={`position-relative ${linkStyle}`} key={`navigation__country`}>
+            <a className={this.linkStyle} key={`navigation__continent`} onClick={this.resetCountry}>{this.props.levels[0].name}</a>
+            <span className={`position-relative ${this.linkStyle}`} key={`navigation__country`}>
               {this.props.levels[1].name}
               <div className="bg-list-item position-absolute d-flex flex-column justify-content-between" data-panel>
                 <Table dataSource={this.props.levels[1].programs} className="w-100 mb-5"
@@ -86,7 +86,7 @@ class Navigation extends Component {
                 <div className="row px-5 pb-5">
                   { this.props.levels[1].code &&
                   <div className="col-3 py-2">
-                    <h3 className="text-white fw-bold mb-4" style={{textTransform:'none',maxWidth:'23.5rem'}}>Scan QR code with <br className="d-none d-lg-block"/>your mobile device <br className="d-none d-lg-block"/>for more information</h3>
+                    <h3 className="h4 text-white fw-bold mb-4" style={{textTransform:'none',maxWidth:'23.5rem'}}>Scan QR code with <br className="d-none d-lg-block"/>your mobile device <br className="d-none d-lg-block"/>for more information</h3>
                     <div className="p-3 bg-white" style={{width: '14rem', height: '14rem'}}>
                       <QRCode value={this.props.levels[1].code} size={93}/>
                     </div>
@@ -136,7 +136,7 @@ class Navigation extends Component {
             </span>
             </>
             :
-            <span className={`position-relative ${linkStyle}`} key={`navigation__continent`}>
+            <span className={`position-relative ${this.linkStyle}`} key={`navigation__continent`}>
               {this.props.levels[0].name}
               <nav className="d-flex position-absolute justify-content-between align-items-stretch">
                 <div id="navigation__country" className="col d-flex flex-column align-items-stretch justify-contrent-stretch px-0">

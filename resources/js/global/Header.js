@@ -12,7 +12,7 @@ class Header extends Component {
     let is_admin = paths.filter(p => p === 'admin')
     return (
       <header data-header className="navbar navbar-light w-100 sticky-top">
-        <figure className="py-0 navbar-brand text-left text-uppercase d-flex align-items-center my-auto ms-0 me-auto">
+        <figure className="py-0 ps-5 navbar-brand text-left text-uppercase d-flex align-items-center my-auto ms-0 me-auto">
           <a href={is_admin.length ? '/admin' : '/'} aria-label={title}
            className="d-flex display-4 pe-2 mb-0 text-primary text-uppercase">
            <Tooltip title="Click to return to home">
@@ -32,7 +32,7 @@ class Header extends Component {
           }
         </figure>
         { ( ( department || program ) && this.props.show_frontend ) &&
-        <div className="d-none d-md-inline h4 my-auto text-primary my-auto">{department} | <span className="fw-bold text-uppercase">{program}</span></div>
+        <div className="d-none d-md-inline h4 my-auto pe-5 text-primary">{department} | <span className="fw-bold text-uppercase">{program}</span></div>
         }
         { !this.props.show_frontend &&
         <button 

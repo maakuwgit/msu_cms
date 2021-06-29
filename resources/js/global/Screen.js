@@ -375,7 +375,7 @@ console.log(credit)
         <Header show_frontend={true} show_ui={false}/>
         <Feedback feedback={this.state.feedback}/>
         <article key="map__wrapper" 
-        className="d-flex m-0 px-0 align-items-stretch justify-content-stretch h-100 w-100 flex-column">
+        className="d-flex m-0 px-0 align-items-stretch justify-content-stretch h-100 w-100 flex-column bg-aluminum">
           <Greeting/>
           <Navigation levels={levels} selectCountry={this.selectCountry} 
           toggleCountries={toggleCountries} selectContinent={this.selectContinent}/>
