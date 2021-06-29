@@ -18,8 +18,7 @@ import Settings from "../pages/Settings"
 import firebase from 'firebase/app'
 import 'firebase/storage'
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration: measurementId is optional!
 const app = firebase.initializeApp({
   apiKey: cms.settings.firebase.api_key,
   authDomain: cms.settings.firebase.auth_domain,
@@ -437,7 +436,7 @@ class Admin extends Component {
   }
 
   //Set the modal in the state object from this or a child component (modal is reusable)
-  setModal(type='edit', headline='', copy='', ctas=false, inputs=[], on_submit=false, image=''){
+  setModal(type='edit', headline='', copy='', ctas=false, inputs=[], on_submit=false, image='', caption=false){
     if(type === 'preview') {
       $('#main__modal_window').modal('show')
     }
@@ -449,6 +448,7 @@ class Admin extends Component {
         copy: copy,
         ctas: ctas,
         image: image, 
+        caption: caption, 
         inputs: inputs,
         nStyle: type === 'delete' ? 'justify-content-center' : false,
         on_submit: on_submit
@@ -730,11 +730,47 @@ class Admin extends Component {
     this.getGalleries()
     this.getMedia()
     this.getPrograms()
-
+    
     updateBodyStyle('admin')
   }
     
   render(){
+    let globalVars = {
+      upload: this.state.upload, 
+      continents: this.state.continents,
+      countries: this.state.countries,
+      galleries: this.state.galleries, 
+      programs: this.state.programs, 
+      media: this.state.media,
+      media_types: this.state.media_types
+    }
+
+    console.log(this.state.programs)
+
+    let globalMethods = {
+      //Alert Methods
+      resetAlert: this.resetAlert, 
+      //Modal Methods
+      editModal: this.editModal, 
+      createModal: this.createModal, 
+      deleteModal: this.deleteModal, 
+      resetModal: this.resetModal, 
+      setModal: this.setModal, 
+      //Program Methods
+      editProgram: this.editProgram, 
+      parseProgram: this.parseProgram, 
+      deletePrograms: this.deletePrograms, 
+      deleteProgram: this.deleteProgram, 
+      postProgram: this.postProgram, 
+      //Search Methods
+      searchSubmit: this.searchSubmit
+    }
+
+    let mediaMethods = {
+      uploadMedia: this.uploadMedia,  
+      deleteMedia: this.deleteMedia
+    }
+
     return (
       <BrowserRouter>
         <Sidebar show_frontend={false}/>
@@ -742,111 +778,38 @@ class Admin extends Component {
         <Feedback feedback={this.state.feedback}/>
         <Switch>
           <Route exact path="/admin" render={() => (
-            <Dashboard 
-              countries={this.state.countries} 
-              continents={this.state.continents} 
-              programs={this.state.programs}
-              galleries={this.state.galleries} 
-              media={this.state.media} 
-              upload={this.state.upload} 
-              editModal={this.editModal} 
-              createModal={this.createModal} 
-              deleteModal={this.deleteModal} 
-              resetModal={this.resetModal} 
-              setModal={this.setModal} 
-              searchSubmit={this.searchSubmit}
-              editCountry={this.editCountry} 
-              parseCountry={this.parseCountry} 
-              suspendCountry={this.suspendCountry}
-              editProgram={this.editProgram}
-              deletePrograms={this.deletePrograms}
-              deleteProgram={this.deleteProgram}
-              parseProgram={this.parseProgram} 
-              postProgram={this.postProgram} 
-              uploadMedia={this.uploadMedia} 
-              setQR={this.setQR} 
-              resetAlert={this.resetAlert}/>
+            <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} setQR={this.setQR}/>
           )} />
           <Route exact path="/admin/continents" render={() => (
-            <Continents countries={this.state.countries} continents={this.state.continents}/>
+            <Continents {...globalVars} {...globalMethods}/>
           )} />
           <Route exact path="/admin/countries" render={() => (
-            <Countries countries={this.state.countries}
-            editModal={this.editModal} 
-            createModal={this.createModal} 
-            deleteModal={this.deleteModal} 
-            searchSubmit={this.searchSubmit}/>
+            <Countries {...globalVars} {...globalMethods}/>
           )} />
           <Route path="/admin/countries/:slug" render={(params) => (
-            <Country 
-              slug={params.match.params.slug}
-              countries={this.state.countries} 
-              programs={this.state.programs} 
-              parseProgram={this.parseProgram} 
-              postProgram={this.postProgram} 
-              galleries={this.state.galleries} 
-              media={this.state.media} 
-              uploadMedia={this.uploadMedia} 
-              deleteMedia={this.deleteMedia}
-              editModal={this.editModal} 
-              createModal={this.createModal} 
-              deleteModal={this.deleteModal} 
-              resetModal={this.resetModal} 
-              setModal={this.setModal} 
-              suspendCountry={this.suspendCountry}
-              editProgram={this.editProgram}
-              deletePrograms={this.deletePrograms}
-              deleteProgram={this.deleteProgram} 
-              postProgram={this.postProgram} 
-              uploadMedia={this.uploadMedia} 
-              setQR={this.setQR} 
-              resetAlert={this.resetAlert}/>
+            <Country {...globalVars} {...globalMethods} {...mediaMethods} slug={params.match.params.slug} setQR={this.setQR}/>
           )} />
           <Route exact path="/admin/programs" render={() => (
-            <Programs 
-             countries={this.state.countries}
-             galleries={this.state.galleries} 
-             programs={this.state.programs}
-             media={this.state.media}
-             editModal={this.editModal} 
-             createModal={this.createModal} 
-             deleteModal={this.deleteModal} 
-             resetModal={this.resetModal} 
-             setModal={this.setModal} 
-             editProgram={this.editProgram}
-             parseProgram={this.parseProgram}
-             deletePrograms={this.deletePrograms}
-             deleteProgram={this.deleteProgram} 
-             postProgram={this.postProgram} 
-             searchSubmit={this.searchSubmit}/>
+            <Programs {...globalVars} {...globalMethods}/>
           )} />
           <Route exact path="/admin/galleries" render={() => (
-            <Galleries 
-             countries={this.state.countries} 
-             galleries={this.state.galleries} 
-             setModal={this.setModal} 
-             deleteMedia={this.deleteMedia}  
-             uploadMedia={this.uploadMedia} 
-             media={this.state.media} 
-             media_types={this.state.media_types}/>
+            <Galleries {...globalVars} {...globalMethods} {...mediaMethods}/>
           )} />
           <Route exact path="/admin/settings" render={() => (
-            <Settings settings={cms.settings.options}/>
+            <Settings {...globalVars}/>
           )} />
         </Switch>
-        <Modal 
-          id="main__modal_window"  
+        <Modal id="main__modal_window" {...mediaMethods}
           loading={this.state.loading}
           copy={this.state.modal.copy} 
           headline={this.state.modal.headline}
           image={this.state.modal.image} 
+          caption={this.state.modal.caption}
           type={this.state.modal.type}
           ctas={this.state.modal.ctas}
           nStyle={this.state.modal.nStyle} 
           inputs={this.state.modal.inputs} 
           resetModal={this.resetModal} 
-          deleteMedia={this.deleteMedia}  
-          uploadMedia={this.uploadMedia} 
           on_submit={this.state.modal.on_submit}/>
         <Footer show_frontend={false}/>
       </BrowserRouter>
