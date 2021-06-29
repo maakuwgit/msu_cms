@@ -41,6 +41,11 @@ Startup on a Windows Machine:
 4) Start the PHP server using "php artisan serve"
 5) Open Chrome and navigate to 127.0.0.1:8000 and you should see everything.
 
+Getting rid of annoying Warnings and Breaking Changes:
+A few things, some specific to OS, will need to be addressed before a production build will eport correctly
+1) Bootstrap 5, a great tool that it is, still relies on some old tech, and old styles it promises to update in 5.5. Fix the SASS math warning using the sass-migrator plugin. Simply run 'npm install -g sass-migrator'. It will ONLY work globally. After it's install, run 'sass-migrator division **/*.scss' and it'll ANY scss math div issues present in your buildable files!
+https://sass-lang.com/documentation/breaking-changes/slash-div
+
 Possible known problems solved:
 If, at some point, you've been manually screwing around with the Seeders, Factories, or Migrations, it's a good bet you've screwed up the migration by now! If you run into a wall, try these remedies before trashing everything:
 a) 'sail composer dump-autoload -o' or 'composer dump-autoload -o': this re-aligns the autoload to your changes to routes and paths. Doesn't always work, but it's the first step.
