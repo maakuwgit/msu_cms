@@ -31,7 +31,7 @@ html[data-screen]{
     }
 
     &:after {
-      width: 70vh;
+      width: 85vh;
       padding-top: 8.25rem;
       padding-bottom: 12.5rem;
       background-image: url(../../../images/foreground.png);
@@ -46,12 +46,13 @@ html[data-screen]{
 
     [data-map] {
       max-width: 80%;
+      z-index: 1;
       margin-left: 0;
     }
   }
 
   [data-header] {
-    min-height: rem-calc(132);
+    min-height: rem-calc(66);
 
     .h3 {
       font-size: calc(1.235rem + 0.9vw);
@@ -59,8 +60,8 @@ html[data-screen]{
 
     .navbar-brand {
       svg {
-        height: rem-calc(100);
-        font-size: rem-calc(100);
+        height: rem-calc(50);
+        font-size: rem-calc(50);
       }
     }
   }

@@ -136,11 +136,11 @@ $theme-colors: (
 $spacer: 1.25rem;
 $spacers: (
     0: 0,
-    1: ($spacer * .25),
-    2: ($spacer * .5),
+    1: calc(#{$spacer} * .25),
+    2: calc(#{$spacer} * .5),
     3: $spacer,
-    4: ($spacer * 1.5),
-    5: ($spacer * 3)
+    4: calc(#{$spacer} * 1.5),
+    5: calc(#{$spacer} * 3)
 );
 
 $highlights: (
@@ -176,12 +176,12 @@ $h5-font-size:                      1.125rem;
 $h6-font-size:                      1rem;
 
 $display-font-sizes: (
-    1:                      4rem,
-    2:                      3.5rem,
-    3:                      3rem,
-    4:                      2.625rem,
-    5:                      2.25rem,
-    6:                      2rem
+    1: 4rem,
+    2: 3.5rem,
+    3: 3rem,
+    4: 2.625rem,
+    5: 2.25rem,
+    6: 2rem
 );
   
 // Navbar
@@ -235,12 +235,6 @@ $badge-font-weight:                 $font-weight-normal;
 $badge-padding-y:                   10px;
 $badge-padding-x:                   30px;
 
-//Thumbnail
-$thumbnail-height:                  rem-calc(170) !default;//LEGACY Do not remove!
-$thumbnail-bg:                      $aluminum;
-$thumbnail-border-color:            $aluminum;
-$thumbnail-box-shadow:              none;
-
 //Hero
 $hero_height:                       33vh;
 $hero_height--lg:                   50vw;
@@ -275,15 +269,10 @@ $modal-content-box-shadow-sm-up:    none;
 
 $modal-backdrop-bg:                 $list-item;
 $modal-backdrop-opacity:            1;
-$modal-header-border-color:         transparent;
-$modal-header-border-width:         0;
-$modal-header-padding-y:            #{map-get($spacers, 3)};
-$modal-header-padding-x:            #{map-get($spacers, 2)};
 
 $modal-xl:                          50vw;
 $modal-lg:                          $modal-xl;
 $modal-md:                          $modal-xl;
-$modal-sm:                          calc(100vw - #{map-get($spacers, 1)});
 
 $modal-fade-transform:              scale(1.01);
 $modal-show-transform:              scale(1);

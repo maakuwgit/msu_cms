@@ -199,21 +199,6 @@
     width: 100%;
     border-collapse: collapse;
   }
-
-  .ant-table-summary {
-    > tr > td {
-      border-bottom: #{rem-calc(1)} solid $primary;
-      background-color: $aluminum;
-    }
-
-    .empty {
-      border-color: transparent;
-      background-color: transparent;
-      + .empty {
-        border-right-color: $primary;
-      }
-    }
-  }
 }
 
 //Global Ant Table
@@ -360,19 +345,27 @@
 
 .ant-slider {
   &:hover {
-    .ant-slider-rail, 
+    .ant-slider-rail {
+      background-color: darken($tertiary,50%);
+    }
     .ant-slider-track {
-      background-color: transparent;
+      background-color: $secondary;
     }
   }
 }
 
+/*Dev note: Band-aids a weird box issue where the dragger is 200% the width of the container*/
+.ant-slider-mark,
+.ant-slider-step {
+  max-width: 50%;
+}
+
 .ant-slider-rail {
-  background-color: transparent;
+  background-color: $tertiary;
 }
 
 .ant-slider-track {
-  background-color: transparent;
+  background-color: $primary;
 }
 
 .ant-slider-dot {
