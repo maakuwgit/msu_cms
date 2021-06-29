@@ -1,4 +1,30 @@
-#suspended {
+fieldset {
+	display: block;
+}
+
+h1, .h1 {
+    font-size: $h1-font-size;
+}
+
+h2, .h2 {
+    font-size: $h2-font-size;
+}
+
+h3, .h3 {
+    font-size: $h3-font-size;
+}
+
+h4, .h4 {
+    font-size: $h4-font-size;
+}
+
+h5, .h5 {
+    font-size: $h5-font-size;
+}
+
+h6, .h6 {
+    font-size: $h6-font-size;
+}#suspended {
 	+ small {
 		span.unchecked {
 			color: $secondary;
@@ -76,30 +102,6 @@
 			font-size: rem-calc(10)
 		}
 	}
-}
-
-h1, .h1 {
-    @include font-size($h1-font-size);
-}
-
-h2, .h2 {
-    @include font-size($h2-font-size);
-}
-
-h3, .h3 {
-    @include font-size($h3-font-size);
-}
-
-h4, .h4 {
-    @include font-size($h4-font-size);
-}
-
-h5, .h5 {
-    @include font-size($h5-font-size);
-}
-
-h6, .h6 {
-    @include font-size($h6-font-size);
 }
 
 .ant-table-cell.inline-list a:after {
