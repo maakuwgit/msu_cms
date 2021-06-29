@@ -150,7 +150,8 @@ $hero_height:                       33vh;
 $hero_height--lg:                   50vw;
 
 //Navigation
-$navigation-panel-width:            calc(55vw - #{rem-calc(252)});
+$navigation-panel-width:            100%;
+$navigation-button-width:           52vw;
 $navigation-height:                 rem-calc(100);
 $navigation-bottom:                 $greeting-height + $greeting-border-height - $footer-height + $navigation-height;
 $navigation-width:                  rem-calc(800);

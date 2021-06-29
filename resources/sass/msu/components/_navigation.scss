@@ -15,13 +15,13 @@
   a {
     min-width: rem-calc(252);
     &:nth-child(2) {
-      min-width: 40vw;
+      min-width: 30vw;
     }
   }
 
   span {
     &:nth-child(3) {
-      min-width: $navigation-panel-width;
+      min-width: $navigation-button-width;
     }
   }
 
@@ -170,7 +170,7 @@
 
   .slick-prev, 
   .slick-next {
-    top: calc(100% + #{$navigation-slider-btn-width * 2});
+    top: calc(100% + #{$navigation-slider-btn-width * 2} - 0.5rem);
     width: auto;
     min-width: $navigation-slider-btn-width;
     height: auto;
