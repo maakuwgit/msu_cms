@@ -1,6 +1,5 @@
 import cms from '../cms.json'
 import React, {Component} from 'react'
-import { NavLink } from "react-router-dom"
 import { getPaths } from '../functions'
 import { Tooltip } from 'antd'
 
@@ -14,26 +13,26 @@ class Header extends Component {
     return (
       <header data-header className="navbar navbar-light w-100 sticky-top">
         <figure className="py-0 navbar-brand text-left text-uppercase d-flex align-items-center my-auto ms-0 me-auto">
-          <NavLink exact to={is_admin.length ? '/admin' : '/'} aria-label={title}
+          <a href={is_admin.length ? '/admin' : '/'} aria-label={title}
            className="d-flex display-4 pe-2 mb-0 text-primary text-uppercase">
            <Tooltip title="Click to return to home">
               <svg className="icon">
                 <use xlinkHref="#logo__msu"/>
               </svg>
             </Tooltip>
-          </NavLink>
+          </a>
           { title &&
-          <figcaption className="mt-3">
-            <NavLink className="h3 text-primary" to={is_admin.length ? '/admin' : '/'}>
+          <figcaption className="mt-2">
+            <a className="h4 text-primary my-auto" href={is_admin.length ? '/admin' : '/'}>
               <Tooltip title="Click to return to home">
                 <span className="fw-bold">{title.substr(0, title.lastIndexOf(' '))}</span> {title.substr(title.lastIndexOf(' ') + 1)}
               </Tooltip>
-            </NavLink>
+            </a>
           </figcaption>
           }
         </figure>
         { ( ( department || program ) && this.props.show_frontend ) &&
-        <div className="d-none d-md-inline h3 my-auto text-primary">{department} | <span className="fw-bold text-uppercase">{program}</span></div>
+        <div className="d-none d-md-inline h4 my-auto text-primary my-auto">{department} | <span className="fw-bold text-uppercase">{program}</span></div>
         }
         { !this.props.show_frontend &&
         <button 
