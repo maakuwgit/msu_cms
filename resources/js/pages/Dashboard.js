@@ -37,8 +37,6 @@ class Dashboard extends Component {
     this.checkCountries   = this.checkCountries.bind(this)
     this.parseCountries   = this.parseCountries.bind(this)
 
-    //this.parsePrograms    = this.parsePrograms.bind(this)
-
     this.selectCountry    = this.selectCountry.bind(this)
     
     this.selectFilter     = this.selectFilter.bind(this)
@@ -85,16 +83,19 @@ class Dashboard extends Component {
   }
 
   parseContinents(){
-    if(this.props.continents.length > 0 && this.state.continents.length === 0){
-      this.setState({continents: this.props.continents.filter(c => c.enabled)})
+    if(this.props.continents) {
+      if(this.props.continents.length > 0 && this.state.continents.length === 0){
+        this.setState({continents: this.props.continents.filter(c => c.enabled)})
+      }
     }
   }
 
   parseCountries(){
-    if(this.props.countries.length > 0 && this.state.countries.length === 0){
-      let enabled = this.props.countries.filter(c => c.enabled)
-//      enabled.forEach(e => e.programs = this.parsePrograms(e.id))
-      this.setState({countries: enabled})
+    if(this.props.countries) {
+      if(this.props.countries.length > 0 && this.state.countries.length === 0){
+        let enabled = this.props.countries.filter(c => c.enabled)
+        this.setState({countries: enabled})
+      }
     }
   }
 
@@ -109,16 +110,26 @@ class Dashboard extends Component {
         gallery = this.props.galleries.filter(g => g.country_id === country.id)
         gallery = gallery.length > 0 ? gallery[0] : false
       }
+      let programs  = []
+      if(this.props.programs) {
+        gallery = this.props.programs.filter(pr => {
+          console.log(pr.countries, country.id)
+          return pr.countries.filter(p => p.id === country.id)
+        })
+        gallery = gallery.length > 0 ? gallery[0] : false
+      }
+
       this.setState({
         country: country, 
         selectedPrograms: [], 
-        programs: country.programs,
+        programs: programs,
         gallery: gallery
       })
     }else{
       this.setState({
         country: false,
         programs: false,
+        gallery: false,
         selectedPrograms: []
       })
     }
@@ -456,6 +467,7 @@ class Dashboard extends Component {
                           label: 'Edit', 
                           target: '#main__modal_window', 
                           callback: () => {
+                            console.log(record, this.props.programs)
                             this.props.editModal(`Edit Program #${record.id}`, '',[
                             {
                               label: 'id',
@@ -463,10 +475,10 @@ class Dashboard extends Component {
                               type: 'hidden',
                               value: record.id
                             },{
-                              label: 'Country',
-                              id: 'country_id',
+                              label: 'Countries',
+                              id: 'countries',
                               type: 'hidden',
-                              value: record.country_id
+                              value: record.countries
                             },{
                               label: 'Name',
                               id: 'name',

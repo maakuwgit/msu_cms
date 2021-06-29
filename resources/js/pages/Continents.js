@@ -7,11 +7,11 @@ import { Table } from 'antd'
 
 class Continents extends Component {
   componentDidMount() {
-    updateBodyStyle()
+    updateBodyStyle('continents')
   }
 
   componentDidUpdate() {
-    updateBodyStyle()
+    updateBodyStyle('continents')
   }
 
   render() {
@@ -20,6 +20,7 @@ class Continents extends Component {
         <Headline key="cms.continents.__headline" 
         hStyle={cms.components.headline.style + ' bg-white'}
         headline={cms.continents.headline} copy={cms.continents.description}/>
+        { this.props.continents &&
         <Table dataSource={this.props.continents} className={cms.components.table.style} 
           loading={this.props.continents.length ? false : true}
           rowKey={(record) => {
@@ -50,6 +51,7 @@ class Continents extends Component {
             }
           ]}
           pagination={false}/>
+        }
       </article>
     )
   }

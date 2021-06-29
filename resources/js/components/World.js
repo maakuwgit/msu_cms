@@ -18,7 +18,7 @@ class World extends Component {
     let continent = country.parentNode
     let slug      = continent.attributes.id.nodeValue
     let obj       = this.props.continents.filter(c=>c.slug === slug)[0]
-    let paths = getPaths()
+    let paths     = getPaths()
 
     toggleContinents('off',continent)
 

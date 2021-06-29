@@ -4,10 +4,6 @@ import React, {Component} from 'react'
 import Headline from '../components/Headline'
 
 class Settings extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     updateBodyStyle('settings')
   }
@@ -23,18 +19,16 @@ class Settings extends Component {
         hStyle={cms.components.headline.style+' bg-white'}
         headline={cms.settings.headline} copy={cms.settings.description} />
         <form id="settings__form" className="mb-0">
-        { this.props &&
+        { cms.settings.options &&
         <fieldset>
-          { this.props.settings &&
-            this.props.settings.map( setting => {
+          { cms.settings.options.map( setting => {
               return (
             <div className="mb-3" key={`setting__${setting.name}`}>
               <label className="form-label" htmlFor={setting.name}>{setting.name}</label>
               <input readOnly aria-readonly id={setting.name} name={setting.name} defaultValue={setting.value} className="form-control"/>
             </div>
             )
-              })
-            }
+          }) }
         </fieldset>
         }
         <fieldset>
@@ -47,10 +41,11 @@ class Settings extends Component {
             <input readOnly aria-readonly id="theme__secondary" name="theme__secondary" defaultValue={cms.theme.secondary} className="form-control"/>
           </div>
           <div className="mb-3" key="theme__tertiary">
-            <label className="form-label" htmlFor="theme__tertiary">Primary Color</label>
+            <label className="form-label" htmlFor="theme__tertiary">Tertiary Color</label>
             <input readOnly aria-readonly id="theme__tertiary" name="theme__tertiary" defaultValue={cms.theme.tertiary} className="form-control"/>
           </div>
         </fieldset>
+        <p>Additional colors are available via CSS variable names. They cannot be changed, but they can be used with the 'var(--color_name)' syntax.</p>
         </form>
       </article>
     )

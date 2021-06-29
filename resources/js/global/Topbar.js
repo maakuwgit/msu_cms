@@ -38,12 +38,6 @@ class Topbar extends Component {
           </Tooltip>
         </a>
       </div>
-      <div className="d-flex col-4 justify-content-end">
-        <figure className="d-flex mb-0 align-items-center">
-          <figcaption className="small fw-bold">Thepersonse, Namehere</figcaption>
-          <Avatar size={24} className="ms-2 my-2" src="//via.placeholder.com/100x100" />
-        </figure>
-      </div>
     </div>
     )
   }
