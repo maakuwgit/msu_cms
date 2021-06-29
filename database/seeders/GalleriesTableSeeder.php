@@ -130,5 +130,9 @@ class GalleriesTableSeeder extends Seeder
         DB::table('galleries')->insert([
             'countries_id' => 125
         ]);
+        //30 Malaysia
+        DB::table('galleries')->insert([
+            'countries_id' => 107
+        ]);
     }
 }

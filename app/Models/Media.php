@@ -11,6 +11,7 @@ class Media extends Model
         'url',
         'type',  
         'gallery_id', 
+        'credit', 
         'poster'
     ]);
 

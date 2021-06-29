@@ -242,13 +242,17 @@ class Modal extends Component {
               </form>
               : this.props.type === 'preview' ?
               <>
-              { this.props.image.search('.mp4') > 0 ?
-              <video id="modal__video" className="w-100 h-auto" width="100%" controls={true} autoPlay={true}>
-                <source src={this.props.image} type="video/mp4"/>
-              </video>
-              :
-              <img alt="" src={this.props.image} className="w-100 h-auto" width="100%"/>
-              }
+                <figure className="mb-0">
+                { this.props.image.search('.mp4') > 0 ?
+                  <video id="modal__video" className="w-100 h-auto" width="100%" controls={true} autoPlay={true}>
+                    <source src={this.props.image} type="video/mp4"/>
+                  </video>
+                :
+                  <img alt="" src={this.props.image} className="w-100 h-auto" width="100%"/>
+                }
+                </figure>
+                <p className="mb-0 text-white" 
+                 style={{textShadow: '0 0 2px black, 0 0 2px black', marginTop: '-1.75rem', marginLeft: '1rem'}}>{this.props.credit}</p>
               </>
               :
               <nav className={nStyle}>

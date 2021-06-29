@@ -593,5 +593,28 @@ class MediaTableSeeder extends Seeder
             'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "marketing_and_international_comparative_dimensions_of_business_in_europe.mp4" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
             'gallery_id' => 16
         ]);
+        //Malaysia
+        DB::table('media')->insert([
+            'type'       => 1,
+            'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "kuala_lumpur_gebaude__jegathisan-manoharan.jpg" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
+            'gallery_id' => 30,
+            'credit'     => 'Jegathisan Manoharan'
+        ]);
+        DB::table('media')->insert([
+            'type'       => 1,
+            'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "kuala_lumpur__zukiman_mohamad.jpg" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
+            'gallery_id' => 30,
+            'credit'     => 'Zukimazn Mohamed'
+        ]);
+        DB::table('media')->insert([
+            'type'       => 1,
+            'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "kuala_lumpur__6636.jpg" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
+            'gallery_id' => 30
+        ]);
+        DB::table('media')->insert([
+            'type'       => 1,
+            'url'        => env('FIREBASE_URL_PREFIX', 'Laravel') . "kuala_lumpur__6616.jpg" . env('FIREBASE_URL_SUFFIX', 'Laravel'),
+            'gallery_id' => 30
+        ]);
     }
 }
