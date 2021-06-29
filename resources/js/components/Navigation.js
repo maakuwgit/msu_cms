@@ -88,13 +88,13 @@ class Navigation extends Component {
                   <div className="col-3 py-2">
                     <h3 className="text-white fw-bold mb-4" style={{textTransform:'none',maxWidth:'23.5rem'}}>Scan QR code with <br className="d-none d-lg-block"/>your mobile device <br className="d-none d-lg-block"/>for more information</h3>
                     <div className="p-3 bg-white" style={{width: '14rem', height: '14rem'}}>
-                      <QRCode value={this.props.levels[1].code} size={90}/>
+                      <QRCode value={this.props.levels[1].code} size={93}/>
                     </div>
                   </div>
                   }
                   <div className={`${this.props.levels[1].code ? 'col-8 offset-1 py-2' : 'col-12 pt-2 pb-5'} d-flex flex-column justify-content-center`}>
                     { ( this.props.levels[1].gallery ) &&
-                    <Slider dots={false} infinite={true} adaptiveHeight={true}
+                    <Slider dots={false} infinite={true} adaptiveHeight={true} SlickArrowLeft={false} SlickArrowRight={false} 
                       nextArrow={
                       <button type="button" title="Next">
                         <div className="btn h3 py-0 mb-0 text-white">
@@ -118,7 +118,7 @@ class Navigation extends Component {
                           return (
                             <picture key={m.id}>
                               <div style={{backgroundImage:`url(${m.url.search('.mp4') > 0 ? ( m.poster ? m.poster : 'images/poster.png') : m.url})`}} data-backgrounder>
-                                <img alt={m.name} src={m.url}/>
+                                <img alt={m.name} src={m.url} title={m.credit}/>
                                 { m.url.search('.mp4') > 0 &&
                                 <svg className="icon">
                                   <use xlinkHref="#icon__play"/>
