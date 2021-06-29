@@ -1,12 +1,13 @@
 import api from '../api.js'
-import {timedAlert, updateBodyStyle} from '../functions'
+import {timedAlert, updateBodyStyle, checkPrograms, toggleCountries, randomID, zoomMap} from '../functions'
 import React, {Component} from "react"
-import {BrowserRouter, Route, Switch} from "react-router-dom"
 import Header from "../global/Header"
 import Footer from "../global/Footer"
-import Map from '../pages/Map'
 import Modal from "../components/Modal"
 import Feedback from "../partials/Feedback"
+import World from '../components/World'
+import Greeting from '../components/Greeting'
+import Navigation from '../components/Navigation'
 
 class Screen extends Component {
   constructor(props) {
@@ -19,6 +20,10 @@ class Screen extends Component {
       programs: [], 
       media: [], 
       media_types: [], 
+      continents: [],
+      country: false, 
+      gallery: false, 
+      selectedPrograms: [],
       has_server: true,
       loading: false, 
       modal: {
@@ -30,7 +35,8 @@ class Screen extends Component {
       feedback: {
         msg: false,
         stlye: ''
-      }
+      },
+      slides: false
     }
 
     this.countries = []
@@ -46,7 +52,8 @@ class Screen extends Component {
 
     // Program Methods
     this.getPrograms      = this.getPrograms.bind(this)
-    this.parseProgram     = this.parseProgram.bind(this)
+
+    // Gallery Methods
     this.getGalleries     = this.getGalleries.bind(this)
 
     //Media Methods
@@ -55,6 +62,77 @@ class Screen extends Component {
     //Modal Methods
     this.resetModal       = this.resetModal.bind(this)
     this.setModal         = this.setModal.bind(this)
+    this.checkContinent   = this.checkContinent.bind(this)
+    this.selectContinent  = this.selectContinent.bind(this)
+
+    this.checkCountries   = this.checkCountries.bind(this)
+    this.selectCountry    = this.selectCountry.bind(this)
+  }
+
+  //Look at the list of Countries, and class them based on existence and suspension
+  //Used by the Map component for style and listeners
+  checkContinent(slug){
+    let exists = this.state.continents.filter(c => c.slug === slug)
+    return exists.length ? 'active' : ''
+  }
+
+  //Look at the list of Countries, and class them based on existence and suspension
+  //Used by the Map component for style and listeners
+  checkCountries(slug){
+    let exists    = this.state.countries.filter(c => c.slug === slug)
+    if(exists.length > 0) {
+      if(exists[0].enabled === 'on') {
+        let styles = exists[0].suspended === 'off' ? 'active' : 'active suspended'
+        styles += checkPrograms(exists[0])
+        styles += ' opacity-'+exists[0].color
+        return styles
+      }else{
+        return 'disabled'
+      }
+    }else{
+      return ''
+    }
+  }
+
+  injectProgram(obj) {
+    obj.id = randomID()
+    let nu = this.state.programs ? this.state.programs.concat(obj) : [obj]
+    this.setState({programs: nu})
+  }
+
+  selectContinent(continent=false){
+    if(continent) {
+      let countries  = false
+      if(this.countries) {
+        countries = this.countries.filter(p => p.continent_id === continent.id)
+        continent.countries = countries.length > 0 ? countries : false
+      }
+    }
+    this.setState({continent: continent})
+  }
+
+  selectCountry(country=false){
+    if(country){
+      let tag = document.getElementById(`${country.slug}`)
+      let continent = tag ? tag.parentElement : false
+      this.setState({
+        country: country, 
+        selectedPrograms: [], 
+        programs: country.programs,
+        gallery: country.gallery
+      })
+      let scale = tag.dataset.scale ? tag.dataset.scale : continent.dataset.scale
+      let left = tag.dataset.transformoriginx ? parseFloat(tag.dataset.transformoriginx) : parseFloat(continent.dataset.transformoriginx) + 19
+      let top = tag.dataset.transformoriginy ? parseFloat(tag.dataset.transformoriginy) : parseFloat(continent.dataset.transformoriginy)
+      zoomMap(scale, left.toString(), top.toString())
+    }else{
+      this.setState({
+        country: false,
+        programs: false,
+        gallery: false, 
+        selectedPrograms: []
+      })
+    }
   }
 
   //Clear out the modal in the state object for this or a child component
@@ -65,11 +143,11 @@ class Screen extends Component {
   }
 
   //Set the modal in the state object from this or a child component (modal is reusable)
-  setModal(type='edit', headline='', copy='', ctas=false, inputs=[], on_submit=false, image=''){
+  setModal(type='edit', headline='', copy='', ctas=false, inputs=[], on_submit=false, image='', credit=false){
     if(type === 'preview') {
       $('#main__modal_window').modal('show')
     }
-
+console.log(credit)
     this.setState({
       modal: {
         type: type,
@@ -77,6 +155,7 @@ class Screen extends Component {
         copy: copy,
         ctas: ctas,
         image: image, 
+        credit: credit, 
         inputs: inputs,
         nStyle: type === 'delete' ? 'justify-content-center' : false,
         on_submit: on_submit
@@ -87,15 +166,8 @@ class Screen extends Component {
   parseCountry(country) {
     country.id = parseFloat(country.id)
     country.continent_id = parseFloat(country.continent_id)
-//    country.programs = this.state.countries[country.id - 1].programs
     country.updated_at = new Date()
     return country
-  }
-
-  parseProgram(program) {
-    program.id = parseFloat(program.id)
-    program.country_id = parseFloat(program.country_id)
-    return program
   }
 
   //Set the alert window to its original state
@@ -272,6 +344,20 @@ class Screen extends Component {
     })
   }
 
+  componentDidUpdate(){
+    let slides = document.querySelectorAll('.slick-slide:not(.slick-clone)')
+    if(slides && !this.state.slides) {
+      slides.forEach(sl => {
+        sl.classList.add('btn')
+        sl.addEventListener('click', (e) => {
+          let target = e.target.querySelector('img')
+          console.log(target)
+          if(target) this.setModal("preview",'','', [], false, false, target.src, target.title)
+        })
+      })
+    }
+  }
+
   componentDidMount() {
     this.getGalleries(this.getMedia)
     this.getPrograms()
@@ -280,29 +366,31 @@ class Screen extends Component {
   }
 
   render(){
+    let levels = []
+    if(this.state.continent) levels.push(this.state.continent)
+    if(this.state.country) levels.push(this.state.country)
+
     return (
-      <BrowserRouter>
+      <>
         <Header show_frontend={true} show_ui={false}/>
         <Feedback feedback={this.state.feedback}/>
-        <Switch>
-          <Route path="/" render={() => (
-            <Map
-              countries={this.state.countries} 
-              continents={this.state.continents} 
-              programs={this.state.programs}
-              galleries={this.state.galleries} 
-              media={this.state.media} 
-              resetModal={this.resetModal} 
-              setModal={this.setModal} 
-              resetAlert={this.resetAlert}/>
-          )} />
-        </Switch>
+        <article key="map__wrapper" 
+        className="d-flex m-0 px-0 align-items-stretch justify-content-stretch h-100 w-100 flex-column">
+          <Greeting/>
+          <Navigation levels={levels} selectCountry={this.selectCountry} 
+          toggleCountries={toggleCountries} selectContinent={this.selectContinent}/>
+          <World continent={this.state.continent} continents={this.state.continents}
+            country={this.state.country} countries={this.state.countries} programs={this.state.programs} 
+            selectCountry={this.selectCountry} selectContinent={this.selectContinent} 
+            checkContinent={this.checkContinent} checkCountries={this.checkCountries}/>
+        </article>
         <Modal 
           id="main__modal_window"  
           loading={this.state.loading}
           copy={this.state.modal.copy} 
           headline={this.state.modal.headline}
           image={this.state.modal.image} 
+          credit={this.state.modal.credit} 
           type={this.state.modal.type}
           ctas={this.state.modal.ctas}
           nStyle={this.state.modal.nStyle} 
@@ -312,7 +400,7 @@ class Screen extends Component {
           uploadMedia={this.uploadMedia} 
           on_submit={this.state.modal.on_submit}/>
         <Footer show_frontend={true}/>
-      </BrowserRouter>
+      </>
     )
   }
 }

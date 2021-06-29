@@ -27,8 +27,6 @@ class Map extends Component {
     this.checkCountries   = this.checkCountries.bind(this)
     this.parseCountries   = this.parseCountries.bind(this)
     this.selectCountry    = this.selectCountry.bind(this)
-
-    //this.parsePrograms    = this.parsePrograms.bind(this)
   }
 
   //Look at the list of Countries, and class them based on existence and suspension
@@ -71,7 +69,6 @@ class Map extends Component {
   parseCountries(){
     if(this.props.countries.length > 0 && this.state.countries.length === 0){
       let enabled = this.props.countries.filter(c => c.enabled)
-      //enabled.forEach(e => e.curriculum = this.parsePrograms(e.id))
       this.setState({countries: enabled})
     }
   }
