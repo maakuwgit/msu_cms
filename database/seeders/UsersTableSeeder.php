@@ -15,22 +15,31 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'username' => 'admin',
-            'first_name' => 'Bobby',
-            'last_name' => 'Testeroni',
+            'username' => 'maakuwadmin',
+            'first_name' => 'Mark',
+            'last_name' => 'Williamson',
             'user_level_id' => 1, 
-            'email' => 'maakuwemail@gmail.com',
-            'photo' => '//via.placeholder.com/100x100',
-            'password' => bcrypt('password'),
+            'email' => 'mwilliamson@bluewatertech.com',
+            'photo' => '//via.placeholder.com/100x100', 
+            'password' => bcrypt('m1Ch!9@N')
         ]);
         DB::table('users')->insert([
-            'username' => 'msu',
-            'first_name' => 'Manager',
-            'last_name' => 'Username',
+            'username' => 'manager',
+            'first_name' => 'Unammed',
+            'last_name' => 'User',
             'user_level_id' => 2, 
             'email' => 'dorianmgrey@gmail.com',
             'photo' => '//via.placeholder.com/100x100',
             'password' => bcrypt('m1Ch!9@N'),
+        ]);
+        DB::table('users')->insert([
+            'username' => 'bseiber',
+            'first_name' => 'Ben',
+            'last_name' => 'Seiber',
+            'user_level_id' => 2, 
+            'email' => 'bseiber@bluewatertech.com',
+            'photo' => '//via.placeholder.com/100x100',
+            'password' => bcrypt('B1u3W@t3R'),
         ]);
     }
 }

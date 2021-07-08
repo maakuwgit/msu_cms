@@ -21,7 +21,6 @@
     </head>
     <body class="{{$route_name}}">
         <x-sprite/>
-        <x-topbar/>
         <main data-admin class="d-flex flex-wrap"></main>
     </body>
 </html>

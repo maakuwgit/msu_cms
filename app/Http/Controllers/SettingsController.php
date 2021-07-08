@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Models\Settings;
+use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SettingsController extends Controller
 {
@@ -27,6 +29,19 @@ class SettingsController extends Controller
         $settings = Settings::all();
 
         return response()->json($settings);
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function user()
+    {
+        $user = Auth::user();
+        if(!$user) $user = false;
+
+        return response()->json($user);
     }
 
     /**
@@ -61,6 +76,23 @@ class SettingsController extends Controller
         $setting->save();
 
         return response()->json('Success! Setting updated');
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+    
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+    
+        return redirect('/login');
     }
 
     /**
