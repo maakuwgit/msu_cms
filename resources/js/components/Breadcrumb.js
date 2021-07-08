@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Tooltip} from 'antd'
 import cms from '../cms.json'
-import {toggleContinents, toggleCountries, zoomMap} from '../functions'
+import {toggleContinents, toggleCountries, zoomMap} from '../world'
 
 class Breadcrumb extends Component {
   constructor(props) {
@@ -109,7 +109,7 @@ class Breadcrumb extends Component {
         key="breadcrumb__wrapper" 
         data-breadcrumb 
         className="d-flex align-items-center bg-seafoam w-100 mb-2">
-        <h1 className="mb-0">
+        <h1 className="mb-0 display-4">
         { this.props.levels.length > 0 ?
         <>
         <a key={`breadcrumb__home`}

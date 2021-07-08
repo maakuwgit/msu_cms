@@ -1,4 +1,9 @@
 //Resets first...
+:root {
+  --font-family: #{$font-family-sans-serif};
+  --font-family-serif: #{$font-family-serif};
+}
+
 main {
   opacity: 1;
   width: 100%;
@@ -71,6 +76,7 @@ label input + .icon {
   top: unset;
   bottom: 0;
   height: unset;
+  border-radius: 0;
 }
 
 [data-footer] {
@@ -81,7 +87,7 @@ label input + .icon {
 }
 
 [data-greeting] {
-  bottom: $greeting-height + $greeting-border-height - $footer-height;
+  bottom: $greeting-bottom;
   top: auto;
   min-height: $greeting-height;
   border-top: solid $greeting-border-height $greeting-border-color;
@@ -89,15 +95,13 @@ label input + .icon {
 
 [data-header] {
   top: 0;
-  @extend %fixed_navigation;
-  min-height: rem-calc(90);
-  background: rgba($white, 0.8);
-
-  .navbar-brand {
-    svg {
-      height: rem-calc(60);
-    }
+  [data-topbar] + & {
+    top: $topbar-height;
   }
+  
+  @extend %fixed_navigation;
+  min-height: $navbar-height;
+  background: rgba($white, 0.8);
 
   body:not(.dashboard) & {
     &:after {
@@ -127,49 +131,47 @@ label input + .icon {
 }
 
 [data-headline] {
-  h1,h2,p {
+  h1,h2 {
     @extend %headline;
-  }
-}
-
-[data-navigation] {
-  nav {
-    bottom: 0;
-    height: auto;
-    max-height: 19.6875rem;
-    left: 100%;
-    overflow: hidden;
   }
 }
 
 [data-scrollable] {
   position: absolute;
-  padding-top: 10rem;
-  padding-bottom: 14rem;
+  padding-top: rem-calc(160);
+  padding-bottom: rem-calc(224);
   height: 100vh;
   overflow: scroll;
 
   p {
-      font-size: $h3-font-size;
+    font-size: $h3-font-size;
   }
 }
 
 [data-search] {
   input, label {
     font-size: rem-calc(14);
+    text-transform: uppercase;
+  }
+  input {
+    border-radius: rem-calc(4);
+  }
+  label {
+    background: transparent;
   }
 }
 
 [data-sidebar] {
-  width: rem-calc(200);
+  width: $sidebar-width;
   right: 0;
   z-index: 100;
   position: fixed;
-  background-color: $tertiary;
+  background: $sidebar-background;
+  box-shadow: $sidebar-shadow;
   &.collapsing, 
   &.show {
       & ~ * {
-          max-width: calc(100% - #{rem-calc(200)});
+          max-width: calc(100% - #{$sidebar-width});
       }
   }
 }
@@ -184,17 +186,18 @@ label input + .icon {
   left: 0;
   z-index: 100;
   width: 100%;
-  height: rem-calc(32);
-  padding: rem-calc(4);
-  color: $white;
-  background-color: goldenrod;
+  height: $topbar-height;
+  padding: $topbar-padding;
+  font-size: rem-calc(12);
+  color: $topbar-text-color;
+  background: $topbar-background;
   a {
       color: $white;
   }
   + main {
-    padding-top: rem-calc(32);
+    padding-top: $topbar-height;
     [data-header] {
-      top: rem-calc(32);
+      top: $topbar-height;
     }
   }
 }

@@ -1,40 +1,16 @@
 import React, {Component} from 'react'
+import cms from '../cms.json'
 import Search from '../partials/Search'
 
 class Headline extends Component {
-  constructor(props) {
-    super(props) 
-
-    this.state = {
-      activeTab: ''
-    }
-        
-    this.hStyle = "row align-items-center w-100 py-4 mb-2 mx-auto"
-  }
-
-  componentDidMount(){
-    if( this.props ) {
-      if( this.props.hStyle ) this.hStyle = this.props.hStyle
-    }
-  }
-
-  componentDidUpdate(){
-    if( this.props ) {
-      if( this.props.hStyle ) this.hStyle = this.props.hStyle
-    }
-  }
-
   render() {
     if( this.props.copy || this.props.headline ) {
       return  (
-        <header data-headline className={this.hStyle} style={{overflow:'visible'}}>
+        <header data-headline className={this.props.hStyle ? this.props.hStyle : cms.headline.hStyle} style={{overflow:'visible'}}>
           <div className="d-flex justify-content-start align-items-center">
-            <div key="headline__text" className="d-flex justify-content-start ps-lg-0 mb-3 mb-lg-0">
+            <div key="headline__heading" className="d-flex justify-content-start flex-column ps-lg-0 mb-3 mb-lg-0">
               { this.props.headline &&
               <h1 className={`ms-0${!this.props.copy ? ' mb-0' : ''}`}>{this.props.headline}</h1>
-              }
-              { this.props.copy &&
-                <p className="ms-0 mb-0">{this.props.copy}</p>
               }
             </div>
             { ( this.props.has_search || this.props.add_new || this.props.subsubtabs) &&
@@ -45,14 +21,14 @@ class Headline extends Component {
               use_countries={this.props.use_countries} use_programs={this.props.use_programs} />
               }
               { this.props.has_selected &&
-              <button className="btn btn-danger text-white ms-4 d-flex align-items-center" onClick={this.props.deleteAll}>
-                <span className="me-2">Delete</span>
+              <button className={`btn-danger ${cms.headline.btnStyle}`} onClick={this.props.deleteAll}>
+                <span className="me-2">{this.props.delete.slug ? this.props.delete.slug : cms.headline.btnLabelDelete}</span>
                 <span className="badge badge-pill badge-white p-1">{this.props.num_selected}</span>
               </button>
               }
               { this.props.add_new &&
-              <button className="btn btn-secondary text-white ms-4 d-flex align-items-center" onClick={this.props.add_new.callback} data-target="#main__modal_window" data-toggle="modal">
-                <span className="me-2">Add&nbsp;{this.props.add_new.slug ? this.props.add_new.slug : 'New'}</span>
+              <button className={`btn-secondary ${cms.headline.btnStyle}`} onClick={this.props.add_new.callback} data-bs-target="#main__modal_window" data-bs-toggle="modal">
+                <span className="me-2">{this.props.add_new.slug ? this.props.add_new.slug : cms.headline.btnLabelNew}</span>
                 <svg className="icon">
                   <use xlinkHref="#icon__math--add"/>
                 </svg>
@@ -61,6 +37,9 @@ class Headline extends Component {
             </div>
             }
           </div>
+          { this.props.copy &&
+          <p key="headline__copy" className="ms-0 pb-3 mb-4 bg-white">{this.props.copy}</p>
+          }
         </header>
       )
     }else{

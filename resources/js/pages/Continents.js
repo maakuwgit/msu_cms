@@ -1,17 +1,13 @@
 import cms from '../cms.json'
-import {updateBodyStyle} from '../functions'
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import Headline from '../components/Headline'
 import { Table } from 'antd'
 
 class Continents extends Component {
-  componentDidMount() {
-    updateBodyStyle('continents')
-  }
 
   componentDidUpdate() {
-    updateBodyStyle('continents')
+    this.props.getPage('continents')
   }
 
   render() {

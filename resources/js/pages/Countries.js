@@ -1,5 +1,4 @@
 import cms from '../cms.json'
-import {updateBodyStyle} from '../functions'
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 import Headline from '../components/Headline'
@@ -36,13 +35,9 @@ class Countries extends Component {
     let target = document.getElementById(href.substr(href.search('group')))
     target.scrollIntoView({behavior:'smooth'})
   }
-  
-  componentDidMount() {
-    updateBodyStyle()
-  }
 
   componentDidUpdate() {
-    updateBodyStyle()
+    this.props.getPage('countries')
   }
 
   render() {
@@ -61,8 +56,8 @@ class Countries extends Component {
         headline={cms.countries.headline} copy={cms.countries.description}
         has_search={true} searchSubmit={this.props.searchSubmit}
         use_countries={true}/>
-        <div key="countries__scroll_spy" data-spy="scroll" data-target="#navbar--countries" 
-          data-offset="210" style={{zIndex:1}}>
+        <div key="countries__scroll_spy" data-bs-spy="scroll" data-bs-target="#navbar--countries" 
+          data-bs-offset="210" style={{zIndex:1}}>
           { this.props &&
           Object.keys(this.letters).map(letter => {
           return (
@@ -88,7 +83,8 @@ class Countries extends Component {
           )
           }) }
           </div>
-          <nav key="navbar--countries" id="navbar--countries" className="list-group sticky justify-content-start">
+          <nav key="navbar--countries" id="navbar--countries" data-spynav 
+           className="list-group sticky justify-content-start">
             { Object.keys(this.letters).map(letter => {
               let str = this.letters[letter]
               return (

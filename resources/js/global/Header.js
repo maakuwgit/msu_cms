@@ -11,10 +11,10 @@ class Header extends Component {
     let paths = getPaths()
     let is_admin = paths.filter(p => p === 'admin')
     return (
-      <header data-header className="navbar navbar-light w-100 sticky-top">
-        <figure className="py-0 ps-5 navbar-brand text-left text-uppercase d-flex align-items-center my-auto ms-0 me-auto">
+      <header data-header className={`navbar navbar-light w-100 sticky-top${this.props.hStyle ? ' '+ this.props.hStyle : ''}`}>
+        <figure className={`navbar-brand d-flex align-items-center ${this.props.figStyle ? this.props.figStyle : cms.header.figStyle}`}>
           <a href={is_admin.length ? '/admin' : '/'} aria-label={title}
-           className="d-flex display-4 pe-2 mb-0 text-primary text-uppercase">
+           className="d-flex h2 pe-1 mb-0 text-primary text-uppercase">
            <Tooltip title="Click to return to home">
               <svg className="icon">
                 <use xlinkHref="#logo__msu"/>
@@ -22,8 +22,8 @@ class Header extends Component {
             </Tooltip>
           </a>
           { title &&
-          <figcaption className="mt-2">
-            <a className="h4 text-primary my-auto" href={is_admin.length ? '/admin' : '/'}>
+          <figcaption className="my-auto">
+            <a className="h6 text-primary my-auto" href={is_admin.length ? '/admin' : '/'}>
               <Tooltip title="Click to return to home">
                 <span className="fw-bold">{title.substr(0, title.lastIndexOf(' '))}</span> {title.substr(title.lastIndexOf(' ') + 1)}
               </Tooltip>
@@ -31,10 +31,10 @@ class Header extends Component {
           </figcaption>
           }
         </figure>
-        { ( ( department || program ) && this.props.show_frontend ) &&
-        <div className="d-none d-md-inline h4 my-auto pe-5 text-primary">{department} | <span className="fw-bold text-uppercase">{program}</span></div>
+        { ( ( department || program ) && this.props.show_tagline ) &&
+        <div className="d-none d-md-inline h6 my-auto pe-3 text-primary">{department} | <span className="fw-bold text-uppercase">{program}</span></div>
         }
-        { !this.props.show_frontend &&
+        { this.props.show_menu &&
         <button 
           className="navbar-toggler border-0" 
           type="button" 

@@ -1,0 +1,355 @@
+// Typography
+@font-face {
+    font-family: 'Gotham';
+    src: url('~/fonts/gotham400i.woff2') format('woff2'),
+         url('~/fonts/gotham400i.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('~/fonts/gotham400.woff2') format('woff2'),
+         url('~/fonts/gotham400.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('~/fonts/gotham300i.woff2') format('woff2'),
+         url('~/fonts/gotham300i.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('~/fonts/gotham300.woff2') format('woff2'),
+         url('~/fonts/gotham300.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+$rem-base:                  16;
+$font-family-sans-serif:    'Gotham', Helvetica, Arial, sans-serif;
+$font-family-serif:         Times, serif;
+$headings-font-family:      $font-family-sans-serif;
+$font-size-base:            rem-calc($rem-base);
+$line-height-base:          1.125;
+
+.gotham {
+    font-family: $font-family-sans-serif;
+}
+// Base colors (ordered the greys by lightness from lightest to darkest)
+/* Yellows */
+$dessert: #D4C08E;
+$goldenrod: #FFD286;
+$yellow: #EBC43C;
+$gold: #C79637;
+$taupe: #4A4331;
+$chocolate: #4E3307;
+$chocolate-drk: #241702;
+/* Blues */
+$powder: #dae5f0;
+$baby: #cedeed;
+$periwinkle: #bbbbf4;
+$royal: #0D5DBB;
+$midnight: #0A1849;
+/* Greens */
+$seafoam: #cce9e0;
+$melon: #90DD8A;
+$green: #27ae60;
+$forest: #0b5850;
+/* Blue/Greens */
+$teal: #00B9D0;
+/* Reds */
+$orange: #e28b09;
+$red: #C8102E;
+$crimson: #C41230;
+/* Purples */
+$pink: #f3d3e2;
+$magenta: #FD3470;
+$eggplant: #4a286d;
+$purple: #A230CA;
+$plum: #30023B;
+/* Grey */
+$white: white;
+$ivory: #F4EFE1;
+$silver: #F1F5F6;
+$aluminum: #f6f7f6;
+$grey: #b8b8b8;
+$battleship: #b6b6b6;
+$smoke: #4e4e4e;
+$ebony: #1f1f1f;
+$coal: #202020;
+$black: black;
+// Official social colors
+$facebook: #3461a1;
+$twitter: #28aae1;
+$google: #d44a2c;
+// Bootstrap colors
+$navy: #160B29;
+$stoic: #dcdcdc;
+// Project colors (ordered the greys by lightness from lightest to darkest)
+/* Theme */
+$seafoam    : #C9E3D8;
+$lime       : #0DB14B;
+$pine       : #18453B;
+/* UI */
+$yellow     : #FAEB5C;
+$red        : #FF5142;
+$danger     : $red;
+$warning    : $yellow;
+$success    : $lime; 
+
+//Theme Colors
+$primary    : $pine;
+$secondary  : $lime;
+$tertiary   : #d0dad7;//rgba($pine, 0.2);
+$list-item  : rgba($pine, 0.6);
+
+// Font Weights
+$font-weight-normal: 400;
+$font-weight-bold: 600;
+
+// Media queries
+$screen-xxl: 3840px;//120em
+$screen-xl:  2560px;
+$screen-lg:  1300px;
+$screen-md:  1024px;
+$screen-sm:  960px;
+
+// Media query variables
+$screen-xxl-maximum: $screen-xxl - 1;
+$screen-xl-maximum:  $screen-xl - 1;
+$screen-lg-maximum:  $screen-lg - 1;
+$screen-md-maximum:  $screen-md - 1;
+$screen-sm-maximum:  $screen-sm - 1;
+
+$screen-sm-min: $screen-sm;
+$screen-md-min: $screen-md;
+$screen-lg-min: $screen-lg;
+$screen-xl-min: $screen-xl;
+$screen-xxl-min: $screen-xxl;
+
+//Padding Options [Legacy]
+$padding-medium: rem-calc(50);
+$padding-large: rem-calc(100);
+$padding-xlarge: $padding-medium + $padding-large;
+
+//Margins & Padding
+$spacer: rem-calc(20);
+$spacers: (
+    0: 0,
+    1: calc(#{$spacer} * .25),
+    2: calc(#{$spacer} * .5),
+    3: $spacer,
+    4: calc(#{$spacer} * 1.5),
+    5: calc(#{$spacer} * 3)
+);
+
+$highlights: (
+    1: 90%,
+    2: 85%,
+    3: 80%,
+    4: 75%,
+    5: 70%,
+    6: 65%,
+    7: 60%,
+    8: 55%,
+    9: 50%,
+    10: 45%,
+    11: 40%,
+    12: 35%,
+    13: 30%,
+    14: 25%,
+    15: 20%,
+    16: 15%,
+    17: 10%
+);
+
+//Used for super large fonts
+$display-font-sizes: (
+    1: #{rem-calc(52)},
+    2: #{rem-calc(48)},
+    3: #{rem-calc(40)},
+    4: #{rem-calc(32)},
+    5: 2.25rem,
+    6: 2rem
+);
+
+//Headings
+$h1-font-size:                      rem-calc(32);
+$h2-font-size:                      rem-calc(30);
+$h3-font-size:                      rem-calc(28);
+$h4-font-size:                      rem-calc(24);
+$h5-font-size:                      rem-calc(20);
+$h6-font-size:                      rem-calc(18);
+
+/*
+** MSU DOM Objects
+*/
+//Screen
+$screen-background:                  url(../images/background-lg.jpg);
+$screen-foreground:                  url(../images/foreground.png);
+
+/* Components */
+//Footer
+$footer-height:                     rem-calc(40);
+
+//Greeting
+$greeting-height:                   rem-calc(62);
+$greeting-bottom:                   $footer-height;
+$greeting-border-height:            rem-calc(4);
+$greeting-border-color:             $secondary;
+
+//Navigation
+$navigation-panel-width:            100%;
+$navigation-panel-padding:          map-get($spacers, 4);
+$navigation-panel-button-width:     52vw;
+$navigation-qr-width:               rem-calc(376);
+$navigation-table-border:           #{rem-calc(1)} solid $battleship;
+$navigation-th-font-size:           rem-calc(22);
+$navigation-td-font-size:           rem-calc(13);
+$navigation-td-padding:             map-get($spacers, 2) map-get($spacers, 2);
+$navigation-th-padding:             map-get($spacers, 1) map-get($spacers, 2);
+$navigation-button-width:           rem-calc(136);
+$navigation-height:                 rem-calc(50);
+$navigation-bottom:                 $greeting-height + $footer-height;
+$navigation-slider-btn-width:       rem-calc(16);
+$navigation-slide-height:           rem-calc(145);
+$navigation-slide-border:           rem-calc(4);
+
+//Subnavigation
+$subnavigation-width:               rem-calc(400);
+$subnavigation-height:              rem-calc(154);
+
+//Sidebar
+$sidebar-width:                     rem-calc(200);
+$sidebar-background:                $white;
+$sidebar-shadow:                    #{rem-calc(2)} #{rem-calc(85)} #{rem-calc(7)} $black;
+
+//Topbar
+$topbar-background:               goldenrod;
+$topbar-text-color:                 $white;
+$topbar-height:                     rem-calc(32);
+$topbar-padding:                    rem-calc(4) rem-calc(10);
+
+//World
+$world-background:                  $screen-background;
+$world-font-size:                   rem-calc(6);
+
+$world-map-labels: (
+    africa: #{rem-calc(5)}, 
+    asia: #{$world-font-size}, 
+    europe: #{rem-calc(4)},
+    north-america: #{rem-calc(5)},
+    oceania: #{rem-calc(4)}, 
+    south-america: #{rem-calc(5)}
+);
+
+/*
+** Bootstrap Overides/Variables
+** If you wanna changes how things look, do it here.
+*/
+//Grid
+$grid-gutter-width:                 rem-calc(10);
+$grid-breakpoints: (
+  xs: 0,
+  sm: $screen-sm,
+  md: $screen-md,
+  lg: $screen-lg,
+  xl: $screen-xl
+);
+
+$container-max-widths: (
+    md: $screen-lg-maximum,
+    lg: $screen-xl-maximum,
+    xl: $screen-xxl-maximum
+);
+
+ //Colors
+$theme-colors: (
+    'primary'       : $primary,
+    'secondary'     : $secondary, 
+    'tertiary'      : $tertiary, 
+    'aluminum'      : $aluminum, 
+    'battleship'    : $battleship, 
+    'smoke'         : $smoke,  
+    'pine'          : $pine,
+    'seafoam'       : $seafoam,
+    'white'         : $white,
+    'lime'          : $lime, 
+    'list-item'     : $list-item, 
+    'success'       : $success,
+    'danger'        : $red,
+    'warning'       : $yellow
+);
+
+// Body
+$body-color :                        $black;
+$body-bg    :                        $white;
+
+//Badge
+$badge-font-weight:                 $font-weight-normal;
+$badge-padding-y:                   rem-calc(10);
+$badge-padding-x:                   rem-calc(30);
+  
+// Navbar
+$navbar-dark-color:                 $white;
+$navbar-dark-color:                 $secondary;
+$navbar-dark-active-color:          $battleship;
+$navbar-dark-toggler-border-color:  $white;
+$navbar-height:                     rem-calc(50);
+$navbar-padding-y:                  rem-calc(5);
+$navbar-padding-x:                  rem-calc(5);
+
+//Buttons & Inputs
+$input-border-color:                $battleship;
+$input-border-radius:               0;
+$input-group-addon-bg:              $white;
+$input-placeholder-color:           $tertiary;
+$link-color:                        $secondary;
+$link-decoration:                   none;
+$btn-font-family:                   $headings-font-family;
+$btn-font-weight:                   $font-weight-bold;
+$btn-font-size:                     $h6-font-size;
+$btn-padding-y:                     rem-calc(8);
+$btn-padding-x:                     rem-calc(12);
+
+$component-active-color:            $white;
+$component-active-bg:               $primary;
+
+//Table
+$table-border-width:                0;
+$table-border-color:                $aluminum;
+$table-accent-bg:                   $aluminum;
+$table-striped-order:               even;
+$table-cell-padding:                1.0625rem;
+$table-cell-padding-sm:             0.5875rem;
+
+// Modals
+$modal-inner-padding:               0;
+$modal-footer-margin-between:       rem-calc(8);
+$modal-dialog-margin:               rem-calc(8);
+$modal-dialog-margin-y-sm-up:       1.75rem;
+
+$modal-content-color:               $battleship;
+$modal-content-bg:                  $white;
+$modal-content-border-color:        transparent;
+$modal-content-border-width:        0;
+$modal-content-border-radius:       rem-calc(4);
+$modal-content-inner-border-radius: 0;
+$modal-content-box-shadow-xs:       none;
+$modal-content-box-shadow-sm-up:    none;
+
+$modal-backdrop-bg:                 $list-item;
+$modal-backdrop-opacity:            1;
+
+$modal-xl:                          50vw;
+$modal-lg:                          $modal-xl;
+$modal-md:                          $modal-xl;
+
+$modal-fade-transform:              scale(1.01);
+$modal-show-transform:              scale(1);

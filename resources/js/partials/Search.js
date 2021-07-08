@@ -65,13 +65,13 @@ class Search extends Component {
     }
 
     return (
-      <form data-search onSubmit={this.submitForm} className="w-100">
+      <form data-search onSubmit={this.submitForm} className="w-100 d-flex flex-column">
         {this.search_response}
-        <div className="mb-3 input-group my-auto">
+        <div className="input-group my-auto">
             { this.icon &&
-            <div className="input-group-prepend">
+            <div className="input-group-prepend position-absolute h-100" style={{left:0, zIndex:1}}>
             {!this.state.value ?
-              <label className="input-group-text pe-0 ps-1 border-right-0" htmlFor={this.id}>
+              <label className="input-group-text h-100 pe-0 ps-1 border-0" htmlFor={this.id}>
                 <svg className="icon text-primary">
                   <use xlinkHref={this.icon}/>
                 </svg>
@@ -85,7 +85,7 @@ class Search extends Component {
             }
             </div>
           }
-          <input type="text" className="form-control border-left-0" id={this.id} 
+          <input type="text" className="form-control" id={this.id} style={{paddingLeft:'1.5rem'}} 
            placeholder={this.searchLabel} onChange={this.fieldChange}/>
         </div>
       </form>

@@ -44,7 +44,6 @@ class Country extends Component {
     if(this.props) {
       if(this.props.programs.length > 0) this.setState({programs:this.props.programs})
     }
-    updateBodyStyle('country')
   }
 
   componentDidUpdate(){
@@ -54,7 +53,8 @@ class Country extends Component {
         this.has_programs = true
       }
     }
-    updateBodyStyle('country')
+
+    this.props.getPage('country')
   }
 
   render() {

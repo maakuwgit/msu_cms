@@ -14,27 +14,31 @@ class Gallery extends Component {
     this.files = []
     this.country = false
 
-    this.onChange = this.onChange.bind(this)
+    this.onChange     = this.onChange.bind(this)
+    this.beforeUpload = this.beforeUpload.bind(this)
   }
 
-  onChange({ file, fileList}) {
+  onChange({file, fileList}) {
     let name = Object.values(file)[3]
     let exists = this.files.filter(f=> f.url.search(name) !== -1)
-    file.percent = 99
     if(exists.length) fileList.pop()
-    setTimeout(() => { 
+    if(!file.percent) { 
       file.status = 'done'
       file.percent = 100
       file.thumbUrl = cms.settings.firebase.url+file.name+'?alt=media'
       this.setState({fileList: fileList})
-    }, 3000)
+    }
+    this.setState({fileList: fileList})
+  }
+
+  beforeUpload(file, fileList){
+    console.log(file, fileList)
   }
 
   componentDidUpdate(){
     if(this.props) {   
       if(this.props.files){
         if( this.props.files.length > 0 && ( this.has_files === false || this.props.country !== this.country) ){
-          console.log('gallry set file list', this.props.files)
           this.setState({ fileList: this.props.files.slice() })
           this.has_files = true
           this.files = this.props.files
@@ -70,6 +74,7 @@ class Gallery extends Component {
                 customRequest={(data) => { this.props.uploadMedia(data, id, country) }}
                 listType="picture-card" 
                 onChange={this.onChange} 
+                beforeUpload={this.beforeUpload} 
                 onPreview={this.props.previewModal}
                 onRemove={this.props.deleteMedia}
                 fileList={this.state.fileList}>

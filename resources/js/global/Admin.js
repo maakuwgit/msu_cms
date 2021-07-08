@@ -1,6 +1,6 @@
 import api from '../api.js'
 import cms from '../cms.json'
-import {timedAlert, updateBodyStyle} from '../functions'
+import {getPaths, timedAlert, updateBodyStyle} from '../functions'
 import React, {Component} from "react"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import Header from "../global/Header"
@@ -17,6 +17,7 @@ import Programs from "../pages/Programs"
 import Settings from "../pages/Settings"
 import firebase from 'firebase/app'
 import 'firebase/storage'
+import Topbar from './Topbar.js'
 
 // Firebase configuration: measurementId is optional!
 const app = firebase.initializeApp({
@@ -39,9 +40,11 @@ class Admin extends Component {
       galleries: [], 
       programs: [], 
       media: [], 
+      db_path: 'cms', 
       media_types: [], 
       has_server: true,
       loading: false, 
+      user: false,
       modal: {
         headline: '',
         copy: '',
@@ -56,16 +59,22 @@ class Admin extends Component {
       programs_have_posted: true
     }
 
-    this.countries = []
-    this.programs = []
+    this.continents = []
+    this.countries  = []
+    this.galleries  = []
+    this.programs   = []
+    this.media      = []
 
     this.resetAlert = this.resetAlert.bind(this)
+    this.checkPage  = this.checkPage.bind(this)
+    this.getPage    = this.getPage.bind(this)
 
     this.getContinents  = this.getContinents.bind(this)
 
     //Country Methods
-    this.parseCountry     = this.parseCountry.bind(this)
     this.editCountry      = this.editCountry.bind(this)
+    this.injectCountry    = this.injectCountry.bind(this)
+    this.parseCountry     = this.parseCountry.bind(this)
     this.suspendCountry   = this.suspendCountry.bind(this)
     this.getCountries     = this.getCountries.bind(this)
 
@@ -77,6 +86,7 @@ class Admin extends Component {
     this.parseProgram     = this.parseProgram.bind(this)
     this.postProgram      = this.postProgram.bind(this)
     this.getGalleries     = this.getGalleries.bind(this)
+    this.setQR            = this.setQR.bind(this)
 
     //Media Methods
     this.getMedia         = this.getMedia.bind(this)
@@ -91,17 +101,16 @@ class Admin extends Component {
     this.createModal      = this.createModal.bind(this)
     this.deleteModal      = this.deleteModal.bind(this)
 
-    this.setQR            = this.setQR.bind(this)
+    //Settings
+    this.getUser          = this.getUser.bind(this)
   }
 
   setQR(url, country){
     this.setState({loading: true})
     country.code = url
     api.put(`/resource/countries/${country.id}`,country)
-    .then( () => {
-      let np = this.state.countries
-      country = this.parseCountry(country)
-      this.state.countries[country.id - 1] = country
+    .then((response) => {
+      let np = this.injectCountry(response.data)
       
       this.resetAlert()
       this.setState({
@@ -167,7 +176,7 @@ class Admin extends Component {
     })
   }
 
-  uploadMedia(media, gallery_id, country) {
+  uploadMedia(media, gallery_id) {
     this.setState({loading: true})
     let url = cms.settings.firebase.url+media.file.name+'?alt=media'
     let gallery = this.state.galleries.filter(g=>g.id === gallery_id)
@@ -276,6 +285,7 @@ class Admin extends Component {
   }
 
   editProgram(program){
+    program = this.parseProgram(program)
     this.setState({loading: true})
     api.put(`/resource/programs/${program.id}`,program)
     .then( response => {
@@ -305,6 +315,7 @@ class Admin extends Component {
   }
 
   postProgram(program){
+    program = this.parseProgram(program)
     this.setState({loading: true})
     api.post('/resource/programs', program)
     .then( response => {
@@ -458,7 +469,8 @@ class Admin extends Component {
 
   //Clear out the modal in the state object for this or a child component
   resetModal(){
-    this.setState({modal: {}})
+    $('#main__modal_window').modal('hide')
+    setTimeout(() => this.setState({modal: {}}), 300)
   }
 
   //Triggered onSubmit of form and onChange
@@ -497,7 +509,6 @@ class Admin extends Component {
   resetAlert(msg=false,style=''){
     timedAlert(() => {
       this.setState({
-        loading: false,
         feedback: {
           msg: msg,
           style: style
@@ -507,9 +518,9 @@ class Admin extends Component {
   }
 
   //Basic calls, requiring no login
-  getContinents() {
+  getContinents(callback=false) {
     this.setState({loading:true})
-    api.get('/resource/continents')
+    api.get(`/${this.state.db_path}/continents`)
     .then(response => {
       this.resetAlert()
       this.setState({
@@ -520,6 +531,11 @@ class Admin extends Component {
         },
         has_server: true
       })
+      this.continents = response.data
+    })
+    .finally(vars => {
+      this.setState({loading:false})
+      if(callback) callback()
     })
     .catch(error => {
       this.setState({
@@ -534,23 +550,29 @@ class Admin extends Component {
   parseCountry(country) {
     country.id = parseFloat(country.id)
     country.continent_id = parseFloat(country.continent_id)
-    country.programs = this.state.countries[country.id - 1].programs
+    country.continent = JSON.parse(country.continent)
+    country.programs = JSON.parse(country.programs)
+    country.gallery = JSON.parse(country.gallery)
     country.updated_at = new Date()
     return country
   }
 
   parseProgram(program) {
     program.id = parseFloat(program.id)
-    program.countries = program.countries.map(c => parseFloat(c))
+    program.countries = typeof program.country_ids != 'string' ? 
+                        JSON.stringify(program.country_ids) : 
+                        program.country_ids
+    delete program.country_ids
     return program
   }
 
   editCountry(country){
+    country = this.parseCountry(country)
     this.setState({loading: true})
     api.put(`/resource/countries/${country.id}`,country)
     .then( () => {
       let np = this.state.countries
-      country = this.parseCountry(country)
+//      country = this.parseCountry(country)
       this.state.countries[country.id - 1] = country
       
       this.resetAlert()
@@ -560,10 +582,12 @@ class Admin extends Component {
           style: 'success'
         },
         countries: np, 
-        loading: false,
         countries_have_posted: true
       })
       this.countries = np
+    })
+    .finally(vars => {
+      this.setState({loading:false})
     })
     .catch( error => {
       this.setState({
@@ -576,14 +600,22 @@ class Admin extends Component {
     })
   }
 
+  injectCountry(data){
+    let nc = this.state.countries
+    return nc.map(cou => {
+      if(cou.id === data.id) {
+        cou = data
+      }
+      return cou
+    })
+  }
+
   suspendCountry(country){
+    country = this.parseCountry(country)
     this.setState({loading: true})
     api.put(`/resource/countries/${country.id}`,country)
-    .then( () => {
-      let np = this.state.countries
-      country = this.parseCountry(country)
-      this.state.countries[country.id - 1] = country
-      
+    .then((response) => {
+      let np = this.injectCountry(response.data)
       this.resetAlert()
       this.setState({
         feedback: {
@@ -607,14 +639,14 @@ class Admin extends Component {
     })
   }
 
-  getCountries(){
+  getCountries(callback=false){
     this.setState({loading:true})
-    api.get('/resource/countries')
+    api.get(`/${this.state.db_path}/countries`)
     .then(response => {
       this.countries = response.data
-    })
-    .finally(() => {
       this.resetAlert()
+    })
+    .finally(vars => {
       this.setState({
         countries: this.countries,
         feedback: {
@@ -622,6 +654,7 @@ class Admin extends Component {
           style: 'success'
         }
       })
+      if(callback) callback()
     })
     .catch(error => {
       this.setState({
@@ -633,9 +666,9 @@ class Admin extends Component {
     })
   }
 
-  getPrograms(){
+  getPrograms(callback=false){
     this.setState({loading:true})
-    api.get('/resource/programs')
+    api.get(`/${this.state.db_path}/programs`)
     .then(response => {
       this.resetAlert()
       this.setState({
@@ -643,14 +676,14 @@ class Admin extends Component {
         feedback: {
           msg: 'Programs successfully loaded!',
           style: 'success'
-        },
-        is_loaded: true
+        }
       })
       this.programs = response.data
     })
-    .finally(
-      updateBodyStyle()
-    )
+    .finally(vars => {
+      this.setState({loading:false})
+      if(callback) callback()
+    })
     .catch(error => {
       this.setState({
         feedback: {
@@ -661,9 +694,9 @@ class Admin extends Component {
     })
   }
 
-  getGalleries(){
+  getGalleries(callback=false){
     this.setState({loading:true})
-    api.get('/resource/galleries')
+    api.get(`/${this.state.db_path}/galleries`)
     .then(response => {
       this.resetAlert()
       this.setState({
@@ -673,10 +706,12 @@ class Admin extends Component {
           style: 'success'
         }
       })
+      this.galleries = response.data
     })
-    .finally(
-      updateBodyStyle()
-    )
+    .finally(vars => {
+      this.setState({loading:false})
+      if(callback) callback()
+    })
     .catch(error => {
       this.setState({
         feedback: {
@@ -687,9 +722,9 @@ class Admin extends Component {
     })
   }
   
-  getMedia(){
+  getMedia(callback=false){
     this.setState({loading:true})
-    api.get('/resource/media')
+    api.get(`/${this.state.db_path}/media`)
     .then(response => {
       let list = response.data.map(media => {
         return ( {
@@ -698,6 +733,9 @@ class Admin extends Component {
           name: 'no name',
           status: 'done',
           gallery_id: media.gallery_id, 
+          thumbUrl: media.thumbUrl, 
+          caption: media.caption, 
+          poster: media.poster, 
           url: media.url
         } )
       })
@@ -707,13 +745,14 @@ class Admin extends Component {
         feedback: {
           msg: 'Media successfully loaded!',
           style: 'success'
-        },
-        is_loaded: true
+        }
       })
+      this.media = list
     })
-    .finally(
-      updateBodyStyle()
-    )
+    .finally(vars => {
+      this.setState({loading:false})
+      if(callback) callback()
+    })
     .catch(error => {
       this.setState({
         feedback: {
@@ -724,14 +763,99 @@ class Admin extends Component {
     })
   }
 
+  getUser(callback=false){
+    this.setState({loading:true})
+    api.get('/user')
+    .then(response => {
+      this.resetAlert()
+      let user = response.data
+      let db_path = user ? ( user.user_level_id === 1 ? 'resource' : 'cms' ) : 'resource'
+      this.setState({
+        user: user,
+        db_path: db_path,
+        feedback: {
+          msg: 'User successfully loaded!',
+          style: 'success'
+        },
+      })
+    })
+    .finally(vars => {
+      this.setState({loading:false})
+      if(callback) callback()
+      updateBodyStyle('logged')
+    })
+    .catch(error => {
+      this.setState({
+        feedback: {
+          msg: `And error occurred when loading User! ${error.data}`,
+          style: 'danger'
+        }
+      })
+    })
+  }
+
   componentDidMount() {
-    this.getContinents()
-    this.getCountries()
-    this.getGalleries()
-    this.getMedia()
-    this.getPrograms()
-    
     updateBodyStyle('admin')
+    this.checkPage()
+  }
+
+  getPage(page) {
+    switch(page){
+      case 'galleries':
+        if(!this.galleries.length & !this.state.loading) this.getGalleries(this.getMedia)
+        updateBodyStyle('galleries')
+      break;
+      case 'continents':
+        if(!this.continents.length & !this.state.loading) this.getContinents()
+        updateBodyStyle('continents')
+      break;
+      case 'programs':
+        if(!this.programs.length & !this.state.loading) this.getPrograms(this.getCountries)
+        updateBodyStyle('programs')
+      break;
+      case 'settings':
+        //if(!this.state.settings) this.getSettings() Dev Note: not devved yet. Settings are in the json for now
+        updateBodyStyle('settings')
+      case 'countries':
+        if(!this.continents.length & !this.state.loading) this.getContinents(this.getCountries)
+        updateBodyStyle('countries')
+      break;
+      case 'country':
+        //Dev Note: we need a straight country call, but this'll work for now
+        if(!this.continents.length & !this.state.loading) this.getContinents(this.getCountries)
+        updateBodyStyle('country')
+      break;
+      default:
+        if(!this.continents.length & !this.state.loading) this.getContinents(this.getCountries)
+        if(!this.media.length & !this.state.loading) this.getMedia(this.getPrograms)
+        updateBodyStyle('dashboard')
+      break;
+    }
+  }
+
+  checkPage(){
+    this.getUser(() => {
+      let paths = getPaths()
+      if(paths.includes('galleries')){
+        this.getPage('galleries')
+      } else if(paths.includes('continents')){
+        this.getPage('continents')
+      } else if(paths.includes('programs')){
+        this.getPage('programs')
+      } else if(paths.includes('settings')){
+        //this.getSettings() Dev Note: not devved yet. Settings are in the json for now
+        this.getPage('settings')
+      } else {
+        if(paths.includes('countries')){
+          this.getPage('countries')
+          if(paths.length > 3){
+            this.getPage('country')
+          }
+        }else{
+          this.getPage('dashboard')
+        }
+      }
+    })
   }
     
   render(){
@@ -745,25 +869,26 @@ class Admin extends Component {
       media_types: this.state.media_types
     }
 
-    console.log(this.state.programs)
-
     let globalMethods = {
       //Alert Methods
       resetAlert: this.resetAlert, 
+      //Page Methods
+      getPage: this.getPage,
       //Modal Methods
       editModal: this.editModal, 
       createModal: this.createModal, 
       deleteModal: this.deleteModal, 
       resetModal: this.resetModal, 
       setModal: this.setModal, 
-      //Program Methods
-      editProgram: this.editProgram, 
-      parseProgram: this.parseProgram, 
-      deletePrograms: this.deletePrograms, 
-      deleteProgram: this.deleteProgram, 
-      postProgram: this.postProgram, 
       //Search Methods
       searchSubmit: this.searchSubmit
+    }
+
+    let countryMethods = {
+      editCountry: this.editCountry,
+      parseCountry: this.parseCountry,
+      suspendCountry: this.suspendCountry,
+      setQR: this.setQR
     }
 
     let mediaMethods = {
@@ -771,14 +896,27 @@ class Admin extends Component {
       deleteMedia: this.deleteMedia
     }
 
+    let programMethods = {
+      editProgram: this.editProgram, 
+      parseProgram: this.parseProgram, 
+      deletePrograms: this.deletePrograms, 
+      deleteProgram: this.deleteProgram, 
+      postProgram: this.postProgram, 
+    }
+    
     return (
       <BrowserRouter>
         <Sidebar show_frontend={false}/>
-        <Header show_frontend={false} show_ui={true}/>
+        <Topbar username={this.state.user ? this.state.user.username : false} image={this.state.user ? this.state.user.photo : false}
+         usertype={this.state.user ? this.state.user.user_level_id : false}/>
+        <Header show_frontend={false} show_ui={true} show_menu={false}
+         show_menu={this.state.user ? this.state.user.user_level_id === 1 : false} 
+         hStyle={'bg-white'} 
+         figStyle={"py-0 ps-3 text-start text-uppercase my-auto ms-0 me-auto"}/>
         <Feedback feedback={this.state.feedback}/>
         <Switch>
           <Route exact path="/admin" render={() => (
-            <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} setQR={this.setQR}/>
+            <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} {...programMethods}/>
           )} />
           <Route exact path="/admin/continents" render={() => (
             <Continents {...globalVars} {...globalMethods}/>
@@ -787,16 +925,16 @@ class Admin extends Component {
             <Countries {...globalVars} {...globalMethods}/>
           )} />
           <Route path="/admin/countries/:slug" render={(params) => (
-            <Country {...globalVars} {...globalMethods} {...mediaMethods} slug={params.match.params.slug} setQR={this.setQR}/>
+            <Country {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} slug={params.match.params.slug}/>
           )} />
           <Route exact path="/admin/programs" render={() => (
-            <Programs {...globalVars} {...globalMethods}/>
+            <Programs {...globalVars} {...globalMethods} {...programMethods}/>
           )} />
           <Route exact path="/admin/galleries" render={() => (
             <Galleries {...globalVars} {...globalMethods} {...mediaMethods}/>
           )} />
           <Route exact path="/admin/settings" render={() => (
-            <Settings {...globalVars}/>
+            <Settings {...globalVars} {...globalMethods}/>
           )} />
         </Switch>
         <Modal id="main__modal_window" {...mediaMethods}

@@ -2,16 +2,12 @@ import React, {Component} from 'react'
 import Search from '../partials/Search'
 
 class Subheadline extends Component {
-  constructor(props) {
-    super(props) 
-  }
-
   render() {
     if(this.props.copy){
       return  (
         <header data-subheadline className={`d-flex${this.props.hStyle ? ' ' + this.props.hStyle : 'row align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary'}`} style={{overflow:'visible'}}>
-          <div key="headline__copy">
-            <h2 className="ms-0 mb-0 fw-bold text-primary">{this.props.copy}</h2>
+          <div key="headline__copy" className="d-flex">
+            <h2 className={this.props.h2Style ? ' ' + this.props.h2Style : "ms-0 mb-0 fw-bold text-primary"}>{this.props.copy}</h2>
           </div>
           { ( this.props.has_search || this.props.add_new ) &&
           <div key="headline__nav" className={`d-flex justify-content-start pe-0`}>
@@ -29,7 +25,7 @@ class Subheadline extends Component {
             </button>
             }
             { this.props.add_new &&
-            <button className="btn btn-secondary text-white text-uppercase ms-4 d-flex align-items-center" onClick={this.props.add_new.callback} data-target="#main__modal_window" data-toggle="modal">
+            <button className="btn btn-secondary text-white text-uppercase ms-4 d-flex align-items-center" onClick={this.props.add_new.callback} data-bs-target="#main__modal_window" data-bs-toggle="modal">
               <span className={'me-2'}>{this.props.add_new.slug ? this.props.add_new.slug : 'Add New'}</span>
               <svg className="icon">
                 <use xlinkHref="#icon__math--add"/>

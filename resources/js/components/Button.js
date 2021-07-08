@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import {Tooltip} from 'antd'
 import {randomID} from '../functions'
 
 class Button extends Component {
@@ -7,6 +6,24 @@ class Button extends Component {
     let button = false
 
     switch(this.props.type){
+      case 'scrollup':
+        button = (
+          <button className="btn btn-white mb-0 p-1 border-0" style={{transform:'rotate(180deg)',backgroundColor:'transparent'}}>
+          <svg className="icon">
+            <use xlinkHref="#icon__angle--down"/>
+          </svg>
+        </button>
+        )
+      break;
+      case 'scrolldown':
+        button = (
+          <button className="btn btn-white mb-0 p-1 border-0" style={{backgroundColor:'transparent'}}>
+          <svg className="icon">
+            <use xlinkHref="#icon__angle--down"/>
+          </svg>
+        </button>
+        )
+      break;
       case 'back':
         button = (
           <button onClick={this.props.callback} className="btn btn-secondary">

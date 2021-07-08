@@ -1,0 +1,76 @@
+@import "functions";
+@import "variables";
+//Components
+@import "msu/components/navigation";
+
+.ant-table-content {
+  .ant-table-thead > tr > th {
+    font-size: $navigation-th-font-size;
+  }
+}
+
+.ant-table-tbody > tr > td:first-child {
+  border-left: none;
+}
+
+[data-world] {
+  [data-topbar] + [data-header] + article & {
+    margin-top: $navbar-height + $topbar-height;
+  }
+  margin: #{$navbar-height} auto #{$footer-height + $greeting-height} auto;
+  overflow: hidden;
+  &:before,
+  &:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    pointer-events: none;
+  }
+
+  &:after {
+    width: 85vh;
+    padding-top: rem-calc(132);
+    padding-bottom: rem-calc(200);
+    background-image: $screen-foreground;
+    background-size: 100% auto;
+    background-position: bottom right;
+  }
+
+  &:before {
+    width: 100vw;
+    background-image: $screen-background;
+  }
+
+  [data-map] {
+/*    max-width: 80%;*/
+    z-index: 1;
+    margin-left: 0;
+  }
+}
+
+[data-topbar] + [data-header] + [data-error] {
+  top: $topbar-height + $navbar-height;
+}
+
+//Move the error output to the bottom of the screen
+[data-error] {
+  top: $navbar-height;
+  bottom: unset;
+}
+
+//Maintain the same (general) size using scale HOORAY Rem base!)
+@media only screen and (max-width: 80em) {
+  html {
+    font-size: 85%;
+  }
+}
+
+@media only screen and (max-width: 64em) {
+  html {
+    font-size: 55%;
+  }
+}

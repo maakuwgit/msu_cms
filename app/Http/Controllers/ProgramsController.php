@@ -82,14 +82,15 @@ class ProgramsController extends Controller
         $program->name = $request->get('name');
         $program->semester = $request->get('semester');
         $program->suspended = $request->get('suspended');
-
-        foreach($request->get('countries') as $c){
-            $country = Countries::find($c);
-            $program->countries()->detach();
-            $program->countries()->attach($country->id);
+        $program->countries()->detach();
+        $countries = json_decode($request->get('countries'));
+        foreach($countries as $c){
+            $country = Countries::find(floatval($c));
+            $program->countries()->attach($c);
         }
 
         $program->save();
+        $program->countries;
         return response()->json($program);
     }
 

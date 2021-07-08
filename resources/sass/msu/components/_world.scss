@@ -2,37 +2,15 @@
 
 [data-world] {
   margin: 0;
-  background-size: cover;
-  background-position: center;
   background-attachment: fixed;
-  body.admin & {
-    background-image: url(../../../images/background.jpg);
-    [data-country] text {
-      display: none;
-    }
-  }
 
   [data-map] {
     filter: drop-shadow(#{rem-calc(2)} #{rem-calc(4)} #{rem-calc(4)} rgba(0, 0, 0, 0.5));
     //Slight adjustments to account for the visual scaling on "touch"
-    #africa [data-country] text {
-      font-size: rem-calc(10);
-    }
-
-    #europe [data-country] text {
-      font-size: rem-calc(8);
-    }
-    
-    #oceania [data-country] text {
-      font-size: rem-calc(8);
-    }
-
-    #north-america [data-country] text {
-      font-size: rem-calc(10);
-    }
-
-    #south-america [data-country] text {
-      font-size: rem-calc(9);
+    @each $continent, $size in $world-map-labels {
+      ##{$continent} [data-country] text {
+        font-size: $size;
+      }
     }
 
     > [data-country]:not(.active) {
@@ -41,7 +19,6 @@
     }
 
     &[style*="transform"] {
-      filter: drop-shadow(#{rem-calc(2)} #{rem-calc(4)} #{rem-calc(4)} rgba(0, 0, 0, 0));
       > .island, 
       > [data-country].disabled {
         opacity: 0;
@@ -173,7 +150,7 @@
         text, line {
           font-weight: $font-weight-normal;
           text-transform: uppercase;
-          font-size: rem-calc(13);
+          font-size: $world-font-size;
           fill: $primary;
           opacity: 0;
           &.text-invert {

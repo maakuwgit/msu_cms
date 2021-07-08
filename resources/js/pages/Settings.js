@@ -1,15 +1,11 @@
 import cms from '../cms.json'
-import {updateBodyStyle} from '../functions'
 import React, {Component} from 'react'
 import Headline from '../components/Headline'
 
 class Settings extends Component {
-  componentDidMount() {
-    updateBodyStyle('settings')
-  }
 
   componentDidUpdate() {
-    updateBodyStyle('settings')
+    this.props.getPage('settings')
   }
 
   render() {

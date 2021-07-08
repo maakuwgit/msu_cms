@@ -19,7 +19,7 @@ class CountriesProgramsController extends Controller
      */
     public function index()
     {
-        $programs = CountriesPrograms::all()
+        $programs = CountriesPrograms::all();
         
         return response()->json($programs);
     }

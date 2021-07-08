@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
+import cms from '../cms.json'
 import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
+//import "slick-carousel/slick/slick-theme.css"
+import Button from './Button'
 import QRCode from 'react-qr-code'
 import {Slider as Scrollbar, Table} from 'antd'
 import Slider from 'react-slick'
-import {toggleContinents, toggleCountries, zoomMap} from '../functions'
+import {toggleContinents, toggleCountries, zoomMap} from '../world'
 
 class Navigation extends Component {
   constructor(props) {
@@ -12,16 +14,18 @@ class Navigation extends Component {
 
     this.state = {
       name: 'Home',
-      scrollCoordinates: 0
+      panelScrollCoordinates: 0,
+      navScrollCoordinates: 0
     }
 
-    this.linkStyle          = "d-flex h1 text-uppercase fw-bold px-5 my-0 align-items-center"
+    this.linkStyle          = cms.navigation.linkStyle;
 
     this.resetContinent     = this.resetContinent.bind(this)
     this.resetCountry       = this.resetCountry.bind(this)
     this.setHome            = this.setHome.bind(this)
 
-    this.mouseMoveHandler   = this.mouseMoveHandler.bind(this)
+    this.navMouseMoveHandler      = this.navMouseMoveHandler.bind(this)
+    this.panelMouseMoveHandler    = this.panelMouseMoveHandler.bind(this)
   }
 
   resetContinent(){
@@ -43,10 +47,44 @@ class Navigation extends Component {
     this.setState({name:name})
   }
 
-  mouseMoveHandler(value){
-    let target = document.getElementById('navigation__country')
-    target.scrollTop = Math.floor(target.scrollHeight*(value * 0.01))
-    this.setState({scrollCoordinates:value})
+  navMouseMoveHandler(value){
+    let target        = document.getElementById('navigation__country')
+    target.scrollTop  = Math.floor(target.scrollHeight*(value * 0.01))
+    this.setState({navScrollCoordinates:value})
+  }
+
+  panelMouseMoveHandler(value){
+    let target        = document.getElementById('navigation__panel')
+    target.scrollTop  = Math.floor(target.scrollHeight*(value * 0.01))
+    this.setState({panelScrollCoordinates:value})
+  }
+
+  componentDidMount(){
+    window.addEventListener('resize', () => {
+      let panel     = document.getElementById("navigation__panel")
+      let scrollbar = document.getElementById("navigation__panel_scroll")
+      if(scrollbar){
+        scrollbar.classList.remove('d-flex')
+        scrollbar.classList.add('d-none')
+
+        let footer      = document.querySelector('[data-footer]')
+        let greeting    = document.querySelector('[data-greeting]')
+        let header      = document.querySelector('[data-header]')
+        let navigation  = document.querySelector('[data-navigation]')
+        setTimeout(() => {
+          if(panel){
+            if(panel.scrollHeight > window.innerHeight - header.scrollHeight - footer.scrollHeight - greeting.scrollHeight - navigation.scrollHeight){
+              scrollbar.classList.add('d-flex')
+              scrollbar.classList.remove('d-none')
+            }
+          }
+        }, 1000)
+      }
+    })
+  }
+
+  componentDidUpdate(){
+    window.dispatchEvent(new Event('resize'))
   }
 
   render() {
@@ -64,8 +102,8 @@ class Navigation extends Component {
             <a className={this.linkStyle} key={`navigation__continent`} onClick={this.resetCountry}>{this.props.levels[0].name}</a>
             <span className={`position-relative ${this.linkStyle}`} key={`navigation__country`}>
               {this.props.levels[1].name}
-              <div className="bg-list-item position-absolute d-flex flex-column justify-content-between" data-panel>
-                <Table dataSource={this.props.levels[1].programs} className="w-100 mb-5"
+              <div id="navigation__panel" className="bg-list-item position-absolute d-flex flex-column justify-content-between" data-panel>
+                <Table dataSource={this.props.levels[1].programs} className={cms.navigation.tblStyle}
                   rowKey={(record) => {
                     return `dashboard__table__row--${record.id}`
                   }} 
@@ -83,21 +121,21 @@ class Navigation extends Component {
                     }
                   ]}
                   pagination={false}/>
-                <div className="row px-5 pb-5">
+                <div className="d-flex px-4 pb-3">
                   { this.props.levels[1].code &&
-                  <div className="col-3 py-2">
-                    <h3 className="h4 text-white fw-bold mb-4" style={{textTransform:'none',maxWidth:'23.5rem'}}>Scan QR code with <br className="d-none d-lg-block"/>your mobile device <br className="d-none d-lg-block"/>for more information</h3>
-                    <div className="p-3 bg-white" style={{width: '14rem', height: '14rem'}}>
+                  <div className="col-3 py-1" data-qr>
+                    <h3 className="h5 text-white fw-bold">Scan QR code with <br className="d-none d-lg-block"/>your mobile device <br className="d-none d-lg-block"/>for more information</h3>
+                    <div className="p-2 bg-white" style={{width: '7rem', height: '7rem'}}>
                       <QRCode value={this.props.levels[1].code} size={93}/>
                     </div>
                   </div>
                   }
                   <div className={`${this.props.levels[1].code ? 'col-8 offset-1 py-2' : 'col-12 pt-2 pb-5'} d-flex flex-column justify-content-center`}>
                     { ( this.props.levels[1].gallery ) &&
-                    <Slider dots={false} infinite={true} adaptiveHeight={true} SlickArrowLeft={false} SlickArrowRight={false} 
+                    <Slider dots={false} infinite={true} adaptiveHeight={true} 
                       nextArrow={
                       <button type="button" title="Next">
-                        <div className="btn h3 py-0 mb-0 text-white">
+                        <div className="btn p-0 mb-0 text-white">
                           <svg className="icon">
                             <use xlinkHref="#icon__angle--right"/>
                           </svg>
@@ -106,7 +144,7 @@ class Navigation extends Component {
                       }
                       prevArrow={
                       <button type="button" title="Previous">
-                        <div className="btn h3 py-0 mb-0 text-white">
+                        <div className="btn p-0 mb-0 text-white">
                           <svg className="icon">
                             <use xlinkHref="#icon__angle--left"/>
                           </svg>
@@ -117,8 +155,10 @@ class Navigation extends Component {
                       { this.props.levels[1].gallery.media.map(m => {
                           return (
                             <picture key={m.id}>
-                              <div style={{backgroundImage:`url(${m.url.search('.mp4') > 0 ? ( m.poster ? m.poster : 'images/poster.png') : m.url})`}} data-backgrounder>
-                                <img alt={m.name} src={m.url} title={m.credit}/>
+                              <div style={{backgroundImage:`url(${m.url.search('.mp4') > 0 ? 
+                              ( m.poster ? m.poster : 'images/poster.png') 
+                              : ( m.thumbUrl ? m.thumbUrl : m.url ) })`}} data-backgrounder>
+                                <img alt={m.name} src={m.thumbUrl ? m.thumbUrl : m.url} data-url={m.url} title={m.credit}/>
                                 { m.url.search('.mp4') > 0 &&
                                 <svg className="icon">
                                   <use xlinkHref="#icon__play"/>
@@ -133,18 +173,29 @@ class Navigation extends Component {
                   </div>
                 </div>
               </div>
+              {/*
+              <div id="navigation__panel_scroll" className="d-none position-absolute flex-column justify-content-between"
+               style={{backgroundColor:'rgba(255,255,255,0.9)',bottom:0,right:'-1.75rem',height:'calc(100vh - 9.5rem - 44px)'}}>
+                <Scrollbar vertical tooltipVisible={false} className={"mx-0"} 
+                  onChange={this.panelMouseMoveHandler} 
+                  value={this.state.panelScrollCoordinates} />
+                <div className="d-flex flex-column">
+                  <Button type="scrollup"/>
+                  <Button type="scrolldown"/>
+                </div>
+              </div>*/}
             </span>
             </>
             :
             <span className={`position-relative ${this.linkStyle}`} key={`navigation__continent`}>
               {this.props.levels[0].name}
-              <nav className="d-flex position-absolute justify-content-between align-items-stretch">
+              <nav data-subnavigation className="d-flex position-absolute justify-content-between align-items-stretch">
                 <div id="navigation__country" className="col d-flex flex-column align-items-stretch justify-contrent-stretch px-0">
                   { this.props.levels[0].countries.map((cou, c) => {
                     return (
                     <button key={`map__navigation__anchor${c}`}
-                    className="btn btn-list-item py-3 px-5 text-uppercase text-left border-0 h1 mb-0 mt-1" 
-                    data-country_slug={cou.slug} style={{lineHeight:'1.1875'}}
+                    className={cms.navigation.sublinkStyle} 
+                    data-country_slug={cou.slug}
                     onClick={(event) => {
                       let btn     = event.target
                       let slug    = btn.dataset.country_slug
@@ -160,22 +211,14 @@ class Navigation extends Component {
                   }) }
                 </div>
                 { this.props.levels[0].countries.length > 3 &&
-                <div className="d-flex flex-column px-0 py-3 bg-white justify-content-between">
+                <div className="d-flex flex-column justify-content-between" style={{backgroundColor:'rgba(255,255,255,0.9)'}}>
                   <Scrollbar vertical tooltipVisible={false}
-                    min={0} max={90}
-                    onChange={this.mouseMoveHandler} 
-                    value={this.state.scrollCoordinates} />
+                    min={0} max={90} className={"mx-0"} 
+                    onChange={this.navMouseMoveHandler} 
+                    value={this.state.navScrollCoordinates} />
                   <div className="d-flex flex-column">
-                    <button className="btn btn-white h3 mb-0 p-1" style={{transform:'rotate(180deg)'}}>
-                      <svg className="icon">
-                        <use xlinkHref="#icon__angle--down"/>
-                      </svg>
-                    </button>
-                    <button className="btn btn-white h3 mb-0 p-1">
-                      <svg className="icon">
-                        <use xlinkHref="#icon__angle--down"/>
-                      </svg>
-                    </button>
+                    <Button type="scrollup"/>
+                    <Button type="scrolldown"/>
                   </div>
                 </div>
                 }

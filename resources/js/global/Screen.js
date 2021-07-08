@@ -1,8 +1,11 @@
 import api from '../api.js'
-import {timedAlert, updateBodyStyle, checkPrograms, toggleCountries, randomID, zoomMap} from '../functions'
+import {timedAlert, updateBodyStyle, randomID} from '../functions'
+import {toggleCountries, zoomMap} from '../world'
+import {checkPrograms} from '../programs'
 import React, {Component} from "react"
 import Header from "../global/Header"
 import Footer from "../global/Footer"
+import Topbar from "../global/Topbar"
 import Modal from "../components/Modal"
 import Feedback from "../partials/Feedback"
 import World from '../components/World'
@@ -42,13 +45,20 @@ class Screen extends Component {
     this.countries = []
     this.programs = []
 
-    this.resetAlert = this.resetAlert.bind(this)
+    this.resetAlert       = this.resetAlert.bind(this)
 
-    this.getContinents  = this.getContinents.bind(this)
+    this.getUser          = this.getUser.bind(this)
+
+    // Continents Methods
+    this.checkContinent   = this.checkContinent.bind(this)
+    this.selectContinent  = this.selectContinent.bind(this)
+    this.getContinents    = this.getContinents.bind(this)
 
     //Country Methods
     this.parseCountry     = this.parseCountry.bind(this)
     this.getCountries     = this.getCountries.bind(this)
+    this.checkCountries   = this.checkCountries.bind(this)
+    this.selectCountry    = this.selectCountry.bind(this)
 
     // Program Methods
     this.getPrograms      = this.getPrograms.bind(this)
@@ -62,11 +72,6 @@ class Screen extends Component {
     //Modal Methods
     this.resetModal       = this.resetModal.bind(this)
     this.setModal         = this.setModal.bind(this)
-    this.checkContinent   = this.checkContinent.bind(this)
-    this.selectContinent  = this.selectContinent.bind(this)
-
-    this.checkCountries   = this.checkCountries.bind(this)
-    this.selectCountry    = this.selectCountry.bind(this)
   }
 
   //Look at the list of Countries, and class them based on existence and suspension
@@ -147,7 +152,6 @@ class Screen extends Component {
     if(type === 'preview') {
       $('#main__modal_window').modal('show')
     }
-console.log(credit)
     this.setState({
       modal: {
         type: type,
@@ -310,6 +314,9 @@ console.log(credit)
           name: 'no name',
           status: 'done',
           gallery_id: media.gallery_id, 
+          caption: media.caption, 
+          poster: media.poster, 
+          thumbUrl: media.thumbUrl, 
           url: media.url
         } )
       })
@@ -358,7 +365,35 @@ console.log(credit)
     }
   }
 
+  getUser(){
+    this.setState({loading:true})
+    api.get('/user')
+    .then(response => {
+      this.resetAlert()
+      this.setState({
+        user: response.data,
+        feedback: {
+          msg: 'User successfully loaded!',
+          style: 'success'
+        },
+        is_loaded: true
+      })
+    })
+    .finally(
+      updateBodyStyle()
+    )
+    .catch(error => {
+      this.setState({
+        feedback: {
+          msg: `And error occurred when loading User! ${error.data}`,
+          style: 'danger'
+        }
+      })
+    })
+  }
+
   componentDidMount() {
+    this.getUser()
     this.getGalleries(this.getMedia)
     this.getPrograms()
     this.getCountries()
@@ -372,6 +407,9 @@ console.log(credit)
 
     return (
       <>
+        { this.state.user &&
+        <Topbar username={this.state.user.username} image={this.state.user.photo}/>
+        }
         <Header show_frontend={true} show_ui={false}/>
         <Feedback feedback={this.state.feedback}/>
         <article key="map__wrapper" 

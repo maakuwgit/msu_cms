@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {Table} from 'antd'
 import cms from '../cms.json'
-import {checkPrograms, closeModal, updateBodyStyle, toggleCountries, randomID} from '../functions'
+import {closeModal, randomID} from '../functions'
+import {toggleCountries} from '../world'
+import {checkPrograms} from '../programs'
 import Button from '../components/Button'
 import Breadcrumb from '../components/Breadcrumb'
 import World from '../components/World'
@@ -105,25 +107,11 @@ class Dashboard extends Component {
 
   selectCountry(country=false){
     if(country){
-      let gallery  = false
-      if(this.props.galleries) {
-        gallery = this.props.galleries.filter(g => g.country_id === country.id)
-        gallery = gallery.length > 0 ? gallery[0] : false
-      }
-      let programs  = []
-      if(this.props.programs) {
-        gallery = this.props.programs.filter(pr => {
-          console.log(pr.countries, country.id)
-          return pr.countries.filter(p => p.id === country.id)
-        })
-        gallery = gallery.length > 0 ? gallery[0] : false
-      }
-
       this.setState({
         country: country, 
         selectedPrograms: [], 
-        programs: programs,
-        gallery: gallery
+        programs: country.programs,
+        gallery: country.gallery
       })
     }else{
       this.setState({
@@ -142,19 +130,20 @@ class Dashboard extends Component {
   componentDidUpdate(){
     this.parseCountries()
     this.parseContinents()
-    updateBodyStyle('dashboard')
+
+    this.props.getPage('dashboard')
   }
 
   componentDidMount(){
     this.parseCountries()
     this.parseContinents()
-    updateBodyStyle('dashboard')
   }
 
   render() {
     let levels = []
     if(this.state.continent) levels.push(this.state.continent)
     if(this.state.country) levels.push(this.state.country)
+//    if(this.state.gallery) console.log(this.state.gallery.media)
     return (
       <article key="dashboard__wrapper" className="container mx-0 px-2 pb-2">
         <div className="row mx-0 align-items-stretch justify-content-stretch h-100">
@@ -295,7 +284,6 @@ class Dashboard extends Component {
                             }
                           ],(obj) => {
                             closeModal(this.props.resetModal)
-                            obj = this.props.parseCountry(obj)
                             this.props.editCountry(obj)
                             })
                           }
@@ -351,6 +339,24 @@ class Dashboard extends Component {
                               type: 'hidden',
                               required: true, 
                               value: record.continent_id
+                            },{
+                              label: 'Continents',
+                              id: 'continent',
+                              type: 'hidden',
+                              required: true, 
+                              value: JSON.stringify(record.continent)
+                            },{
+                              label: 'Programs',
+                              id: 'programs',
+                              type: 'hidden',
+                              required: true, 
+                              value: JSON.stringify(record.programs)
+                            },{
+                              label: 'Gallery',
+                              id: 'gallery',
+                              type: 'hidden',
+                              required: true, 
+                              value: JSON.stringify(record.gallery)
                             }
                           ],(obj) => {
                             closeModal(this.props.resetModal)
@@ -369,7 +375,8 @@ class Dashboard extends Component {
             :
             <>
             <Subheadline key="dashboard__headline--programs" 
-            copy={cms.programs.label} hStyle="row align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top" add_new={{
+            copy={cms.programs.label} h2Style="ms-0 mb-0 fw-bold text-primary display-6" 
+            hStyle="d-flex align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top justify-content-start" add_new={{
               slug: 'New',
               callback: () => {
                 this.props.createModal(`New Program`, '',[
@@ -460,6 +467,12 @@ class Dashboard extends Component {
                     align: 'center',
                     width: '2rem',
                     render: (text, record, index) => {
+                      let programs = []
+                      let program = false
+                      if(record.pivot) {
+                        programs = this.props.programs.filter(pr => pr.id === record.pivot.programs_id)
+                        if( programs.length ) program = programs[0]
+                      }
                       return (
                       <Button type="dropdown" is_enabled={true} 
                        ctas={[
@@ -467,7 +480,6 @@ class Dashboard extends Component {
                           label: 'Edit', 
                           target: '#main__modal_window', 
                           callback: () => {
-                            console.log(record, this.props.programs)
                             this.props.editModal(`Edit Program #${record.id}`, '',[
                             {
                               label: 'id',
@@ -476,9 +488,9 @@ class Dashboard extends Component {
                               value: record.id
                             },{
                               label: 'Countries',
-                              id: 'countries',
+                              id: 'country_ids',
                               type: 'hidden',
-                              value: record.countries
+                              value: program ? JSON.stringify(program.countries.map(cou => cou.id)) : JSON.stringify([])
                             },{
                               label: 'Name',
                               id: 'name',
@@ -503,10 +515,10 @@ class Dashboard extends Component {
                             }
                           ],(obj) => {
                             closeModal(this.props.resetModal)
-                            let nu = this.state.programs.filter(p => p.id !== record.id)
-                            nu.concat(obj)
+                            let np = this.state.programs.filter(p => p.id !== record.id)
+                            np.push(obj)
+                            this.setState({programs: np})
                             this.props.editProgram(obj)
-                            this.setState({programs: nu})
                             })
                           }
                         },{

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import cms from '../cms.json'
-import {getPaths, toggleContinents, toggleCountries, zoomMap} from '../functions'
+import {getPaths} from '../functions'
+import {toggleContinents, toggleCountries, zoomMap} from '../world'
 import {Spin} from 'antd'
 
 class World extends Component {
@@ -50,9 +51,9 @@ class World extends Component {
 
   render() {
     return (
-      <figure data-world className="w-100 h-100 d-flex align-items-center justify-content-center px-3 bg-aluminum" data-backgrounder>
+      <figure data-world className={cms.world.figStyle} data-backgrounder>
         { this.props ?
-        <svg data-map width="100%" height="100%" className="w-100 h-100 p-5" viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg">
+        <svg data-map width="100%" height="100%" className={cms.world.svgStyle} viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg">
           <g data-country id="greenland" 
            onClick={this.props.countries !== 'greenland' ? this.touchCountry : () => {}} 
            className={`island ${this.props.checkCountries('greenland')}`}>        

@@ -1,58 +1,7 @@
 {
-  "routes": ["world","continents","countries","programs","galleries","settings"],
-  "settings": {
-    "slug": "settings",
-    "label": "Settings", 
-    "headline": "Settings",
-    "description": "View all the current application settings", 
-    "is_dev": true, 
-    "options": [
-      {
-        "name": "title",
-        "value": "Michigan State University"
-      },{
-        "name": "department",
-        "value": "Broad College of Business"
-      },{
-        "name": "program",
-        "value": "Education Abroad"
-      },{
-        "name": "instagram",
-        "value": "https://instagram.com.msuabroad"
-      },{
-        "name": "background",
-        "value": "/images/background-lg.jpg"
-      },{
-        "name": "version",
-        "value": "1.0.0"
-      },{
-        "name": "logo",
-        "value" : "logo__michigan_stage_university.svg"
-      },{
-        "name": "greeting",
-        "value": "Touch a country to continue"
-      }
-    ],
-    "firebase": {
-      "url": "https://firebasestorage.googleapis.com/v0/b/msu-study-abroad.appspot.com/o/",
-      "api_key": "AIzaSyBDX1AoSQ35d7aPlPHfqunkLpL_MSip0NY",
-      "auth_domain": "msu-study-abroad.firebaseapp.com",
-      "project_id": "msu-study-abroad",
-      "storage_bucket": "msu-study-abroad.appspot.com",
-      "messaging_sender_id": "101022326580",
-      "app_id": "1:101022326580:web:b404b091b59d4f4b3a4f61",
-      "measurement_id": "G-0R88Z11R7S"
-    }
-  },
-  "theme": {
-    "primary": "Pine",
-    "secondary": "Seafoam",
-    "tertiary": "Aluminum",
-    "article": "container ml-0 bg-white"
-  },
   "components": {
     "headline": {
-      "style": "sticky sticky-top col-12 mb-2 pt-4 px-2 pb-0"
+      "style": "sticky sticky-top col-12 mb-2 pt-4 px-3 pb-0 bg-white"
     },
     "table": {
       "style": "px-3 mb-3"
@@ -61,7 +10,7 @@
   "continents": { 
     "slug": "continents",
     "label": "Continents",
-    "description": "View all continents in a table, and all their corresponding countries", 
+    "tooltip": "View all continents in a table, and all their corresponding countries", 
     "headline": "Continents & Archipelagos",
     "unfiltered" : [
       {
@@ -112,7 +61,7 @@
     "slug": "countries",
     "label": "Countries",
     "headline": "All Countries", 
-    "description": "View all countries in an alphabetical list", 
+    "tooltip": "View all countries in an alphabetical list", 
     "modal": {
       "reinstate": "Reinstating a Country enables its highlight color and the ability to tap/click it on the map",
       "suspend": "Suspending a Country retains it's programs, but removes its highlight and the ability to tap/click it on the map. Useful, for example, when travel to a country has been suspended/limited"
@@ -126,28 +75,101 @@
     "continents": "Continents",
     "islands-archipelagos": "Islands"
   },
+  "footer": {
+    "text": "MSUBROADABROAD",
+    "icon": "#icon__instagram", 
+    "pStyle": "w-100 h-100 d-flex align-items-center justify-content-center mb-0 py-1 fw-bold text-primary small"
+  },
   "gallery": {
     "title": "Gallery"
   },
   "galleries": {
     "slug":"galleries",
     "headline": "All Galleries", 
-    "description": "View all galleries, by Country", 
+    "tooltip": "View all galleries, by Country", 
     "label":"Galleries"
   },
   "greeting": {
-    "headline": "Touch a highlighted region to begin"
+    "headline": "Touch a highlighted region to begin",
+    "hStyle": "py-2 px-4 bg-primary w-100 fixed-bottom d-flex align-items-center",
+    "h1Style": "h4 mb-0 fw-bold text-uppercase text-white"
   },
-  "qrcode": {
-    "title": "QR Code",
-    "description": "link to the an existing website detailing the selected countries programs and an image gallery"
+  "header": {
+    "figStyle": "py-0 ps-3 text-start text-uppercase my-auto ms-0 me-auto"
+  },  
+  "headline": {
+    "hStyle": "sticky sticky-top col-12 mb-2 pt-4 px-3 pb-4 bg-white bg-white",
+    "btnStyle": "btn text-white ms-4 d-flex align-items-center", 
+    "btnLabelNew": "Add New",
+    "btnLabelDelete": "Delete"
+  },
+  "navigation": {
+    "linkStyle": "d-flex h4 text-uppercase fw-bold px-4 my-0 align-items-center",
+    "sublinkStyle": "btn btn-list-item py-1 px-3 text-uppercase text-start border-0 h4 mb-0",
+    "tblStyle": "w-100 mb-3"
   },
   "programs": {
     "slug": "programs",
     "label": "Programs",
     "headline": "All Programs", 
-    "description": "View all Programs in a table with multiple pages", 
+    "tooltip": "View all Programs in a table with multiple pages", 
     "unfiltered": []
+  },
+  "qrcode": {
+    "size": 65,
+    "title": "QR Code",
+    "description": "link to the an existing website detailing the selected countries programs and an image gallery"
+  },
+  "routes": ["world","continents","countries","programs","galleries","settings"],
+  "settings": {
+    "slug": "settings",
+    "label": "Settings", 
+    "headline": "Settings",
+    "tooltip": "View all the current application settings", 
+    "is_dev": true, 
+    "options": [
+      {
+        "name": "title",
+        "value": "Michigan State University"
+      },{
+        "name": "department",
+        "value": "Broad College of Business"
+      },{
+        "name": "program",
+        "value": "Education Abroad"
+      },{
+        "name": "instagram",
+        "value": "https://instagram.com.msuabroad"
+      },{
+        "name": "background",
+        "value": "/images/background-lg.jpg"
+      },{
+        "name": "version",
+        "value": "1.0.0"
+      },{
+        "name": "logo",
+        "value" : "logo__michigan_stage_university.svg"
+      },{
+        "name": "greeting",
+        "value": "Touch a country to continue"
+      }
+    ],
+    "firebase": {
+      "url": "https://firebasestorage.googleapis.com/v0/b/msu-study-abroad.appspot.com/o/",
+      "api_key": "AIzaSyBDX1AoSQ35d7aPlPHfqunkLpL_MSip0NY",
+      "auth_domain": "msu-study-abroad.firebaseapp.com",
+      "project_id": "msu-study-abroad",
+      "storage_bucket": "msu-study-abroad.appspot.com",
+      "messaging_sender_id": "101022326580",
+      "app_id": "1:101022326580:web:b404b091b59d4f4b3a4f61",
+      "measurement_id": "G-0R88Z11R7S"
+    }
+  },
+  "theme": {
+    "primary": "Pine",
+    "secondary": "Seafoam",
+    "tertiary": "Aluminum",
+    "article": "container ms-0 bg-white"
   },
   "upload": {
       "btn": {
@@ -166,7 +188,9 @@
     "slug": "", 
     "headline": "Everywhere", 
     "description": "Edit programs, galleries, and countries from a map view", 
-    "label": "World",
+    "label": "World", 
+    "figStyle": "w-100 h-100 d-flex align-items-center justify-content-center px-4 bg-aluminum", 
+    "svgStyle": "w-100 h-100 py-2", 
     "coordinates": {
     "africa": {
       "scale": 2,
@@ -174,7 +198,7 @@
       "originY":  -12,
       "countries": {
         "scale": 2,
-        "originX": -10,
+        "originX": -16,
         "originY":  -12
       }
     },
@@ -184,47 +208,47 @@
       "originY":  7,
       "countries": {
         "scale": 1.5,
-        "originX": -42,
+        "originX": -35,
         "originY":  10
       }
     },
     "europe": {
       "scale": 2.5,
-      "originX": 2, 
-      "originY":  14,
+      "originX": 0, 
+      "originY":  16,
       "countries": {
         "scale": 2.5,
-        "originX": -11, 
-        "originY":  14
+        "originX": -13, 
+        "originY":  18
       }
     },
     "oceania": {
       "scale": 2.5,
-      "originX": -29, 
+      "originX": -25, 
       "originY":  -25,
       "countries": {
         "scale": 2.5,
-        "originX": -44, 
+        "originX": -39, 
         "originY":  -25
       }
     },
     "north_america": {
       "scale": 1.75,
-      "originX": 31, 
+      "originX": 24, 
       "originY":  11,
       "countries": {
         "scale": 1.75,
-        "originX": 13, 
+        "originX": 7, 
         "originY":  15
       }
     },
     "south_america": {
       "scale": 2,
-      "originX": 23, 
+      "originX": 14, 
       "originY":  -24,
       "countries": {
         "scale": 2,
-        "originX": 4, 
+        "originX": 0, 
         "originY":  -24
       }
     }

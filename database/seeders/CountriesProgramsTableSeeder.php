@@ -132,107 +132,107 @@ class CountriesProgramsTableSeeder extends Seeder
             'countries_id' => 61
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 30,
+            'programs_id' => 29,
             'countries_id' => 65
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 31,
+            'programs_id' => 29,
             'countries_id' => 169
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 32,
+            'programs_id' => 29,
             'countries_id' => 184
+        ]);
+        DB::table('countries_programs')->insert([
+            'programs_id' => 30,
+            'countries_id' => 184
+        ]);
+        DB::table('countries_programs')->insert([
+            'programs_id' => 31,
+            'countries_id' => 37
+        ]);
+        DB::table('countries_programs')->insert([
+            'programs_id' => 32,
+            'countries_id' => 126
         ]);
         DB::table('countries_programs')->insert([
             'programs_id' => 33,
-            'countries_id' => 184
-        ]);
-        DB::table('countries_programs')->insert([
-            'programs_id' => 34,
-            'countries_id' => 37
-        ]);
-        DB::table('countries_programs')->insert([
-            'programs_id' => 35,
-            'countries_id' => 126
-        ]);
-        DB::table('countries_programs')->insert([
-            'programs_id' => 36,
             'countries_id' => 125
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 37,
+            'programs_id' => 34,
             'countries_id' => 184
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 38,
+            'programs_id' => 35,
             'countries_id' => 7
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 39,
+            'programs_id' => 36,
             'countries_id' => 84
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 40,
+            'programs_id' => 37,
             'countries_id' => 37
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 41,
+            'programs_id' => 38,
             'countries_id' => 37
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 42,
+            'programs_id' => 39,
             'countries_id' => 69
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 43,
+            'programs_id' => 40,
             'countries_id' => 152
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 44,
+            'programs_id' => 41,
             'countries_id' => 82
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 45,
+            'programs_id' => 42,
             'countries_id' => 82
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 46,
+            'programs_id' => 43,
             'countries_id' => 17
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 47,
+            'programs_id' => 44,
             'countries_id' => 9
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 48,
+            'programs_id' => 45,
             'countries_id' => 130
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 49,
+            'programs_id' => 46,
             'countries_id' => 9
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 50,
+            'programs_id' => 47,
             'countries_id' => 126
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 51,
+            'programs_id' => 48,
             'countries_id' => 32
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 52,
+            'programs_id' => 49,
             'countries_id' => 10
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 52,
+            'programs_id' => 49,
             'countries_id' => 22
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 52,
+            'programs_id' => 49,
             'countries_id' => 61
         ]);
         DB::table('countries_programs')->insert([
-            'programs_id' => 53,
+            'programs_id' => 50,
             'countries_id' => 9
         ]);
     }

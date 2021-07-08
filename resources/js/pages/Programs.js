@@ -1,5 +1,5 @@
 import cms from '../cms.json'
-import {closeModal, updateBodyStyle} from '../functions'
+import {closeModal} from '../functions'
 import React, {Component} from 'react'
 import Button from '../components/Button'
 import Headline from '../components/Headline'
@@ -27,60 +27,59 @@ class Programs extends Component {
     this.setState({selectedPrograms: []})
   }
 
-  componentMount() {
-    updateBodyStyle()
-  }
-
   componentDidUpdate() {
-    updateBodyStyle()
+    this.props.getPage('programs')
   }
 
   render() {
     return (
       <article key="article__programs" className={cms.theme.article}>
-        <Headline key="programs__headline"  add_new={{
+        <Headline key="programs__headline" add_new={{
           slug: 'New',
           callback: () => {
             this.props.createModal(`New Program`, '',[
-            {
-              label: 'Name',
-              id: 'name',
-              type: 'text', 
-              required: true, 
-              style: 'col-md-6'
-            },{
-              label: 'Semester',
-              id: 'semester',
-              type: 'text', 
-              required: true, 
-              style: 'col-md-6'
-            },{
-              label: 'Country',
-              id: 'country_id',
-              type: 'select', 
-              required: true, 
-              options: this.props.countries.map(co => {
-                return { 
-                  label: co.name,
-                  value: co.id
-                }
-              }),
-              style: 'mt-2 col-md-6'
-            },{
-              label: 'Suspended/Open',
-              id: 'suspended',
-              type: 'checkbox', 
-              style: 'mt-2 col-md-6', 
-              description: <span>This program is <span className="checked">suspended</span><span className="unchecked">open</span></span>, 
-            }
-          ],(obj) => {
-            closeModal(this.props.resetModal)
-            setTimeout(() => this.props.postProgram(obj), 3600)
+              {
+                label: 'Name',
+                id: 'name',
+                type: 'text', 
+                required: true, 
+                style: 'col-12', 
+                placeholder: 'Please choose a name for the Program'
+              },{
+                label: 'Semester',
+                id: 'semester',
+                type: 'text', 
+                required: true, 
+                style: 'mt-2 col-md-6', 
+                placeholder: 'Spring, Summer, Winter etc.'
+              },{
+                label: 'Country',
+                id: 'countries',
+                type: 'select', 
+                required: true, 
+                multiple: true, 
+                options: this.props.countries.map(co => {
+                  return { 
+                    label: co.name,
+                    value: co.id
+                  }
+                }),
+                style: 'mt-2 col-md-6',
+                value: [0]
+              },{
+                label: 'Suspended/Open',
+                id: 'suspended',
+                type: 'checkbox', 
+                style: 'mt-2 col-12', 
+                description: <span>This program is <span className="checked">suspended</span><span className="unchecked">open</span></span>
+              }
+            ],(obj) => {
+              obj = this.props.parseProgram(obj)
+              this.props.postProgram(obj)
             })
           }
         }}
         has_selected={this.state.selectedPrograms.length > 0 ? 'program' : false} num_selected={this.state.selectedPrograms ? this.state.selectedPrograms.length : 0} 
-        hStyle={cms.components.headline.style+' bg-white'}
         headline={cms.programs.headline} copy={cms.programs.description}
         has_search={true} searchSubmit={this.props.searchSubmit}
         use_programs={true} deleteAll={this.deleteAll}/>
@@ -125,9 +124,11 @@ class Programs extends Component {
               title: 'Country',
               dataIndex: 'countries',
               key: 'countries',
-              render: (country) => {
-                if( country.length ) {
-                  return country[0].name
+              render: (countries) => {
+                if( countries  ) {
+                  return countries.map((cou,c) => {
+                    return c + 1 < countries.length ? cou.name + ', ' : cou.name
+                  })
                 }else{
                   return 'Uh oh! Looks like you have a program assigned to a country with that doesn\'t exist!'
                 }
@@ -167,8 +168,8 @@ class Programs extends Component {
                         style: 'mt-2 col-md-6', 
                         value: record.semester
                       },{
-                        label: 'Country',
-                        id: 'countries',
+                        label: 'Country/Countries',
+                        id: 'country_ids',
                         type: 'select', 
                         required: true, 
                         multiple: true, 
@@ -179,7 +180,7 @@ class Programs extends Component {
                           }
                         }),
                         style: 'mt-2 col-md-6',
-                        value: record.countries
+                        value: record.countries.map(cou => cou.id)
                       },{
                         label: 'Suspended/Open',
                         id: 'suspended',
@@ -190,7 +191,6 @@ class Programs extends Component {
                       }
                     ],(obj) => {
                       closeModal(this.props.resetModal)
-                      obj = this.props.parseProgram(obj)
                       this.props.editProgram(obj)
                       })
                     }

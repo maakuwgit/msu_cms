@@ -4,7 +4,7 @@
 * Helpers
 * This is where you put anything that is part of the will be needed for functional, organizational, or flourish for the core styles
 */
-@import "helpers/mixins";
+//@import "helpers/mixins";
 @import "helpers/extends";
 @import "helpers/animations";
 
@@ -14,15 +14,11 @@
 * This is to allow flexibility and easy override from the CMS without causing structural breakage
 * @usage: Only add Components that are loaded by the React app.js here.
 */
-@import "base/admin";
 @import "base/global";
-@import "base/screen";
 
 /*
 * Components
 * Base components, or components that are too unweildy to cram into the global.scss
 * @example: "world" and "breadcrumb are the 2 base components that make up the CMS. "navigation" is the base component of the Screen.
 */
-@import "components/breadcrumb";
 @import "components/world";
-@import "components/navigation";

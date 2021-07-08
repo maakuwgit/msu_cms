@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
 use Auth;
+use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +28,7 @@ Auth::routes();
 
 //Admin
 Route::view('/resource/{path?}/*', 'admin')->middleware('auth');
+Route::view('/admin', 'admin')->middleware('auth');
 Route::view('/admin/{path?}', 'admin')->middleware('auth');
 Route::view('/admin/{path?}/{subpath?}', 'admin')->middleware('auth');
 
@@ -39,4 +42,6 @@ Route::resources([
 ]);
 
 Route::get('/resource/settings', [SettingsController::class, 'index']);
+Route::get('/user', [SettingsController::class, 'user']);
+Route::get('/logout', [SettingsController::class, 'logout']);
 Route::put('/setting', [SettingsController::class, 'setting']);

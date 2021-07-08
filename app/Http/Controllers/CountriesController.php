@@ -91,14 +91,13 @@ class CountriesController extends Controller
 
         $country = Countries::find($id);
         $country->name = $request->get('name');
-        $country->slug = $request->get('slug');
-        $country->continent_id = $request->get('continent_id');
         $country->code = $request->get('code');
         $country->enabled = $request->get('enabled');
         $country->suspended = $request->get('suspended');
 
         $country->save();
-        return response()->json('Country successfully updated!');
+        $country = $this->parse([$country]);
+        return response()->json($country[0]);
     }
 
     /**

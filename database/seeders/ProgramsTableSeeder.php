@@ -160,124 +160,109 @@ class ProgramsTableSeeder extends Seeder
             'suspended' => 'off'
         ]);//29
         DB::table('programs')->insert([
-            'name' =>  'Marketing and International Comparative Dimensions of Business in Europe',
-            'semester' => 'Summer', 
-            'suspended' => 'off'
-        ]);//30
-        DB::table('programs')->insert([
-            'name' =>  'Marketing and International Comparative Dimensions of Business in Europe',
-            'semester' => 'Summer', 
-            'suspended' => 'off'
-        ]);//31
-        DB::table('programs')->insert([
-            'name' =>  'Marketing and International Comparative Dimensions of Business in Europe',
-            'semester' => 'Summer', 
-            'suspended' => 'off'
-        ]);//32
-        DB::table('programs')->insert([
             'name' =>  'Marketing and Business in London',
             'semester' => 'Winter Break', 
             'suspended' => 'off'
-        ]);//33
+        ]);//30
         DB::table('programs')->insert([
             'name' =>  'Marketing in China',
             'semester' => 'Summer', 
             'suspended' => 'off'
-        ]);//34
+        ]);//31
         DB::table('programs')->insert([
             'name' =>  'New Zealand Kiwi Hospitality Wine and Food',
             'semester' => 'Summer', 
             'suspended' => 'off'
-        ]);//35
+        ]);//32
         DB::table('programs')->insert([
             'name' =>  'NHL Stenden University',
             'semester' => 'Fall, Spring', 
             'suspended' => 'off'
-        ]);//36
+        ]);//33
         DB::table('programs')->insert([
             'name' =>  'Organizational Staffing in London',
             'semester' => 'Summer', 
             'suspended' => 'off'
-        ]);//37
+        ]);//34
         DB::table('programs')->insert([
             'name' =>  'Semester in Buenos Aires',
             'semester' => 'Spring', 
             'suspended' => 'off'
-        ]);//38
+        ]);//35
         DB::table('programs')->insert([
             'name' =>  'Semester in Florence',
             'semester' => 'Spring', 
             'suspended' => 'off'
-        ]);//39
+        ]);//36
         DB::table('programs')->insert([
             'name' =>  'Semester in Shanghai',
             'semester' => 'Spring', 
             'suspended' => 'off'
-        ]);//40
+        ]);//37
         DB::table('programs')->insert([
             'name' =>  'Internships in Shanghai',
             'semester' => 'Summer', 
             'suspended' => 'off'
-        ]);//41
+        ]);//38
         DB::table('programs')->insert([
             'name' =>  'Grassroots Tools of Sustainable Development: Service Learning in Guatemala',
             'semester' => 'Spring Break', 
             'suspended' => 'off'
-        ]);//42
+        ]);//39
         DB::table('programs')->insert([
             'name' =>  'Service Learning in Senegal: School Building with buildOn',
             'semester' => 'Spring Break', 
             'suspended' => 'off'
-        ]);//43
+        ]);//40
         DB::table('programs')->insert([
             'name' =>  'StartUp Nation: Innovation and Entrepreneurship in Israel',
             'semester' => 'Winter Break', 
             'suspended' => 'off'
-        ]);//44
+        ]);//41
         DB::table('programs')->insert([
             'name' =>  'Tel Aviv University',
             'semester' => 'Spring, Summer', 
             'suspended' => 'off'
-        ]);//45
+        ]);//42
         DB::table('programs')->insert([
             'name' =>  'University of Namur',
             'semester' => 'Fall, Spring, Academic Year', 
             'suspended' => 'off'
-        ]);//46
+        ]);//43
         DB::table('programs')->insert([
             'name' =>  'University of New South Wales (UNSW)',
             'semester' => 'Spring', 
             'suspended' => 'off'
-        ]);//47
+        ]);//44
         DB::table('programs')->insert([
             'name' =>  'University of Stavanger',
             'semester' => 'Fall, Spring', 
             'suspended' => 'off'
-        ]);//48
+        ]);//45
         DB::table('programs')->insert([
             'name' =>  'University of Sydney',
             'semester' => 'Spring', 
             'suspended' => 'off'
-        ]);//49
+        ]);//46
         DB::table('programs')->insert([
             'name' =>  'University of Waikato',
             'semester' => 'Spring', 
             'suspended' => 'off'
-        ]);//50
+        ]);//47
         DB::table('programs')->insert([
             'name' =>  'Great Lakes Supply Chain Tour',
             'semester' => 'Summer', 
             'suspended' => 'off'
-        ]);//51
+        ]);//48
         DB::table('programs')->insert([
             'name' =>  'International Business Studies in Europe',
             'semester' => 'Summer', 
             'suspended' => 'off'
-        ]);//52
+        ]);//49
         DB::table('programs')->insert([
             'name' =>  'Honors Semester at Monash University',
             'semester' => 'Spring', 
             'suspended' => 'off'
-        ]);//53
+        ]);//50
     }
 }

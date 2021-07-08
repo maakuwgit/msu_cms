@@ -12,13 +12,13 @@ class Sidebar extends Component {
       data-bs-backdrop="false" 
       className={`offcanvas navbar navbar-dark sticky-top flex-column justify-content-start align-items-center p-2 min-vh-100 collapse${this.props.show_ui ? ' d-none' : ''}`}>
         <nav className="w-100">
-          <ul className="nav navbar-nav ms-0">
+          <ul className="nav navbar-nav ms-0 d-grid gap-1">
           { cms.routes.map((link,l) => {
             return (
-            <li key={`nav-link--${l}`} className="py-1 nav-link fw-bold text-uppercase">
-              <Tooltip title={cms[link].description} placement="left">
+            <li key={`nav-link--${l}`} className="py-0 nav-link fw-bold text-uppercase">
+              <Tooltip title={cms[link].tooltip} placement="left">
                 <NavLink exact onClick={() => nav.classList.remove('show')} 
-                className="btn btn-sm btn-primary rounded-0 btn-block" 
+                className="btn btn-sm btn-primary rounded-0 w-100" 
                 to={'/admin/'+cms[link].slug}>{cms[link].label}
                 </NavLink>
               </Tooltip>
