@@ -17,8 +17,9 @@ class CreateMediaTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('url');
+            $table->string('thumbUrl')->nullable();
             $table->string('credit')->nullable();
-            $table->string('poster')->nullable();
+            $table->string('poster')->default('images/poster.png');
             $table->integer('type');
             $table->integer('gallery_id');
         });

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Media extends Model
 {
     protected $fillable = ([
-        'url',
+        'url', 
+        'thumbUrl', 
         'type',  
         'gallery_id', 
         'credit', 
