@@ -92,12 +92,17 @@
   width: 100%;
   bottom: 3.125rem;
   max-height: calc(100vh - 12.625rem);
-  overflow: scroll;
+  overflow: hidden;
+  overflow-y: auto;
 }
-[data-navigation] [data-qr] * {
+[data-navigation] [data-qr] h3, [data-navigation] [data-qr] h4, [data-navigation] [data-qr] h5, [data-navigation] [data-qr] h6 {
   font-size: 0.8125rem;
   text-transform: none;
   max-width: 23.5rem;
+}
+[data-navigation] [data-qr] svg {
+  width: 100% !important;
+  height: 100% !important;
 }
 [data-navigation] .ant-table-tbody > tr {
   background-color: transparent;

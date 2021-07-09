@@ -69,6 +69,7 @@ class Breadcrumb extends Component {
       break;
     }
     this.setHome(cms.filters[target.value])
+    this.props.selectFilter(target.value)
     this.setState({
       filter:{
         value: target.value,
@@ -135,7 +136,7 @@ class Breadcrumb extends Component {
         { this.props.levels.length < 1 &&
         <form className="ms-3">
           <Tooltip title="Filter the map view to show only what you desire" placement="right">
-            <select className="form-control" onChange={this.setFilter}>
+            <select className="form-select" onChange={this.setFilter}>
             {this.filters.map((option,o) => {
               return (
                 <option key={'option-'+o} value={option.value}>{option.label}</option>

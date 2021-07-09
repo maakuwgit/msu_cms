@@ -29,6 +29,8 @@ class Dashboard extends Component {
       selectedPrograms: []
     }
 
+    this.countries        = []
+
     this.divCss           = { overflow:'scroll' }
     this.divStyle         = "p-4 bg-tertiary"
 
@@ -97,6 +99,7 @@ class Dashboard extends Component {
       if(this.props.countries.length > 0 && this.state.countries.length === 0){
         let enabled = this.props.countries.filter(c => c.enabled)
         this.setState({countries: enabled})
+        this.countries = enabled
       }
     }
   }
@@ -114,12 +117,33 @@ class Dashboard extends Component {
         gallery: country.gallery
       })
     }else{
-      this.setState({
+      let state = {
         country: false,
         programs: false,
         gallery: false,
         selectedPrograms: []
+      }
+      let hasgrams = []
+      let actives = []
+      state.countries = this.state.countries.map(c => {
+        if(c.continent_id === this.state.continent.id && c.enabled){
+          if(this.state.filter){
+            if(c.programs.length) hasgrams.push(c)
+            if(c.suspended === 'off') actives.push(c)
+            if(this.state.filter === 'countries--active') {
+              state.countries = actives
+            }else if(this.state.filter === 'countries--programs') {
+              state.countries = hasgrams
+            }else{
+              state.countries = this.countries
+            }
+          }
+        }
       })
+
+      console.log(hasgrams, actives, this.state.filter, state.countries)
+
+      this.setState(state)
     }
   }
 
@@ -164,13 +188,16 @@ class Dashboard extends Component {
             <Subheadline key="dashboard__headline--countries"
             copy={cms.countries.headline} hStyle="row align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top"/>
             <div className={this.divStyle}>
-              <Table dataSource={this.props.countries ? this.props.countries.filter(c => c.continent_id === this.state.continent.id && c.enabled) : false}
-                loading={this.props.countries.length ? false : true}
+              <Table dataSource={this.state.countries ? this.state.countries : false}
+                loading={this.state.countries.length ? false : true}
                 rowKey={(record) => {
                   return `dashboard__table__row--${record.id}`
                 }} 
                 rowClassName={(record) =>{
-                  return "ant-table-clickable"+ (record.suspended !== 'off' ? ' suspended' : '')
+                  let style = "ant-table-clickable"+ (record.suspended !== 'off' ? ' suspended' : '')
+                  style = record.programs ? style + ' programs' : style
+                  style = record.enabled === 'on' ? style + ' active' : style
+                  return style
                 }} 
                 onRow={(record, r) => {
                   if(record.suspended === 'off'){

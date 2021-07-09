@@ -49,13 +49,20 @@
     width: $navigation-panel-width;
     bottom: $navigation-height;
     max-height: calc(100vh - #{$navigation-height + $greeting-height + $navbar-height + $footer-height});
-    overflow: scroll;
+    overflow: hidden;
+    overflow-y: auto;
   }
 
-  [data-qr] * {
-    font-size: $navigation-td-font-size;
-    text-transform: none;
-    max-width: $navigation-qr-width;
+  [data-qr] {
+    h3, h4, h5, h6 {
+      font-size: $navigation-td-font-size;
+      text-transform: none;
+      max-width: $navigation-qr-width;
+    }
+    svg {
+      width: 100% !important;
+      height: 100% !important;
+    }
   }
 
   .ant-table-tbody > tr {
