@@ -125,7 +125,7 @@ class Navigation extends Component {
                   { this.props.levels[1].code &&
                   <div className="col-3 py-1" data-qr>
                     <h3 className="h5 text-white fw-bold">Scan QR code with <br className="d-none d-lg-block"/>your mobile device <br className="d-none d-lg-block"/>for more information</h3>
-                    <div className="p-2 bg-white" style={{width: '7rem', height: '7rem'}}>
+                    <div className="d-flex justify-content-center align-items-center bg-white" style={{width: '7rem', height: '7rem'}}>
                       <QRCode value={this.props.levels[1].code} size={93}/>
                     </div>
                   </div>

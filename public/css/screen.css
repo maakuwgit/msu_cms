@@ -100,10 +100,6 @@
   text-transform: none;
   max-width: 23.5rem;
 }
-[data-navigation] [data-qr] svg {
-  width: 100% !important;
-  height: 100% !important;
-}
 [data-navigation] .ant-table-tbody > tr {
   background-color: transparent;
 }
