@@ -53,8 +53,8 @@ class Programs extends Component {
                 style: 'mt-2 col-md-6', 
                 placeholder: 'Spring, Summer, Winter etc.'
               },{
-                label: 'Country',
-                id: 'countries',
+                label: 'Country/Countries',
+                id: 'country_ids',
                 type: 'select', 
                 required: true, 
                 multiple: true, 
@@ -74,7 +74,8 @@ class Programs extends Component {
                 description: <span>This program is <span className="checked">suspended</span><span className="unchecked">open</span></span>
               }
             ],(obj) => {
-              obj = this.props.parseProgram(obj)
+//              obj = this.props.parseProgram(obj)
+              closeModal(this.props.resetModal)
               this.props.postProgram(obj)
             })
           }
@@ -125,7 +126,7 @@ class Programs extends Component {
               dataIndex: 'countries',
               key: 'countries',
               render: (countries) => {
-                if( countries  ) {
+                if( countries.length > 0 ) {
                   return countries.map((cou,c) => {
                     return c + 1 < countries.length ? cou.name + ', ' : cou.name
                   })

@@ -22,7 +22,7 @@ class Headline extends Component {
               }
               { this.props.has_selected &&
               <button className={`btn-danger ${cms.headline.btnStyle}`} onClick={this.props.deleteAll}>
-                <span className="me-2">{this.props.delete.slug ? this.props.delete.slug : cms.headline.btnLabelDelete}</span>
+                <span className="me-2">{this.props.delete ? this.props.delete.slug : cms.headline.btnLabelDelete}</span>
                 <span className="badge badge-pill badge-white p-1">{this.props.num_selected}</span>
               </button>
               }

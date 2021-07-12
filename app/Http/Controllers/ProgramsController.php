@@ -62,7 +62,14 @@ class ProgramsController extends Controller
 
         $program->save();
 
-        return response()->json($program->id);
+        $countries = json_decode($request->get('countries'));
+        foreach($countries as $c){
+            $country = Countries::find(floatval($c));
+            $program->countries()->attach($c);
+        }
+        
+        $program->countries;
+        return response()->json($program);
     }
 
     /**

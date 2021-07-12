@@ -54,88 +54,86 @@ class Modal extends Component {
   }
 
   parseInput(input, index){
-    if(this.state[input.id]){
-      let output = false
-      switch(input.type){
-        case 'select':
-          output = (
-            <select id={input.id} disabled={input.readOnly} readOnly={input.readOnly} multiple={input.multiple}
-            className="form-control form-select" required={input.required} value={this.state[input.id]} defaultValue={input.placeholder} 
+    let output = false
+    switch(input.type){
+      case 'select':
+        output = (
+          <select id={input.id} disabled={input.readOnly} readOnly={input.readOnly} multiple={input.multiple}
+          className="form-control form-select" required={input.required} value={this.state[input.id]}
+          onChange={(evt)=>{
+            let opts = evt.target.options
+            let val = []
+            for(var o = 0; o < opts.length; o++) {
+              if(opts[o].selected) val.push(opts[o].value)
+            }
+            this.setState({[input.id]: val})
+          }}>
+            { input.multiple !== true &&
+            <option key={`option__${index}-${randomID()}`}></option>
+            }
+            { input.options && input.options.map((option,o) =>{
+              return <option key={`option__${index}-${randomID()}--${o}`} value={option.value}>{option.label}</option>
+            })}
+          </select>
+        )
+      break;
+      case 'textarea':
+        output = (
+          <textarea id={input.id} placeholder={input.placeholder} className="form-control"
+            value={this.state[input.id] ? this.state[input.id] : ''} readOnly={input.readOnly}
             onChange={(evt)=>{
-              let opts = evt.target.options
-              let val = []
-              for(var o = 0; o < opts.length; o++) {
-                if(opts[o].selected) val.push(opts[o].value)
-              }
-              this.setState({[input.id]: val})
-            }}>
-              { input.multiple !== true &&
-              <option key={`option__${index}-${randomID()}`}></option>
-              }
-              { input.options && input.options.map((option,o) =>{
-                return <option key={`option__${index}-${randomID()}--${o}`} value={option.value}>{option.label}</option>
-              })}
-            </select>
-          )
-        break;
-        case 'textarea':
-          output = (
-            <textarea id={input.id} placeholder={input.placeholder} className="form-control"
-              value={this.state[input.id]} readOnly={input.readOnly} defaultValue={input.placeholder} 
+              this.setState({[input.id]: evt.target.value})
+            }} required={input.required}/>
+        )
+      break;
+      case 'slider':
+        output = (
+          <Slider id={input.id} marks={{
+            1: '10%',
+            9: '50%',
+            17: '90%'
+          }} step={1} max={9} min={1} value={input.value ? input.value : 4} onChange={(evt)=>{
+            this.setState({[input.id]: evt.target.value})
+          }}/>
+        )
+      break;
+      case 'gallery':
+        output = (
+          <Gallery key="modal__gallery" 
+          files={input.value} 
+          deleteMedia={this.props.deleteMedia} 
+          uploadMedia={this.props.uploadMedia} 
+          country={input.country} 
+          id={input.id} 
+          index={1} 
+          previewModal={this.previewModal}/>
+        )
+      break;
+      case 'qrcode':
+        output = (
+          <QRCode code={input.value} hide_nav={true}/>
+        )
+      break;
+      case 'text':
+      default:
+        output = (
+          <>
+            <input id={input.id} name={input.id} type={input.type}
+              placeholder={input.placeholder} className="form-control"
+              value={this.state[input.id] ? this.state[input.id] : ''}
+              readOnly={input.readOnly}
               onChange={(evt)=>{
                 this.setState({[input.id]: evt.target.value})
-              }} required={input.required}/>
-          )
-        break;
-        case 'slider':
-          output = (
-            <Slider marks={{
-              1: '10%',
-              9: '50%',
-              17: '90%'
-            }} step={1} max={9} min={1} defaultValue={input.value ? input.value : 4} />
-          )
-        break;
-        case 'gallery':
-          output = (
-            <Gallery key="modal__gallery" 
-            files={input.value} 
-            deleteMedia={this.props.deleteMedia} 
-            uploadMedia={this.props.uploadMedia} 
-            country={input.country} 
-            id={input.id} 
-            index={1} 
-            previewModal={this.previewModal}/>
-          )
-        break;
-        case 'qrcode':
-          output = (
-            <QRCode code={input.value} hide_nav={true}/>
-          )
-        break;
-        case 'text':
-        default:
-          output = (
-            <>
-              <input id={input.id} name={input.id} type={input.type}
-                placeholder={input.placeholder} className="form-control"
-                value={this.state[input.id]} defaultValue={input.placeholder} 
-                readOnly={input.readOnly}
-                onChange={(evt)=>{
-                  this.setState({[input.id]: evt.target.value})
-                }} required={input.required} 
-                pattern={input.pattern}/>
-              { input.msg &&
-              <small className="invalid-feedback">{input.msg}</small>
-              }
-            </>
-          )
-        break;
-      }
-      return output
-    }else{
-      return false
+              }} required={input.required} 
+              pattern={input.pattern}/>
+            { input.msg &&
+            <small className="invalid-feedback">{input.msg}</small>
+            }
+          </>
+        )
+      break;
     }
+    return output
   }
 
   componentDidUpdate(){

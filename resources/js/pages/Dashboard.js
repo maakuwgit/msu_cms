@@ -32,7 +32,7 @@ class Dashboard extends Component {
     this.countries        = []
 
     this.divCss           = { overflow:'scroll' }
-    this.divStyle         = "p-4 bg-tertiary"
+    this.divStyle         = "p-4 bg-tertiary mb-2 h-100"
 
     this.checkContinent   = this.checkContinent.bind(this)
     this.parseContinents  = this.parseContinents.bind(this)
@@ -64,7 +64,7 @@ class Dashboard extends Component {
   //Look at the list of Countries, and class them based on existence and suspension
   //Used by the Map component for style and listeners
   checkCountries(slug){
-    let exists    = this.state.countries.filter(c => c.slug === slug)
+    let exists    = this.state.countries.length > 0 ? this.state.countries.filter(c => c.slug === slug) : []
     if(exists.length > 0) {
       if(exists[0].enabled === 'on') {
         //console.log(exists[0])
@@ -80,12 +80,6 @@ class Dashboard extends Component {
     }
   }
 
-  injectProgram(obj) {
-    obj.id = randomID()
-    let nu = this.state.programs ? this.state.programs.concat(obj) : [obj]
-    this.setState({programs: nu})
-  }
-
   parseContinents(){
     if(this.props.continents) {
       if(this.props.continents.length > 0 && this.state.continents.length === 0){
@@ -94,10 +88,14 @@ class Dashboard extends Component {
     }
   }
 
-  parseCountries(){
-    if(this.props.countries) {
+  parseCountries(countries=false){
+    if(countries) {
+      let enabled = countries.filter(c => c.enabled)
+      this.setState({countries: enabled})
+      this.countries = enabled
+    }else if(this.props.countries) {
       if(this.props.countries.length > 0 && this.state.countries.length === 0){
-        let enabled = this.props.countries.filter(c => c.enabled)
+        let enabled = this.props.countries.filter(c => c.enabled === 'on')
         this.setState({countries: enabled})
         this.countries = enabled
       }
@@ -105,7 +103,8 @@ class Dashboard extends Component {
   }
 
   selectContinent(continent=false){
-    this.setState({continent: continent})
+    let countries = this.props.countries.filter(cou => cou.continent_id === continent.id)
+    this.setState({continent: continent, countries: countries })
   }
 
   selectCountry(country=false){
@@ -125,23 +124,22 @@ class Dashboard extends Component {
       }
       let hasgrams = []
       let actives = []
-      state.countries = this.state.countries.map(c => {
+
+      state.countries = this.state.countries.length > 0 ? this.state.countries.filter(c => {
         if(c.continent_id === this.state.continent.id && c.enabled){
           if(this.state.filter){
             if(c.programs.length) hasgrams.push(c)
             if(c.suspended === 'off') actives.push(c)
             if(this.state.filter === 'countries--active') {
-              state.countries = actives
+              return actives
             }else if(this.state.filter === 'countries--programs') {
-              state.countries = hasgrams
+              return hasgrams
             }else{
-              state.countries = this.countries
+              return this.countries
             }
           }
         }
-      })
-
-      console.log(hasgrams, actives, this.state.filter, state.countries)
+      }) : []
 
       this.setState(state)
     }
@@ -186,7 +184,8 @@ class Dashboard extends Component {
             { !this.state.country ?
             <>
             <Subheadline key="dashboard__headline--countries"
-            copy={cms.countries.headline} hStyle="row align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top"/>
+            copy={cms.countries.headline} 
+            hStyle="row align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top"/>
             <div className={this.divStyle}>
               <Table dataSource={this.state.countries ? this.state.countries : false}
                 loading={this.state.countries.length ? false : true}
@@ -412,16 +411,18 @@ class Dashboard extends Component {
                   id: 'name',
                   type: 'text', 
                   required: true, 
-                  style: 'col-md-6'
+                  style: 'col-md-6',
+                  placeholder: 'Choose a name for your program'
                 },{
                   label: 'Semester',
                   id: 'semester',
                   type: 'text', 
                   required: true, 
-                  style: 'col-md-6'
+                  style: 'col-md-6',
+                  placeholder: 'Summer, Spring etc.'
                 },{
-                  label: 'Country',
-                  id: 'country_id',
+                  label: 'Country/Countries',
+                  id: 'country_ids',
                   type: 'select', 
                   options: this.props.countries.map(co => {
                     return { 
@@ -431,7 +432,7 @@ class Dashboard extends Component {
                   }),
                   readOnly: true,
                   style: 'mt-2 col-md-6',
-                  value: this.props.countries.filter(c => c.id === this.state.country.id)[0].id
+                  value: [this.props.countries.filter(c => c.id === this.state.country.id)[0].id]
                 },{
                   label: 'Suspended/Open',
                   id: 'suspended',
@@ -440,9 +441,13 @@ class Dashboard extends Component {
                   description: <span>This program is <span className="checked">suspended</span><span className="unchecked">open</span></span>, 
                 }
               ],(obj) => {
-                this.injectProgram(obj)
                 closeModal(this.props.resetModal)
-                this.props.postProgram(obj)
+                this.props.postProgram(obj, (program) => {
+                  let np = this.state.programs.concat(program)
+                  let nc = this.state.country
+                  nc.programs.concat(program)
+                  this.setState({programs:np, country:nc})
+                  })
                 })
               }
             }} has_selected={this.state.selectedPrograms.length > 0 ? 'program' : false} num_selected={this.state.selectedPrograms ? this.state.selectedPrograms.length : 0} />

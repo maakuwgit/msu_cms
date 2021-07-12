@@ -15,6 +15,7 @@ class World extends Component {
   touchContinent(event){
     let target    = event.target
     let country   = target.parentNode
+    //Ensure that countries that are NOT part of continents still clickthrough
     if( country.nodeName !== 'g') country = country.parentNode
     let continent = country.parentNode
     let slug      = continent.attributes.id.nodeValue
@@ -40,12 +41,12 @@ class World extends Component {
     if( country.nodeName !== 'g') country = country.parentNode
     if(country.attributes.id && country.className) {
       let slug      = country.attributes.id.nodeValue
-      let obj       = this.props.countries.filter(c=>c.slug === slug)[0]
+      let obj       = this.props.countries.filter(c=>c.slug === slug)
       toggleCountries('off',country)
 
       country.classList.add('selected')
 
-      this.props.selectCountry(obj)
+      if(obj.length > 0) this.props.selectCountry(obj[0])
     }
   }
 

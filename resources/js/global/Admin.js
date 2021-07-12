@@ -314,12 +314,12 @@ class Admin extends Component {
     })
   }
 
-  postProgram(program){
+  postProgram(program, callback=false){
     program = this.parseProgram(program)
     this.setState({loading: true})
     api.post('/resource/programs', program)
     .then( response => {
-      program.id = response.data
+      program = response.data
       let np = this.state.programs.concat(program)
       
       this.resetAlert()
@@ -333,6 +333,7 @@ class Admin extends Component {
         programs_have_posted: true
       })
       this.programs = np
+      if(callback) callback(program)
     })
     .catch( error => {
       this.setState({
@@ -558,7 +559,7 @@ class Admin extends Component {
   }
 
   parseProgram(program) {
-    program.id = parseFloat(program.id)
+    if(program.id) program.id = parseFloat(program.id)
     program.countries = typeof program.country_ids != 'string' ? 
                         JSON.stringify(program.country_ids) : 
                         program.country_ids
