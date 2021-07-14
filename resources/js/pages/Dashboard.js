@@ -186,7 +186,7 @@ class Dashboard extends Component {
             <Subheadline key="dashboard__headline--countries"
             copy={cms.countries.headline} 
             hStyle="row align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top"/>
-            <div className={this.divStyle}>
+            <div className={this.divStyle} style={{overflow:'scdroll'}}>
               <Table dataSource={this.state.countries ? this.state.countries : false}
                 loading={this.state.countries.length ? false : true}
                 rowKey={(record) => {

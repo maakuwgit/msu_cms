@@ -28,7 +28,7 @@
         "webpack-cli": "^4.6.0"
     },
     "devDependencies": {
-        "antd": "4.13.0",
+        "antd": "^4.16.7",
         "autoprefixer": "^10.2.6",
         "axios": "^0.21",
         "bootstrap": "^5.0.2    ",

@@ -59,6 +59,10 @@
       text-transform: none;
       max-width: $navigation-qr-width;
     }
+
+    input {
+      font-size: rem-calc(10)
+    }
   }
 
   .ant-table-tbody > tr {

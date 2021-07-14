@@ -35,16 +35,16 @@ class QR extends Component {
             <legend className="text-uppercase fw-bold text-secondary small">{this.title}</legend>
             <fieldset>
               <div className="input-group">
-                <input type="url" value={this.state.code} id="code" onChange={(evt)=>{
-              this.setState({code: evt.target.value})
-            }} className="h-auto form-control rounded-0"/>
+                <input type="url" value={this.state.code} id="code" onChange={(evt)=> {
+                  this.setState({code: evt.target.value})
+                }} className="h-auto form-control form-control-sm rounded-0"/>
                 { !this.props.hide_nav &&
                 <div className="input-group-append">
-                  <button className="btn btn-smoke text-uppercase" type="submit">Save</button>
+                  <button className="btn btn-smoke text-uppercase rounded-0 rounded-end btn-sm" type="submit">Save</button>
                 </div>
                 }
               </div>
-              <label className="text-smoke small mb-0" htmlFor="code">{this.description}</label>
+              <label className="text-smoke mb-0" htmlFor="code" style={{fontSize:'0.625rem'}}>{this.description}</label>
             </fieldset>
           </div>
         </div>

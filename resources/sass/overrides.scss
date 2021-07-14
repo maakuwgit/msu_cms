@@ -394,6 +394,16 @@ h6, .h6 {
       }
     }
   }
+  .ant-upload-list-item-file,
+  .ant-upload-list-item-thumbnail {
+    + .ant-upload-list-item-name {
+      display: block;
+      white-space: initial;
+      line-height: 1;
+      font-size: rem-calc(9);
+      padding: 0 #{rem-calc(5)};
+    }
+  }
 }
 
 .ant-upload-picture-card-wrapper {
@@ -404,6 +414,35 @@ h6, .h6 {
       border: 0;
       border-radius: 0;
       background-color: $white;
+      &.ant-upload-list-item-uploading {
+        background-color: $warning;
+        padding: rem-calc(2);
+        .ant-upload-list-item-info {
+          height: 100%;
+          background-color: $white;
+        }
+        .ant-upload-list-item-progress {
+          left: 7px;
+        }
+        .ant-progress-text {
+          font-size: rem-calc(8);
+        }
+      }
+      &.ant-upload-list-item-error {
+        background-color: $danger;
+        padding: rem-calc(2);
+        .ant-upload-list-item-info {
+          background-color: $white;
+        }
+        .ant-upload-list-item-thumbnail {
+          width: rem-calc(40);
+          height: rem-calc(40);
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: rem-calc(10);
+          border: solid #{rem-calc(1)} $battleship;
+        }
+      }
     }
   }
 }

@@ -223,8 +223,6 @@ class Admin extends Component {
           media_has_posted: true
         })
         firebase.storage().ref(media.file.name).put(media.file).on('state_changed' , (snapshot) => {
-          media.file.percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          media.file.state = 'uploading'
           switch (snapshot.state) {
             case firebase.storage.TaskState.PAUSED:
               media.file.state = 'paused'
@@ -232,6 +230,7 @@ class Admin extends Component {
             case firebase.storage.TaskState.RUNNING:
             default: 
               //console.log('Upload is running')
+              media.onProgress({percent: (snapshot.bytesTransferred / snapshot.totalBytes) * 100})
             break;
           }
         }, 
@@ -268,14 +267,14 @@ class Admin extends Component {
               style: 'success'
             }
           })
-          media.file.percent = 100
-          media.file.state = 'done'
+          media.onSuccess(media.file)
         })
       })
       .catch( error => {
+        media.onError(error)
         this.setState({
           feedback: {
-            msg: `An error occurred while trying to create ${media.file.name}: ${error}`,
+            msg: `${media.file.name} can't be uploaded! ${error.response.data.message}`,
             style: 'danger'
           },
           media_has_posted: false

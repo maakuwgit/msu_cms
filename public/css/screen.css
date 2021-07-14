@@ -100,6 +100,9 @@
   text-transform: none;
   max-width: 23.5rem;
 }
+[data-navigation] [data-qr] input {
+  font-size: 0.625rem;
+}
 [data-navigation] .ant-table-tbody > tr {
   background-color: transparent;
 }
