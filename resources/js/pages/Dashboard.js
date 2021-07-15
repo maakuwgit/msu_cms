@@ -359,9 +359,9 @@ class Dashboard extends Component {
                             },{
                               label: 'Enable/Disable',
                               id: 'enabled',
-                              type: this.props.usertype === 1 ? 'checkbox' : 'hidden', 
+                              type: 'hidden', 
                               style: 'col-md-6 mt-2', 
-                              readOnly: this.props.usertype != 1, 
+                              readOnly: true, 
                               description: "This country is available to Moderators", 
                               value: record.enabled === 'off' ? false : true
                             },{

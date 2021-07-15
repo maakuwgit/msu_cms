@@ -15,10 +15,10 @@ class World extends Component {
   }
 
   makeText(slug, x, y) {
-    return this.props.countries.map(cou => {
+    return this.props.countries.map((cou,c) => {
       if(cou.slug === slug) {
         return (
-        <text fill="var(--bs-white)" className="gotham fw-bold">
+        <text key={`country_title__${slug}-${c}`} fill="var(--bs-white)" className="gotham fw-bold">
           <tspan x={x} y={y}>{cou.name}
           </tspan>
         </text>
@@ -57,8 +57,8 @@ class World extends Component {
     if(country.attributes.id && country.className) {
       let slug      = country.attributes.id.nodeValue
       let obj       = this.props.countries.filter(c=>c.slug === slug && ( c.suspended === 'off' || this.props.show_suspended))
+      
       toggleCountries('off',country)
-console.log(slug, obj, this.props.countries)
       country.classList.add('selected')
 
       if(obj.length > 0) this.props.selectCountry(obj[0])

@@ -24,6 +24,9 @@ class Navigation extends Component {
     this.resetCountry       = this.resetCountry.bind(this)
     this.setHome            = this.setHome.bind(this)
 
+    this.downBtnHandler     = this.downBtnHandler.bind(this)
+    this.upBtnHandler       = this.upBtnHandler.bind(this)
+
     this.navMouseMoveHandler      = this.navMouseMoveHandler.bind(this)
     this.panelMouseMoveHandler    = this.panelMouseMoveHandler.bind(this)
   }
@@ -51,6 +54,24 @@ class Navigation extends Component {
     let target        = document.getElementById('navigation__country')
     target.scrollTop  = Math.floor(target.scrollHeight*(value * 0.01))
     this.setState({navScrollCoordinates:value})
+  }
+
+  downBtnHandler(event){
+    let target          = document.getElementById('navigation__country')
+    let handle          = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-handle')
+    let rail            = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-rail')
+    let value           = target.scrollTop + 52
+    target.scrollTop    = value
+    this.setState({navScrollCoordinates:Math.floor((rail.offsetHeight/target.scrollHeight) * value)})
+  }
+
+  upBtnHandler(event){
+    let target          = document.getElementById('navigation__country')
+    let handle          = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-handle')
+    let rail            = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-rail')
+    let value           = target.scrollTop - 52
+    target.scrollTop    = value
+    this.setState({navScrollCoordinates:Math.floor((rail.offsetHeight/target.scrollHeight) * value)})
   }
 
   panelMouseMoveHandler(value){
@@ -213,14 +234,14 @@ class Navigation extends Component {
                   }) }
                 </div>
                 { this.props.levels[0].countries.length > 3 &&
-                <div className="d-flex flex-column justify-content-between" style={{backgroundColor:'rgba(255,255,255,0.9)'}}>
+                <div data-scrollbar className="d-flex flex-column justify-content-between" style={{backgroundColor:'rgba(255,255,255,0.9)'}}>
                   <Scrollbar vertical tooltipVisible={false}
                     min={0} max={90} className={"mx-0"} 
                     onChange={this.navMouseMoveHandler} 
                     value={this.state.navScrollCoordinates} />
                   <div className="d-flex flex-column">
-                    <Button type="scrollup"/>
-                    <Button type="scrolldown"/>
+                    <Button type="scrollup" callback={this.upBtnHandler}/>
+                    <Button type="scrolldown" callback={this.downBtnHandler}/>
                   </div>
                 </div>
                 }
