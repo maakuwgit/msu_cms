@@ -8,24 +8,24 @@ class Button extends Component {
     switch(this.props.type){
       case 'scrollup':
         button = (
-          <button className="btn btn-white mb-0 p-1 border-0" 
+          <button data-scroll="up" className="btn btn-white mb-0 p-1 border-0" 
            onClick={this.props.callback} 
            style={{transform:'rotate(180deg)',backgroundColor:'transparent'}}>
-          <svg className="icon">
-            <use xlinkHref="#icon__angle--down"/>
-          </svg>
-        </button>
+            <svg className="icon">
+              <use xlinkHref="#icon__angle--down"/>
+            </svg>
+          </button>
         )
       break;
       case 'scrolldown':
         button = (
-          <button className="btn btn-white mb-0 p-1 border-0" 
+          <button data-scroll="down" className="btn btn-white mb-0 p-1 border-0" 
            onClick={this.props.callback} 
            style={{backgroundColor:'transparent'}}>
-          <svg className="icon">
-            <use xlinkHref="#icon__angle--down"/>
-          </svg>
-        </button>
+            <svg className="icon">
+              <use xlinkHref="#icon__angle--down"/>
+            </svg>
+          </button>
         )
       break;
       case 'back':

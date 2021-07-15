@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import cms from '../cms.json'
 import "slick-carousel/slick/slick.css"
-//import "slick-carousel/slick/slick-theme.css"
 import Button from './Button'
 import QRCode from 'react-qr-code'
 import {Slider as Scrollbar, Table} from 'antd'
@@ -24,11 +23,9 @@ class Navigation extends Component {
     this.resetCountry       = this.resetCountry.bind(this)
     this.setHome            = this.setHome.bind(this)
 
-    this.downBtnHandler     = this.downBtnHandler.bind(this)
-    this.upBtnHandler       = this.upBtnHandler.bind(this)
+    this.scrollBtnHandler     = this.scrollBtnHandler.bind(this)
 
     this.navMouseMoveHandler      = this.navMouseMoveHandler.bind(this)
-    this.panelMouseMoveHandler    = this.panelMouseMoveHandler.bind(this)
   }
 
   resetContinent(){
@@ -56,58 +53,21 @@ class Navigation extends Component {
     this.setState({navScrollCoordinates:value})
   }
 
-  downBtnHandler(event){
-    let target          = document.getElementById('navigation__country')
-    let handle          = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-handle')
-    let rail            = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-rail')
-    let value           = target.scrollTop + 52
-    target.scrollTop    = value
-    this.setState({navScrollCoordinates:Math.floor((rail.offsetHeight/target.scrollHeight) * value)})
+  scrollBtnHandler(event){
+    let btn    = event.target
+    let target = document.getElementById('navigation__country')
+    let handle = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-handle')
+    let rail   = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-rail')
+    let value  = target.scrollTop
+    if(btn.dataset.scroll === "down") {
+      value += 52
+    }else{
+      value -= 52
+    }
+    target.scrollTop = value
+    this.setState({navScrollCoordinates:Math.floor(((rail.offsetHeight + handle.offsetHeight)/target.scrollHeight) * value)})
   }
-
-  upBtnHandler(event){
-    let target          = document.getElementById('navigation__country')
-    let handle          = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-handle')
-    let rail            = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-rail')
-    let value           = target.scrollTop - 52
-    target.scrollTop    = value
-    this.setState({navScrollCoordinates:Math.floor((rail.offsetHeight/target.scrollHeight) * value)})
-  }
-
-  panelMouseMoveHandler(value){
-    let target        = document.getElementById('navigation__panel')
-    target.scrollTop  = Math.floor(target.scrollHeight*(value * 0.01))
-    this.setState({panelScrollCoordinates:value})
-  }
-
-  componentDidMount(){
-    window.addEventListener('resize', () => {
-      let panel     = document.getElementById("navigation__panel")
-      let scrollbar = document.getElementById("navigation__panel_scroll")
-      if(scrollbar){
-        scrollbar.classList.remove('d-flex')
-        scrollbar.classList.add('d-none')
-
-        let footer      = document.querySelector('[data-footer]')
-        let greeting    = document.querySelector('[data-greeting]')
-        let header      = document.querySelector('[data-header]')
-        let navigation  = document.querySelector('[data-navigation]')
-        setTimeout(() => {
-          if(panel){
-            if(panel.scrollHeight > window.innerHeight - header.scrollHeight - footer.scrollHeight - greeting.scrollHeight - navigation.scrollHeight){
-              scrollbar.classList.add('d-flex')
-              scrollbar.classList.remove('d-none')
-            }
-          }
-        }, 1000)
-      }
-    })
-  }
-
-  componentDidUpdate(){
-    window.dispatchEvent(new Event('resize'))
-  }
-
+  
   render() {
     if( this.props.levels.length > 0 ) {
       return(
@@ -153,7 +113,7 @@ class Navigation extends Component {
                   }
                   <div className={`${this.props.levels[1].code ? 'col-8 offset-1 py-2' : 'col-12 pt-2 pb-5'} d-flex flex-column justify-content-center`}>
                     { ( this.props.levels[1].gallery ) &&
-                    <Slider dots={false} infinite={true} adaptiveHeight={true} 
+                    <Slider dots={false} infinite={true} adaptiveHeight={true}
                       nextArrow={
                       <button type="button" title="Next">
                         <div className="btn p-0 mb-0 text-white">
@@ -194,17 +154,6 @@ class Navigation extends Component {
                   </div>
                 </div>
               </div>
-              {/*
-              <div id="navigation__panel_scroll" className="d-none position-absolute flex-column justify-content-between"
-               style={{backgroundColor:'rgba(255,255,255,0.9)',bottom:0,right:'-1.75rem',height:'calc(100vh - 9.5rem - 44px)'}}>
-                <Scrollbar vertical tooltipVisible={false} className={"mx-0"} 
-                  onChange={this.panelMouseMoveHandler} 
-                  value={this.state.panelScrollCoordinates} />
-                <div className="d-flex flex-column">
-                  <Button type="scrollup"/>
-                  <Button type="scrolldown"/>
-                </div>
-              </div>*/}
             </span>
             </>
             :
@@ -240,8 +189,8 @@ class Navigation extends Component {
                     onChange={this.navMouseMoveHandler} 
                     value={this.state.navScrollCoordinates} />
                   <div className="d-flex flex-column">
-                    <Button type="scrollup" callback={this.upBtnHandler}/>
-                    <Button type="scrolldown" callback={this.downBtnHandler}/>
+                    <Button type="scrollup" callback={this.scrollBtnHandler}/>
+                    <Button type="scrolldown" callback={this.scrollBtnHandler}/>
                   </div>
                 </div>
                 }

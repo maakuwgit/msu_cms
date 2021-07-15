@@ -116,7 +116,6 @@ class Screen extends Component {
   }
 
   selectCountry(country=false){
-    console.log(country)
     if(country){
       let tag = document.getElementById(`${country.slug}`)
       let continent = tag ? tag.parentElement : false
