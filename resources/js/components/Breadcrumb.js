@@ -123,7 +123,6 @@ class Breadcrumb extends Component {
             onClick={this.resetCountry}>
               <Tooltip title="Return to the Countries View">{this.props.levels[0].name}</Tooltip>
             </a>
-            <span key={`breadcrumb__country`}>{this.props.levels[1].name}</span>
           </>
           :
             <span key={`breadcrumb__continent`}>{this.props.levels[0].name}</span>

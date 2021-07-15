@@ -42,7 +42,7 @@ class CountriesController extends Controller
      */
     public function active()
     {
-        $countries = Countries::where('enabled','=','on','and','suspended','=','off')->get();
+        $countries = Countries::where('enabled','on')->get();
 
         return response()->json($this->parse($countries));
     }
@@ -91,6 +91,7 @@ class CountriesController extends Controller
 
         $country = Countries::find($id);
         $country->name = $request->get('name');
+        $country->color = $request->get('color');
         $country->code = $request->get('code');
         $country->enabled = $request->get('enabled');
         $country->suspended = $request->get('suspended');

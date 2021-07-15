@@ -35,7 +35,6 @@ export const updateBodyStyle = (style='') => {
   body.className = location
 }
 
-
 //Create a numerical suffix that is (mostly) random, once combinded with other string data
 export const randomID = (length=8) => {
   // Declare all characters
@@ -48,50 +47,6 @@ export const randomID = (length=8) => {
   }
 
   return str
-}
-
-//[Unused] Send data about the 'section' a user is interacting with to the backend
-export const trackIt = (data, section) => {
-  //console.log(`insert tracking for ${data}`, section)
-}
-
-//Take a standard string of numbers and format it to look like a phone number
-export const formatPhone = (phone) => {
-  return `(${phone.substr(0,3)}) ${phone.substr(3,3)}-${phone.substr(6)}`
-}
-
-//Force the window contents to hard jump tot he top
-export const jumpToTop = () => {
-  setTimeout(window.scrollTo(0, 0), 300)
-}
-
-//Read the location hash (if there is one) and trigger that tab
-export const getHash = () => {
-  let hash = window.location.hash
-  if(hash) {
-    let anchor = document.querySelector(`a[href="${hash}"]`)
-    if( anchor ) {
-      anchor.click()
-    }
-  }else{
-    return false
-  }
-}
-
-export const setHash = (event) => {
-  let hash = event.target.dataset.href
-  window.location = hash
-}
-
-//Convert any DOM object containing an anchor into a clickable element
-export const clickthrough = (event) => {
-  if(!event) return false
-  event.preventDefault()
-    
-  const target = event.target.querySelector('a:first-of-type')
-  if(target) {
-    if(!target.classList.contains('disabled')) target.click()
-  }
 }
 
 //Trigger the closing of a Bootstrap modal
@@ -140,19 +95,6 @@ export const getSettings = (callback) => {
   })
   .catch(error => {
     return error.response ? error.response.statusText : error
-  })
-}
-
-export const getUsers = (callback) => {
-  axios.get('/resource/users')
-  .then( response => {
-    callback && callback(response.data)
-  })
-  .finally( () => {
-    return true
-  })
-  .catch(error => {
-    return error.data
   })
 }
 

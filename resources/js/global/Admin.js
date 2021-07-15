@@ -288,8 +288,13 @@ class Admin extends Component {
     this.setState({loading: true})
     api.put(`/resource/programs/${program.id}`,program)
     .then( response => {
-      let np = this.state.programs.filter(p => p.id !== program.id)
-      np.push(response.data)
+      let np = this.state.programs.map(p => {
+        if(p.id !== response.data.id){
+          return p
+        }else{
+          return response.data
+        }
+      })
       this.resetAlert()
       this.setState({
         feedback: {
@@ -549,9 +554,11 @@ class Admin extends Component {
 
   parseCountry(country) {
     country.id = parseFloat(country.id)
+    country.enabled = country.enabled === 'true' ? 'on' : 'off'
     country.continent_id = parseFloat(country.continent_id)
     country.continent = JSON.parse(country.continent)
     country.programs = JSON.parse(country.programs)
+    country.gallery_id = country.gallery[0].id
     country.gallery = JSON.parse(country.gallery)
     country.updated_at = new Date()
     return country
@@ -566,15 +573,12 @@ class Admin extends Component {
     return program
   }
 
-  editCountry(country){
+  editCountry(country, callback=false){
     country = this.parseCountry(country)
     this.setState({loading: true})
     api.put(`/resource/countries/${country.id}`,country)
-    .then( () => {
-      let np = this.state.countries
-//      country = this.parseCountry(country)
-      this.state.countries[country.id - 1] = country
-      
+    .then((response) => {
+      let np = this.injectCountry(response.data)
       this.resetAlert()
       this.setState({
         feedback: {
@@ -588,6 +592,7 @@ class Admin extends Component {
     })
     .finally(vars => {
       this.setState({loading:false})
+      if(callback) callback()
     })
     .catch( error => {
       this.setState({
@@ -601,16 +606,16 @@ class Admin extends Component {
   }
 
   injectCountry(data){
-    let nc = this.state.countries
-    return nc.map(cou => {
+    return this.state.countries.map(cou => {
       if(cou.id === data.id) {
-        cou = data
+        return data
+      }else{
+        return cou
       }
-      return cou
     })
   }
 
-  suspendCountry(country){
+  suspendCountry(country, callback=false){
     country = this.parseCountry(country)
     this.setState({loading: true})
     api.put(`/resource/countries/${country.id}`,country)
@@ -623,10 +628,13 @@ class Admin extends Component {
           style: country.suspended !== 'on' ? 'success' : 'warning'
         },
         countries: np, 
-        loading: false,
         countries_have_posted: true
       })
       this.countries = np
+    })
+    .finally( vars  => {
+      this.setState({loading: false})
+      if(callback) callback()
     })
     .catch( error => {
       this.setState({
@@ -828,6 +836,7 @@ class Admin extends Component {
       default:
         if(!this.continents.length & !this.state.loading) this.getContinents(this.getCountries)
         if(!this.media.length & !this.state.loading) this.getMedia(this.getPrograms)
+        if(!this.galleries.length & !this.state.loading) this.getGalleries()
         updateBodyStyle('dashboard')
       break;
     }
@@ -916,7 +925,8 @@ class Admin extends Component {
         <Feedback feedback={this.state.feedback}/>
         <Switch>
           <Route exact path="/admin" render={() => (
-            <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} {...programMethods}/>
+            <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} {...programMethods}
+            usertype={this.state.user ? this.state.user.user_level_id : false}/>
           )} />
           <Route exact path="/admin/continents" render={() => (
             <Continents {...globalVars} {...globalMethods}/>

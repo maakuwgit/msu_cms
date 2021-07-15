@@ -88,25 +88,31 @@ class Modal extends Component {
       break;
       case 'slider':
         output = (
-          <Slider id={input.id} marks={{
-            1: '10%',
-            9: '50%',
-            17: '90%'
-          }} step={1} max={9} min={1} value={input.value ? input.value : 4} onChange={(evt)=>{
-            this.setState({[input.id]: evt.target.value})
-          }}/>
+          <>
+            <input type="hidden" id={input.id} value={this.state[input.id] ? this.state[input.id] : 4}/>
+            <Slider className="mx-3" id={input.id} marks={{
+              1: '10%',
+              9: '50%',
+              17: '90%'
+            }} step={1} max={9} min={1} value={this.state[input.id] ? this.state[input.id] : 4} onChange={(value)=>{
+              this.setState({[input.id]: value})
+            }}/>
+          </>
         )
       break;
       case 'gallery':
         output = (
-          <Gallery key="modal__gallery" 
-          files={input.value} 
-          deleteMedia={this.props.deleteMedia} 
-          uploadMedia={this.props.uploadMedia} 
-          country={input.country} 
-          id={input.id} 
-          index={1} 
-          previewModal={this.previewModal}/>
+          <>
+            <input type="hidden" id={input.id} value={input.value}/>
+            <Gallery key="modal__gallery" 
+              files={input.files} 
+              deleteMedia={this.props.deleteMedia} 
+              uploadMedia={this.props.uploadMedia} 
+              country={input.country} 
+              id={input.id+'_media'} 
+              index={1} 
+              previewModal={this.previewModal}/>
+          </>
         )
       break;
       case 'qrcode':
@@ -182,7 +188,7 @@ class Modal extends Component {
         <div className={`modal-dialog ${this.mStyle}`} role="document">
           <section className="modal-content p-1">
             { ( this.props.headline && this.props.type != 'preview' ) &&
-            <header className="modal-header">
+            <header className="modal-header px-3 pt-3 pb-2">
               <h5 className={`modal-title mx-2 text-uppercase fw-bold ${this.hStyle}`} id={`${this.id}__label`}>{this.props.headline}</h5>
               {btn}
             </header>
@@ -191,7 +197,7 @@ class Modal extends Component {
               { this.props.copy }
               { this.props.inputs &&
               ( this.props.type === 'edit' || this.props.type === 'create' ) ?
-              <form className="row" onSubmit={this.formSubmit}>
+              <form className="row p-2" onSubmit={this.formSubmit}>
                 { this.props.inputs.map( (input,i) => {
                   if( input.type === 'hidden' ){
                     return (

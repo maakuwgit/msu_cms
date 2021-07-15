@@ -13,7 +13,8 @@ input[type=checkbox] {
 	outline: none;
 }
 
-.btn-danger {
+.btn-danger,
+.btn-secondary {
   color: $white;
   span {
     color: inherit;
@@ -547,7 +548,7 @@ h6, .h6 {
       }
       
       &.suspended {
-        &, &:hover, &focus {
+        &, &:hover, &:focus {
           > td {
             color: $battleship;
             background: $aluminum;
@@ -555,11 +556,21 @@ h6, .h6 {
         }
       }
       
-      &.ant-table-clickable:hover {
-        color: $primary;
-        cursor: pointer;
-        > td {
-          background: rgba($seafoam,0.3);
+      &.ant-table-clickable {
+        &:not(.active) {
+          background-color: lighten($battleship, 10%);
+          > td {
+            color: $battleship;
+            background: $aluminum;
+          }
+        }
+        
+        &:hover {
+          color: $primary;
+          cursor: pointer;
+          > td {
+            background: rgba($seafoam,0.3);
+          }
         }
       }
     }
@@ -574,8 +585,4 @@ h6, .h6 {
       border-bottom: $navigation-table-border;
     }
   }
-}
-
-.ant-drawer-bottom.ant-drawer-open {
-	bottom: rem-calc(100);
 }

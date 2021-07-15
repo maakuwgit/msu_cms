@@ -192,22 +192,24 @@ class Navigation extends Component {
               <nav data-subnavigation className="d-flex position-absolute justify-content-between align-items-stretch">
                 <div id="navigation__country" className="col d-flex flex-column align-items-stretch justify-contrent-stretch px-0">
                   { this.props.levels[0].countries.map((cou, c) => {
-                    return (
-                    <button key={`map__navigation__anchor${c}`}
-                    className={cms.navigation.sublinkStyle} 
-                    data-country_slug={cou.slug}
-                    onClick={(event) => {
-                      let btn     = event.target
-                      let slug    = btn.dataset.country_slug
-                      let markup  = document.getElementById(`${slug}`)
-                      if(markup) {
-                        this.props.toggleCountries('off', markup)
-                        markup.classList.add('selected')
-                        let country = this.props.levels[0].countries.filter(cn => cn.slug === slug)
-                        this.props.selectCountry(country[0])
-                      }
-                    }}>{cou.name}</button>
-                    )
+                    if(cou.suspended === 'off'){
+                      return (
+                      <button key={`map__navigation__anchor${c}`}
+                      className={cms.navigation.sublinkStyle} 
+                      data-country_slug={cou.slug}
+                      onClick={(event) => {
+                        let btn     = event.target
+                        let slug    = btn.dataset.country_slug
+                        let markup  = document.getElementById(`${slug}`)
+                        if(markup) {
+                          this.props.toggleCountries('off', markup)
+                          markup.classList.add('selected')
+                          let country = this.props.levels[0].countries.filter(cn => cn.slug === slug)
+                          this.props.selectCountry(country[0])
+                        }
+                      }}>{cou.name}</button>
+                      )
+                    }
                   }) }
                 </div>
                 { this.props.levels[0].countries.length > 3 &&

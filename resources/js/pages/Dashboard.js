@@ -32,7 +32,7 @@ class Dashboard extends Component {
     this.countries        = []
 
     this.divCss           = { overflow:'scroll' }
-    this.divStyle         = "p-4 bg-tertiary mb-2 h-100"
+    this.divStyle         = "p-4 bg-tertiary h-100"
 
     this.checkContinent   = this.checkContinent.bind(this)
     this.parseContinents  = this.parseContinents.bind(this)
@@ -66,8 +66,7 @@ class Dashboard extends Component {
   checkCountries(slug){
     let exists    = this.state.countries.length > 0 ? this.state.countries.filter(c => c.slug === slug) : []
     if(exists.length > 0) {
-      if(exists[0].enabled === 'on') {
-        //console.log(exists[0])
+      if(exists[0].enabled === 'on' || this.props.usertype === 1) {
         let styles = exists[0].suspended === 'off' ? 'active' : 'active suspended'
         styles += checkPrograms(exists[0])
         styles += ' opacity-'+exists[0].color
@@ -165,7 +164,6 @@ class Dashboard extends Component {
     let levels = []
     if(this.state.continent) levels.push(this.state.continent)
     if(this.state.country) levels.push(this.state.country)
-//    if(this.state.gallery) console.log(this.state.gallery.media)
     return (
       <article key="dashboard__wrapper" className="container mx-0 px-2 pb-2">
         <div className="row mx-0 align-items-stretch justify-content-stretch h-100">
@@ -181,12 +179,8 @@ class Dashboard extends Component {
            style={this.divCss}>
             { this.state.continent &&
             <>
-            { !this.state.country ?
-            <>
-            <Subheadline key="dashboard__headline--countries"
-            copy={cms.countries.headline} 
-            hStyle="row align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top"/>
-            <div className={this.divStyle} style={{overflow:'scdroll'}}>
+            { !this.state.country ?     
+            <div className={this.divStyle} style={{overflow:'scroll'}}>
               <Table dataSource={this.state.countries ? this.state.countries : false}
                 loading={this.state.countries.length ? false : true}
                 rowKey={(record) => {
@@ -194,7 +188,7 @@ class Dashboard extends Component {
                 }} 
                 rowClassName={(record) =>{
                   let style = "ant-table-clickable"+ (record.suspended !== 'off' ? ' suspended' : '')
-                  style = record.programs ? style + ' programs' : style
+                  style = record.programs.length > 0 ? style + ' programs' : style
                   style = record.enabled === 'on' ? style + ' active' : style
                   return style
                 }} 
@@ -230,14 +224,12 @@ class Dashboard extends Component {
                     align: 'center',
                     width: '2rem',
                     render: (text, record, index) => {
-                      let gallery = this.props.galleries.filter(g => g.country_id === record.id)
-                      let media = []
+                      let gallery = this.props.galleries.filter(g => g.countries_id === record.id)
+                      let media = record.gallery ? 
+                                  this.props.media.filter(media => media.gallery_id === record.gallery.id) : 
+                                  []
                       let s_label = record.suspended === 'off' ? 'Suspend' : 'Reinstate'
                       let s_style = record.suspended === 'off' ? 'text-danger' : 'text-success'
-
-                      if(gallery.length) {
-                        media = this.props.media.filter(m => m.gallery_id === gallery[0].id)
-                      }
 
                       return (
                       <Button type="dropdown" is_enabled={true} 
@@ -257,6 +249,33 @@ class Dashboard extends Component {
                               id: 'continent_id',
                               type: 'hidden',
                               value: record.continent_id
+                            },{
+                              label: 'Continents',
+                              id: 'continent',
+                              type: 'hidden',
+                              required: true, 
+                              value: JSON.stringify(record.continent)
+                            },{
+                              label: 'Programs',
+                              id: 'programs',
+                              type: 'hidden',
+                              required: true, 
+                              value: JSON.stringify(record.programs)
+                            },{
+                              label: 'QR Code',
+                              id: 'code',
+                              type: 'hidden',  
+                              value: record.code
+                            },{
+                              label: 'Gallery',
+                              id: 'gallery',
+                              type: 'hidden', 
+                              value: JSON.stringify(gallery)
+                            },{
+                              label: 'Gallery ID',
+                              id: 'gallery_id',
+                              type: 'hidden',  
+                              value: record.gallery_id
                             },{
                               label: 'Slug',
                               id: 'slug',
@@ -282,37 +301,26 @@ class Dashboard extends Component {
                             },{
                               label: 'Enable/Disable',
                               id: 'enabled',
-                              type: 'checkbox', 
+                              type: this.props.usertype === 1 ? 'checkbox' : 'hidden', 
                               style: 'col-md-6 mt-2', 
+                              readOnly: this.props.usertype != 1, 
                               description: "This country is available to Moderators", 
                               value: record.enabled === 'off' ? false : true
                             },{
                               label: 'Suspended/Reinstate',
                               id: 'suspended',
                               type: 'checkbox', 
-                              style: 'col-md-6 mt-2', 
+                              style: this.props.usertype === 1 ? 'col-md-6 mt-2' : 'mt-2', 
                               description: <span>This country's programs are <span className="checked">suspended</span><span className="unchecked">open</span></span>, 
                               value: record.suspended === 'off' ? false : true
-                            },{
-                              label: 'QR Code',
-                              id: 'code',
-                              type: 'qrcode',  
-                              style: 'mt-2', 
-                              description: "Link to an existing website with further information about the program or country", 
-                              value: record.code
-                            },{
-                              label: 'Gallery',
-                              id: this.props.galleries.filter(g => g.country_id === record.id),
-                              type: 'gallery',  
-                              style: 'mt-2', 
-                              country: record, 
-                              value: media
                             }
                           ],(obj) => {
                             closeModal(this.props.resetModal)
-                            this.props.editCountry(obj)
+                            this.props.editCountry(obj, () => {
+                              let nu = this.props.countries.filter(cou => cou.continent_id === this.state.continent.id)
+                              this.setState({countries: nu})
                             })
-                          }
+                          })}
                         },{
                           label: s_label,
                           target: '#main__modal_window', 
@@ -326,12 +334,6 @@ class Dashboard extends Component {
                               type: 'hidden',
                               required: true, 
                               value: record.id
-                            },{
-                              label: 'Enabled',
-                              id: 'enabled',
-                              type: 'hidden',
-                              required: true, 
-                              value: record.enabled
                             },{
                               label: 'Slug',
                               id: 'slug',
@@ -354,6 +356,14 @@ class Dashboard extends Component {
                               id: 'color',
                               type: 'hidden',
                               value: record.color
+                            },{
+                              label: 'Enable/Disable',
+                              id: 'enabled',
+                              type: this.props.usertype === 1 ? 'checkbox' : 'hidden', 
+                              style: 'col-md-6 mt-2', 
+                              readOnly: this.props.usertype != 1, 
+                              description: "This country is available to Moderators", 
+                              value: record.enabled === 'off' ? false : true
                             },{
                               label: 'Suspended/Reinstated',
                               id: 'suspended',
@@ -380,15 +390,21 @@ class Dashboard extends Component {
                             },{
                               label: 'Gallery',
                               id: 'gallery',
-                              type: 'hidden',
-                              required: true, 
-                              value: JSON.stringify(record.gallery)
+                              type: 'hidden', 
+                              value: JSON.stringify(gallery)
+                            },{
+                              label: 'Gallery ID',
+                              id: 'gallery_id',
+                              type: 'hidden',  
+                              value: record.gallery_id
                             }
                           ],(obj) => {
                             closeModal(this.props.resetModal)
-                            this.props.suspendCountry(obj)
+                            this.props.suspendCountry(obj, () => {
+                              let nu = this.props.countries.filter(cou => cou.continent_id === this.state.continent.id)
+                              this.setState({countries: nu})
                             })
-                          }
+                          })}
                         }]} 
                         style={record.suspended === 'off' ? false : "outline-battleship px-2 py-1"}/>
                       )
@@ -397,60 +413,11 @@ class Dashboard extends Component {
                 ]}
                 pagination={false}/>
               </div>
-            </>
             :
             <>
             <Subheadline key="dashboard__headline--programs" 
-            copy={cms.programs.label} h2Style="ms-0 mb-0 fw-bold text-primary display-6" 
-            hStyle="d-flex align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top justify-content-start" add_new={{
-              slug: 'New',
-              callback: () => {
-                this.props.createModal(`New Program`, '',[
-                {
-                  label: 'Name',
-                  id: 'name',
-                  type: 'text', 
-                  required: true, 
-                  style: 'col-md-6',
-                  placeholder: 'Choose a name for your program'
-                },{
-                  label: 'Semester',
-                  id: 'semester',
-                  type: 'text', 
-                  required: true, 
-                  style: 'col-md-6',
-                  placeholder: 'Summer, Spring etc.'
-                },{
-                  label: 'Country/Countries',
-                  id: 'country_ids',
-                  type: 'select', 
-                  options: this.props.countries.map(co => {
-                    return { 
-                      label: co.name,
-                      value: co.id
-                    }
-                  }),
-                  readOnly: true,
-                  style: 'mt-2 col-md-6',
-                  value: [this.props.countries.filter(c => c.id === this.state.country.id)[0].id]
-                },{
-                  label: 'Suspended/Open',
-                  id: 'suspended',
-                  type: 'checkbox', 
-                  style: 'mt-2 col-md-6', 
-                  description: <span>This program is <span className="checked">suspended</span><span className="unchecked">open</span></span>, 
-                }
-              ],(obj) => {
-                closeModal(this.props.resetModal)
-                this.props.postProgram(obj, (program) => {
-                  let np = this.state.programs.concat(program)
-                  let nc = this.state.country
-                  nc.programs.concat(program)
-                  this.setState({programs:np, country:nc})
-                  })
-                })
-              }
-            }} has_selected={this.state.selectedPrograms.length > 0 ? 'program' : false} num_selected={this.state.selectedPrograms ? this.state.selectedPrograms.length : 0} />
+            copy={this.state.country.name} h2Style="ms-0 mb-0 fw-bold text-primary display-6" 
+            hStyle="d-flex align-items-center w-100 py-3 px-4 mb-2 mx-auto bg-tertiary sticky sticky-top justify-content-start" has_selected={this.state.selectedPrograms.length > 0 ? 'program' : false} num_selected={this.state.selectedPrograms ? this.state.selectedPrograms.length : 0} />
             <form className={this.divStyle+' mb-2'} onSubmit={(event)=>{
               event.preventDefault()
               let code = document.getElementById('code')

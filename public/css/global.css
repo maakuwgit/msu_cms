@@ -10492,13 +10492,16 @@ input[type=checkbox] {
   outline: none;
 }
 
-.btn-danger {
+.btn-danger,
+.btn-secondary {
   color: white;
 }
-.btn-danger span {
+.btn-danger span,
+.btn-secondary span {
   color: inherit;
 }
-.btn-danger svg {
+.btn-danger svg,
+.btn-secondary svg {
   fill: white;
 }
 
@@ -10986,7 +10989,14 @@ h6, .h6 {
   background: #87d5c4;
   color: black;
 }
-.ant-table-tbody > tr.ant-table-row.suspended > td, .ant-table-tbody > tr.ant-table-row.suspended:hover > td, .ant-table-tbody > tr.ant-table-row.suspendedfocus > td {
+.ant-table-tbody > tr.ant-table-row.suspended > td, .ant-table-tbody > tr.ant-table-row.suspended:hover > td, .ant-table-tbody > tr.ant-table-row.suspended:focus > td {
+  color: #b6b6b6;
+  background: #f6f7f6;
+}
+.ant-table-tbody > tr.ant-table-row.ant-table-clickable:not(.active) {
+  background-color: #d0d0d0;
+}
+.ant-table-tbody > tr.ant-table-row.ant-table-clickable:not(.active) > td {
   color: #b6b6b6;
   background: #f6f7f6;
 }
@@ -11004,10 +11014,6 @@ h6, .h6 {
 .ant-table-tbody > tr > td {
   padding: calc(1.25rem * .5) calc(1.25rem * .5);
   border-bottom: 0.0625rem solid #b6b6b6;
-}
-
-.ant-drawer-bottom.ant-drawer-open {
-  bottom: 6.25rem;
 }
 
 /*
@@ -11587,7 +11593,7 @@ body:not(.dashboard) [data-header]:after {
 [data-world] [data-map] [data-continent].active.selected [data-country].active text, [data-world] [data-map] [data-continent].active.selected [data-country].active line {
   opacity: 1;
 }
-[data-world] [data-map] [data-continent].active.selected [data-country]:not(.active), [data-world] [data-map] [data-continent].active.selected [data-country]:not(.programs) {
+[data-world] [data-map] [data-continent].active.selected [data-country]:not(.active) {
   cursor: default;
   pointer-events: none;
 }

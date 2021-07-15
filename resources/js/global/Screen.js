@@ -55,7 +55,6 @@ class Screen extends Component {
     this.getContinents    = this.getContinents.bind(this)
 
     //Country Methods
-    this.parseCountry     = this.parseCountry.bind(this)
     this.getCountries     = this.getCountries.bind(this)
     this.checkCountries   = this.checkCountries.bind(this)
     this.selectCountry    = this.selectCountry.bind(this)
@@ -86,10 +85,16 @@ class Screen extends Component {
   checkCountries(slug){
     let exists    = this.state.countries.filter(c => c.slug === slug)
     if(exists.length > 0) {
-      if(exists[0].enabled === 'on') {
-        let styles = exists[0].suspended === 'off' ? 'active' : 'active suspended'
-        styles += checkPrograms(exists[0])
-        styles += ' opacity-'+exists[0].color
+      exists = exists[0]
+      if(exists.enabled === 'on') {
+        let styles = ''
+        if(exists.suspended === 'off'){
+          styles =  'active'
+          styles += checkPrograms(exists)
+          styles += ' opacity-'+exists.color
+        }else{
+          styles = 'suspended'
+        }
         return styles
       }else{
         return 'disabled'
@@ -97,12 +102,6 @@ class Screen extends Component {
     }else{
       return ''
     }
-  }
-
-  injectProgram(obj) {
-    obj.id = randomID()
-    let nu = this.state.programs ? this.state.programs.concat(obj) : [obj]
-    this.setState({programs: nu})
   }
 
   selectContinent(continent=false){
@@ -117,6 +116,7 @@ class Screen extends Component {
   }
 
   selectCountry(country=false){
+    console.log(country)
     if(country){
       let tag = document.getElementById(`${country.slug}`)
       let continent = tag ? tag.parentElement : false
@@ -165,13 +165,6 @@ class Screen extends Component {
         on_submit: on_submit
       }
     })
-  }
-
-  parseCountry(country) {
-    country.id = parseFloat(country.id)
-    country.continent_id = parseFloat(country.continent_id)
-    country.updated_at = new Date()
-    return country
   }
 
   //Set the alert window to its original state
@@ -358,7 +351,6 @@ class Screen extends Component {
         sl.classList.add('btn')
         sl.addEventListener('click', (e) => {
           let target = e.target.querySelector('img')
-          console.log(target)
           if(target) this.setModal("preview",'','', [], false, false, target.src, target.title)
         })
       })
@@ -417,7 +409,7 @@ class Screen extends Component {
           <Greeting/>
           <Navigation levels={levels} selectCountry={this.selectCountry} 
           toggleCountries={toggleCountries} selectContinent={this.selectContinent}/>
-          <World continent={this.state.continent} continents={this.state.continents}
+          <World show_suspended={false} continent={this.state.continent} continents={this.state.continents}
             country={this.state.country} countries={this.state.countries} programs={this.state.programs} 
             selectCountry={this.selectCountry} selectContinent={this.selectContinent} 
             checkContinent={this.checkContinent} checkCountries={this.checkCountries}/>

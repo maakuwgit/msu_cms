@@ -129,7 +129,7 @@
                 opacity: 1
               }
             }
-            &:not(.active), &:not(.programs) {
+            &:not(.active)/*, &:not(.programs) */{
               cursor: default;
               pointer-events: none;
             }
