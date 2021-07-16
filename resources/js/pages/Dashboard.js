@@ -66,7 +66,7 @@ class Dashboard extends Component {
   checkCountries(slug){
     let exists    = this.state.countries.length > 0 ? this.state.countries.filter(c => c.slug === slug) : []
     if(exists.length > 0) {
-      if(exists[0].enabled === 'on' || this.props.usertype === 1) {
+      if(exists[0].enabled === 'on' || this.props.user_type === 1) {
         let styles = exists[0].suspended === 'off' ? 'active' : 'active suspended'
         styles += checkPrograms(exists[0])
         styles += ' opacity-'+exists[0].color
@@ -193,7 +193,6 @@ class Dashboard extends Component {
                   return style
                 }} 
                 onRow={(record, r) => {
-                  if(record.suspended === 'off'){
                   return {
                     onClick: (event) => {
                       if(event.target.tagName === 'TD') {
@@ -210,7 +209,7 @@ class Dashboard extends Component {
                         }
                       }
                     }
-                  }}
+                  }
                 }}
                 columns={[
                   {
@@ -301,16 +300,16 @@ class Dashboard extends Component {
                             },{
                               label: 'Enable/Disable',
                               id: 'enabled',
-                              type: this.props.usertype === 1 ? 'checkbox' : 'hidden', 
+                              type: this.props.user_type === 1 ? 'checkbox' : 'hidden', 
                               style: 'col-md-6 mt-2', 
-                              readOnly: this.props.usertype != 1, 
+                              readOnly: this.props.user_type != 1, 
                               description: "This country is available to Moderators", 
                               value: record.enabled === 'off' ? false : true
                             },{
                               label: 'Suspended/Reinstate',
                               id: 'suspended',
                               type: 'checkbox', 
-                              style: this.props.usertype === 1 ? 'col-md-6 mt-2' : 'mt-2', 
+                              style: this.props.user_type === 1 ? 'col-md-6 mt-2' : 'mt-2', 
                               description: <span>This country's programs are <span className="checked">suspended</span><span className="unchecked">open</span></span>, 
                               value: record.suspended === 'off' ? false : true
                             }
@@ -447,6 +446,10 @@ class Dashboard extends Component {
                     this.setState({ selectedPrograms: rows })
                   }
                 }}
+                rowClassName={(record) => {
+                  let style = "ant-table-clickable"+ (record.suspended !== 'off' ? ' suspended' : ' active')
+                  return style
+                }}
                 columns={[
                   {
                     title: 'Semester',
@@ -514,10 +517,16 @@ class Dashboard extends Component {
                             }
                           ],(obj) => {
                             closeModal(this.props.resetModal)
-                            let np = this.state.programs.filter(p => p.id !== record.id)
-                            np.push(obj)
-                            this.setState({programs: np})
-                            this.props.editProgram(obj)
+                            this.props.editProgram(obj, () => {
+                              let np = this.state.programs.map(p => {
+                                if(p.id !== obj.id){
+                                  return p
+                                }else{
+                                  return obj
+                                }
+                              })
+                              this.setState({programs: np})
+                              })
                             })
                           }
                         },{

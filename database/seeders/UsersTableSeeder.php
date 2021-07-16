@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\UrlGenerator;
 
 class UsersTableSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'Williamson',
             'user_level_id' => 1, 
             'email' => 'mwilliamson@bluewatertech.com',
-            'photo' => '//via.placeholder.com/100x100', 
+            'photo' => env('APP_URL','laravel') . '/images/user__maakuw.jpg',
             'password' => bcrypt('m1Ch!9@N')
         ]);
         DB::table('users')->insert([
@@ -29,7 +30,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => 'User',
             'user_level_id' => 2, 
             'email' => 'dorianmgrey@gmail.com',
-            'photo' => '//via.placeholder.com/100x100',
+            'photo' => env('APP_URL','laravel') . '/images/user__sparty.jpg',
             'password' => bcrypt('m1Ch!9@N'),
         ]);
         DB::table('users')->insert([

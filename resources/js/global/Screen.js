@@ -350,7 +350,7 @@ class Screen extends Component {
         sl.classList.add('btn')
         sl.addEventListener('click', (e) => {
           let target = e.target.querySelector('img')
-          if(target) this.setModal("preview",'','', [], false, false, target.src, target.title)
+          if(target) this.setModal("preview",'','', [], false, false, target.dataset.src, target.title)
         })
       })
     }
@@ -399,9 +399,9 @@ class Screen extends Component {
     return (
       <>
         { this.state.user &&
-        <Topbar username={this.state.user.username} image={this.state.user.photo}/>
+        <Topbar user_type={this.state.user ? this.state.user.user_level_id : false} username={this.state.user.username} image={this.state.user.photo}/>
         }
-        <Header show_frontend={true} show_ui={false}/>
+        <Header show_frontend={true} user_type={this.state.user ? this.state.user.user_level_id : false}/>
         <Feedback feedback={this.state.feedback}/>
         <article key="map__wrapper" 
         className="d-flex m-0 px-0 align-items-stretch justify-content-stretch h-100 w-100 flex-column bg-aluminum">

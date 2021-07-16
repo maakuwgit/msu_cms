@@ -214,12 +214,12 @@ label input + .icon {
 		}
 	}
 
-	&[checked] + small span.checked, 
+	+ small.checked span.checked, 
 	+ small span.unchecked {
 		display: inline;
 	}
 
-	&[checked] + small span.unchecked, 
+	+ small.checked span.unchecked, 
 	+ small span.checked {
 		display: none;
 	}

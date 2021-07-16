@@ -41,9 +41,7 @@ class Topbar extends Component {
           </div>
           <div className="d-flex col-4 justify-content-end">
             <Tooltip title="View my Google Firebase Account">
-              { //Dev Note: this will be replaced by UserTypes call to identify the usertype slug later
-              }
-              <span className="me-1">{this.props.username} | <strong className="text-bold">{this.props.usertype === 1 ? 'Administrator' : 'Manager'}</strong></span>
+              <span className="me-1">{this.props.username} | <strong className="text-bold">{this.props.user_type === 1 ? 'Administrator' : 'Manager'}</strong></span>
               <Avatar src={this.props.image} size="small"/>
             </Tooltip>
           </div>

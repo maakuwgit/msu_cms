@@ -95,10 +95,7 @@ class Programs extends Component {
             }
           }}
           rowClassName={(record) => {
-            let style = "ant-table-clickable"
-            if(record.suspended === 'on') {
-              style += ' suspended'
-            }
+            let style = "ant-table-clickable"+ (record.suspended !== 'off' ? ' suspended' : ' active')
             return style
           }}
           columns={[

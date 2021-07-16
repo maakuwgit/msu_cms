@@ -83,6 +83,7 @@ class Admin extends Component {
     this.deleteProgram    = this.deleteProgram.bind(this)
     this.deletePrograms   = this.deletePrograms.bind(this)
     this.editProgram      = this.editProgram.bind(this)
+    this.injectProgram    = this.injectProgram.bind(this)
     this.parseProgram     = this.parseProgram.bind(this)
     this.postProgram      = this.postProgram.bind(this)
     this.getGalleries     = this.getGalleries.bind(this)
@@ -283,18 +284,12 @@ class Admin extends Component {
     }
   }
 
-  editProgram(program){
+  editProgram(program, callback=false){
     program = this.parseProgram(program)
     this.setState({loading: true})
     api.put(`/resource/programs/${program.id}`,program)
     .then( response => {
-      let np = this.state.programs.map(p => {
-        if(p.id !== response.data.id){
-          return p
-        }else{
-          return response.data
-        }
-      })
+      let np = this.injectProgram(response.data)
       this.resetAlert()
       this.setState({
         feedback: {
@@ -302,10 +297,13 @@ class Admin extends Component {
           style: 'success'
         },
         programs: np, 
-        loading: false,
         programs_have_posted: true
       })
       this.programs = np
+    })
+    .finally(vars => {
+      this.setState({loading:false})
+      if(callback) callback()
     })
     .catch( error => {
       this.setState({
@@ -315,6 +313,16 @@ class Admin extends Component {
         },
         programs_have_posted: false
       })
+    })
+  }
+
+  injectProgram(program) {
+    return this.state.programs.map(p => {
+      if(p.id !== program.id){
+        return p
+      }else{
+        return program
+      }
     })
   }
 
@@ -875,7 +883,8 @@ class Admin extends Component {
       galleries: this.state.galleries, 
       programs: this.state.programs, 
       media: this.state.media,
-      media_types: this.state.media_types
+      media_types: this.state.media_types,
+      user_type: this.state.user ? this.state.user.user_level_id : false
     }
 
     let globalMethods = {
@@ -916,17 +925,15 @@ class Admin extends Component {
     return (
       <BrowserRouter>
         <Sidebar show_frontend={false}/>
-        <Topbar username={this.state.user ? this.state.user.username : false} image={this.state.user ? this.state.user.photo : false}
-         usertype={this.state.user ? this.state.user.user_level_id : false}/>
-        <Header show_frontend={false} show_ui={true} show_menu={false}
+        <Topbar user_type={this.state.user ? this.state.user.user_level_id : false} username={this.state.user ? this.state.user.username : false} image={this.state.user ? this.state.user.photo : false}/>
+        <Header show_frontend={false}
          show_menu={this.state.user ? this.state.user.user_level_id === 1 : false} 
          hStyle={'bg-white'} 
          figStyle={"py-0 ps-3 text-start text-uppercase my-auto ms-0 me-auto"}/>
         <Feedback feedback={this.state.feedback}/>
         <Switch>
           <Route exact path="/admin" render={() => (
-            <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} {...programMethods}
-            usertype={this.state.user ? this.state.user.user_level_id : false}/>
+            <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} {...programMethods}/>
           )} />
           <Route exact path="/admin/continents" render={() => (
             <Continents {...globalVars} {...globalMethods}/>

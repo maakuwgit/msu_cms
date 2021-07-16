@@ -11283,12 +11283,12 @@ body:not(.dashboard) [data-header]:after {
 #suspended + small span.checked, #suspended + .small span.checked {
   color: #FF5142;
 }
-#suspended[checked] + small span.checked, #suspended[checked] + .small span.checked,
+#suspended + small.checked span.checked, #suspended + .checked.small span.checked,
 #suspended + small span.unchecked,
 #suspended + .small span.unchecked {
   display: inline;
 }
-#suspended[checked] + small span.unchecked, #suspended[checked] + .small span.unchecked,
+#suspended + small.checked span.unchecked, #suspended + .checked.small span.unchecked,
 #suspended + small span.checked,
 #suspended + .small span.checked {
   display: none;

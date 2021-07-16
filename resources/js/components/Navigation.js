@@ -59,7 +59,7 @@ class Navigation extends Component {
     let handle = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-handle')
     let rail   = document.querySelector('#navigation__country + [data-scrollbar] .ant-slider-rail')
     let value  = target.scrollTop
-    if(btn.dataset.scroll === "down") {
+    if(btn.dataset.scroll === "up") {
       value += 52
     }else{
       value -= 52
@@ -67,7 +67,7 @@ class Navigation extends Component {
     target.scrollTop = value
     this.setState({navScrollCoordinates:Math.floor(((rail.offsetHeight + handle.offsetHeight)/target.scrollHeight) * value)})
   }
-  
+
   render() {
     if( this.props.levels.length > 0 ) {
       return(
@@ -84,7 +84,7 @@ class Navigation extends Component {
             <span className={`position-relative ${this.linkStyle}`} key={`navigation__country`}>
               {this.props.levels[1].name}
               <div id="navigation__panel" className="bg-list-item position-absolute d-flex flex-column justify-content-between" data-panel>
-                <Table dataSource={this.props.levels[1].programs} className={cms.navigation.tblStyle}
+                <Table dataSource={this.props.levels[1].programs.filter(pr => pr.suspended === 'off')} className={cms.navigation.tblStyle}
                   rowKey={(record) => {
                     return `dashboard__table__row--${record.id}`
                   }} 
@@ -139,7 +139,7 @@ class Navigation extends Component {
                               <div style={{backgroundImage:`url(${m.url.search('.mp4') > 0 ? 
                               ( m.poster ? m.poster : 'images/poster.png') 
                               : ( m.thumbUrl ? m.thumbUrl : m.url ) })`}} data-backgrounder>
-                                <img alt={m.name} src={m.thumbUrl ? m.thumbUrl : m.url} data-url={m.url} title={m.credit}/>
+                                <img alt={m.name} src={m.thumbUrl ? m.thumbUrl : m.url} data-src={m.url} title={m.credit}/>
                                 { m.url.search('.mp4') > 0 &&
                                 <svg className="icon">
                                   <use xlinkHref="#icon__play"/>

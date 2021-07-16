@@ -34,9 +34,9 @@ class Continents extends Component {
               dataIndex: 'countries',
               key: 'countries',
               render: (countries, record) => {
-                let arr = this.props.countries.filter(c => record.id === c.continent_id)
+                let arr = countries.filter(c => record.id === c.continent_id)
                 let links = arr.map((anchor,a) => {
-                  if(anchor.enabled === 'on') {
+                  if(anchor.enabled === 'on' || this.props.user_type === 1) {
                     return <Link key={`country--${a}`} to={`/admin/countries/${anchor.slug}`}>{anchor.name}</Link>
                   }else{
                     return <span key={`country--${a}`}>{anchor.name}</span>

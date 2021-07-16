@@ -20,7 +20,6 @@
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <link href="{{ asset('css/global.css') }}" rel="stylesheet">

@@ -194,7 +194,9 @@ class Modal extends Component {
             </header>
             }
             <div className="modal-body">
-              { this.props.copy }
+              { this.props.copy &&
+                <p className="px-4 mb-0 mt-2">{this.props.copy}</p>
+              }
               { this.props.inputs &&
               ( this.props.type === 'edit' || this.props.type === 'create' ) ?
               <form className="row p-2" onSubmit={this.formSubmit}>
@@ -215,7 +217,7 @@ class Modal extends Component {
                             <input id={input.id} type="checkbox" className="form-control me-2" checked={this.state[input.id]} onChange={(evt) => {
                             this.setState({[input.id]: evt.target.checked})
                           }} required={input.required} style={{width:'1.25rem',height:'1.25rem'}}/>
-                            <small className="text-battleship text-normal" style={{textTransform:'none'}}>{input.description}</small>
+                            <small className={`text-battleship text-normal${this.state[input.id] ? ' checked' : ''}`} style={{textTransform:'none'}}>{input.description}</small>
                           </label>
                         </fieldset>
                         :

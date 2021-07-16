@@ -14,15 +14,16 @@ class Country extends Component {
     super(props)
 
     this.state = {
+      country: false,
       programs: [],
       selectedPrograms: []
     }
 
-    this.has_programs     = false
     this.divStyle         = "p-4 bg-white mb-2"
     
     this.injectProgram    = this.injectProgram.bind(this)
     this.previewModal     = this.previewModal.bind(this)
+    this.selectCountry    = this.selectCountry.bind(this)
   }
 
   //An Interface for the setModal that will slightly realign the display
@@ -40,34 +41,34 @@ class Country extends Component {
     this.setState({programs: nu})
   }
 
-  componentDidMount(){
-    if(this.props) {
-      if(this.props.programs.length > 0) this.setState({programs:this.props.programs})
+  selectCountry(){
+    if(this.props && !this.state.country) {
+      if(this.props.countries){
+        let country = this.props.countries.filter(c => c.slug === this.props.slug)
+        console.log('selectCountry', country, this.props.slug)
+        if(country.length){
+          country = country[0]
+          if(country.slug !== this.state.country.slug){
+            this.setState({
+              country: country
+            })
+          }
+        }
+        this.props.getPage('country')
+      }
     }
+  }
+
+  componentDidMount(){
+    this.selectCountry()
   }
 
   componentDidUpdate(){
-    if(this.props) {
-      if(this.props.programs.length > 0 && !this.has_programs) {
-        this.setState({programs:this.props.programs})
-        this.has_programs = true
-      }
-    }
-
-    this.props.getPage('country')
+    this.selectCountry()
   }
 
   render() {
-    let country = this.props.countries.filter(c => c.slug === this.props.slug)
-    if(country.length ) {
-      country = country[0]
-      let gallery = this.props.galleries.filter(g => g.country_id === country.id)
-      let files = []
-      if(gallery.length) {
-        gallery = gallery[0]
-        files = this.props.media.filter(media => media.gallery_id === gallery.id)
-        console.log(country, gallery, files)
-      }
+    if(this.state.country ) {
       return (
         <article key="country__article" className={cms.theme.article+' d-flex px-0 align-items-stretch flex-column'} style={{ overflow:'scroll' }}>
           <nav 
@@ -78,30 +79,30 @@ class Country extends Component {
               <NavLink key="breadcrumb__continent" to="/admin/continents" className="h6 fw-bold text-primary">
                 <Tooltip title="Return to the Continents page">Continents</Tooltip>
               </NavLink>
-              <span key="breadcrumb__country" className="h6 fw-bold text-list-item">&nbsp;&rsaquo;&nbsp;{country.name}</span>
+              <span key="breadcrumb__country" className="h6 fw-bold text-list-item">&nbsp;&rsaquo;&nbsp;{this.state.country.name}</span>
             </div>
           </nav>
           <section className="d-flex flex-wrap h-100 pb-2 px-2">
             <div className="col-12 col-lg-5">
               <Headline key="country_headline" hStyle={cms.components.headline.style+' bg-white'}
-              headline={country.name} />
+              headline={this.state.country.name} />
               <form className={this.divStyle} onSubmit={(event)=>{
                 event.preventDefault()
                 let code = document.getElementById('code')
-                if(code) this.props.setQR(code.value, country)
+                if(code) this.props.setQR(code.value, this.state.country)
                 }}>
-                <QRCode code={country.code}/>
+                <QRCode code={this.state.country.code}/>
               </form>
               <div className={this.divStyle}>
-              { files.length ?
+              { this.state.country.gallery ?
                 <Gallery key="country_gallery" 
                   index={1} 
-                  country={country} 
-                  id={gallery.id} 
+                  country={this.state.country} 
+                  id={this.state.country.gallery.id} 
                   previewModal={this.previewModal}
                   deleteMedia={this.props.deleteMedia}  
                   uploadMedia={this.props.uploadMedia} 
-                  files={files}/>
+                  files={this.state.country.gallery.media.length ? this.state.country.gallery.media : false}/>
               :
                 <button className="btn btn-primary" disabled>Create Gallery</button>
               }
@@ -109,7 +110,7 @@ class Country extends Component {
             </div>
             <div className="col-12 col-lg-7 bg-tertiary">
               <div className="p-4 h-100">
-                <Subheadline key="country_subheadline" hStyle={cms.components.headline.style+' mb-4 pt-0'}
+                <Subheadline key="country_subheadline" hStyle={cms.components.headline.style+' bg-tertiary mb-4 pt-0'}
                 copy={'programs'} add_new={{
                   slug: 'New',
                   callback: () => {
@@ -138,7 +139,7 @@ class Country extends Component {
                       }),
                       readOnly: true,
                       style: 'mt-2 col-md-6',
-                      value: this.props.countries.filter(c => c.id === country.id)[0].id
+                      value: this.props.countries.filter(c => c.id === this.state.country.id)[0].id
                     },{
                       label: 'Suspended/Open',
                       id: 'suspended',
@@ -153,7 +154,7 @@ class Country extends Component {
                     })
                   }
                 }} has_selected={this.state.selectedPrograms.length > 0 ? 'program' : false} num_selected={this.state.selectedPrograms ? this.state.selectedPrograms.length : 0} />
-                <Table dataSource={this.state.programs.filter(pr => pr.country_id === country.id)} className={cms.components.table.style + ' px-0'} 
+                <Table dataSource={this.state.country.programs} className={cms.components.table.style + ' px-0'} 
                   rowKey={(record) => {
                     return `country__table__row--${record.id}`
                   }} 
