@@ -8,7 +8,6 @@ To do either install, you'll need to have the latest version of Node.js, as well
 5) Start Docker, if it's not already running
 6) Type "sail up" to start a fresh Docker instance and spool up a database
 7) We want to add our login stuff using "sail composer require laravel/breeze --dev"
-8) Type "sail up" to start a fresh Docker instance and spool up a database with the existing data and our new CRUD setup!
 
 Windows 10 Install
 On the initial commit, there should be a "vendor 2" folder. Change that to just read "vendor". Typically, this folder is automatically ignored by Git. Renaming it seems to be the only way to get the git to accept this folder as valid content.

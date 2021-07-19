@@ -876,6 +876,7 @@ class Admin extends Component {
   }
     
   render(){
+    let user_type = this.state.user ? this.state.user.user_level_id : false
     let globalVars = {
       upload: this.state.upload, 
       continents: this.state.continents,
@@ -884,7 +885,7 @@ class Admin extends Component {
       programs: this.state.programs, 
       media: this.state.media,
       media_types: this.state.media_types,
-      user_type: this.state.user ? this.state.user.user_level_id : false
+      user_type: user_type
     }
 
     let globalMethods = {
@@ -931,29 +932,33 @@ class Admin extends Component {
          hStyle={'bg-white'} 
          figStyle={"py-0 ps-3 text-start text-uppercase my-auto ms-0 me-auto"}/>
         <Feedback feedback={this.state.feedback}/>
-        <Switch>
-          <Route exact path="/admin" render={() => (
-            <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} {...programMethods}/>
-          )} />
-          <Route exact path="/admin/continents" render={() => (
-            <Continents {...globalVars} {...globalMethods}/>
-          )} />
-          <Route exact path="/admin/countries" render={() => (
-            <Countries {...globalVars} {...globalMethods}/>
-          )} />
-          <Route path="/admin/countries/:slug" render={(params) => (
-            <Country {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} slug={params.match.params.slug}/>
-          )} />
-          <Route exact path="/admin/programs" render={() => (
-            <Programs {...globalVars} {...globalMethods} {...programMethods}/>
-          )} />
-          <Route exact path="/admin/galleries" render={() => (
-            <Galleries {...globalVars} {...globalMethods} {...mediaMethods}/>
-          )} />
-          <Route exact path="/admin/settings" render={() => (
-            <Settings {...globalVars} {...globalMethods}/>
-          )} />
-        </Switch>
+          { user_type === 1 ?
+          <Switch>
+            <Route exact path="/admin" render={() => (
+              <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} {...programMethods}/>
+            )} />
+            <Route exact path="/admin/continents" render={() => (
+              <Continents {...globalVars} {...globalMethods}/>
+            )} />
+            <Route exact path="/admin/countries" render={() => (
+              <Countries {...globalVars} {...globalMethods}/>
+            )} />
+            <Route path="/admin/countries/:slug" render={(params) => (
+              <Country {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} slug={params.match.params.slug}/>
+            )} />
+            <Route exact path="/admin/programs" render={() => (
+              <Programs {...globalVars} {...globalMethods} {...programMethods}/>
+            )} />
+            <Route exact path="/admin/galleries" render={() => (
+              <Galleries {...globalVars} {...globalMethods} {...mediaMethods}/>
+            )} />
+            <Route exact path="/admin/settings" render={() => (
+              <Settings {...globalVars} {...globalMethods}/>
+            )} />
+          </Switch>
+          :
+          <Dashboard {...globalVars} {...globalMethods} {...mediaMethods} {...countryMethods} {...programMethods}/>
+        }
         <Modal id="main__modal_window" {...mediaMethods}
           loading={this.state.loading}
           copy={this.state.modal.copy} 

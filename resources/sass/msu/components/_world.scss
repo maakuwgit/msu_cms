@@ -36,8 +36,7 @@
           &:hover {
             [data-country] {
               &.active {
-                &,
-                &.programs, 
+                &, 
                 &.suspended {
                   path, polygon {
                     fill: $secondary;
@@ -51,16 +50,11 @@
           [data-country] {
             &.active {
               path, polygon {
-                fill: $white;
+                fill: $primary;
               }
               &.suspended {
                 path, polygon {
                   fill: $smoke;
-                }
-              }
-              &.programs {
-                path, polygon {
-                  fill: $primary;
                 }
               }
             }
@@ -99,7 +93,7 @@
                 pointer-events: none;
                 cursor: help;
               }
-              &.suspended, &:not(.programs) {
+              &.suspended {
                 path, polygon {
                   fill: grayscale($secondary)
                 }
@@ -129,7 +123,7 @@
                 opacity: 1
               }
             }
-            &:not(.active)/*, &:not(.programs) */{
+            &:not(.active) {
               cursor: default;
               pointer-events: none;
             }

@@ -70,6 +70,8 @@ class Navigation extends Component {
 
   render() {
     if( this.props.levels.length > 0 ) {
+      let programs = this.props.levels.length > 1 && this.props.levels[1].programs.filter(pr => pr.suspended === 'off')
+      
       return(
       <nav 
         key="navigation__wrapper" 
@@ -84,7 +86,8 @@ class Navigation extends Component {
             <span className={`position-relative ${this.linkStyle}`} key={`navigation__country`}>
               {this.props.levels[1].name}
               <div id="navigation__panel" className="bg-list-item position-absolute d-flex flex-column justify-content-between" data-panel>
-                <Table dataSource={this.props.levels[1].programs.filter(pr => pr.suspended === 'off')} className={cms.navigation.tblStyle}
+                { programs.length > 0 &&
+                <Table dataSource={programs} className={cms.navigation.tblStyle}
                   rowKey={(record) => {
                     return `dashboard__table__row--${record.id}`
                   }} 
@@ -102,7 +105,8 @@ class Navigation extends Component {
                     }
                   ]}
                   pagination={false}/>
-                <div className="d-flex px-4 pb-3">
+                }
+                <div className={`d-flex px-4 ${ programs.length > 0 ? 'pb-3' : 'py-3'}`}>
                   { this.props.levels[1].code &&
                   <div className="col-3 py-1" data-qr>
                     <h3 className="h5 text-white fw-bold">Scan QR code with <br className="d-none d-lg-block"/>your mobile device <br className="d-none d-lg-block"/>for more information</h3>
