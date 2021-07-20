@@ -29,6 +29,7 @@ class Topbar extends Component {
                 <span className="ms-1">Logout</span>
               </Tooltip>
             </a>
+            {this.props.user_type === 1 &&
             <a href={`https://console.firebase.google.com/u/1/project/${cms.settings.firebase.project_id}/storage/${cms.settings.firebase.storage_bucket}/files`}
             className="d-block mx-1" target="_blank">
               <Tooltip title="View my Google Firebase Account">
@@ -38,13 +39,12 @@ class Topbar extends Component {
                 <span className="ms-1">Firebase</span>
               </Tooltip>
             </a>
+            }
           </div>
-          <div className="d-flex col-4 justify-content-end">
-            <Tooltip title="View my Google Firebase Account">
-              <span className="me-1">{this.props.username} | <strong className="text-bold">{this.props.user_type === 1 ? 'Administrator' : 'Manager'}</strong></span>
-              <Avatar src={this.props.image} size="small"/>
-            </Tooltip>
-          </div>
+          <figure className="d-flex col-4 justify-content-end">
+            <figcaption className="me-1 d-flex align-items-center">{this.props.username} | <strong className="ms-1 text-bold">{this.props.user_type === 1 ? 'Administrator' : 'Manager'}</strong></figcaption>
+            <Avatar src={this.props.image} size="small" alt=""/>
+          </figure>
         </div>
       </nav>
     )
