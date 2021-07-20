@@ -132,7 +132,7 @@ class Breadcrumb extends Component {
           this.state.name
         }
         </h1>
-        { this.props.levels.length < 1 &&
+        { ( this.props.levels.length < 1 && this.props.user_type === 1 ) &&
         <form className="ms-3">
           <Tooltip title="Filter the map view to show only what you desire" placement="right">
             <select className="form-select" onChange={this.setFilter}>
