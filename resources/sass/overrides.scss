@@ -592,3 +592,11 @@ h6, .h6 {
     }
   }
 }
+
+.slick-slider .slick-list, .slick-slider .slick-track {
+  transform: translate3d(0,0,0);
+}
+
+.slick-track {
+  perspective: 1000px;
+}

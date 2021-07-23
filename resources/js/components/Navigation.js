@@ -12,7 +12,7 @@ class Navigation extends Component {
     super(props)
 
     this.state = {
-      name: 'Home',
+      slide: 0,
       panelScrollCoordinates: 0,
       navScrollCoordinates: 0
     }
@@ -21,7 +21,6 @@ class Navigation extends Component {
 
     this.resetContinent     = this.resetContinent.bind(this)
     this.resetCountry       = this.resetCountry.bind(this)
-    this.setHome            = this.setHome.bind(this)
 
     this.scrollBtnHandler     = this.scrollBtnHandler.bind(this)
 
@@ -41,10 +40,6 @@ class Navigation extends Component {
     this.props.selectCountry(false)
     zoomMap(group.dataset.scale,group.dataset.transformoriginx,group.dataset.transformoriginy)
     toggleCountries('off', group)
-  }
-
-  setHome(name){
-    this.setState({name:name})
   }
 
   navMouseMoveHandler(value){
@@ -68,6 +63,16 @@ class Navigation extends Component {
     this.setState({navScrollCoordinates:Math.floor(((rail.offsetHeight + handle.offsetHeight)/target.scrollHeight) * value)})
   }
 
+  componentDidUpdate(){
+    if(this.props){
+      if(this.props.levels.length > 1) {
+        if(this.props.levels[1].name != this.state.name) {
+          this.setState({name:this.props.levels[1].name})
+        }
+      }
+    }
+  }
+
   render() {
     if( this.props.levels.length > 0 ) {
       let programs = this.props.levels.length > 1 && this.props.levels[1].programs.filter(pr => pr.suspended === 'off')
@@ -79,7 +84,7 @@ class Navigation extends Component {
         className="d-flex align-items-stretch bg-white">
         <div className="d-flex">
           <>
-            <a className={this.linkStyle} key={`navigation__home`} onClick={this.resetContinent}>{this.state.name}</a>
+            <a className={this.linkStyle} key={`navigation__home`} onClick={this.resetContinent}>Home</a>
             { this.props.levels.length > 1 ?
             <>
             <a className={this.linkStyle} key={`navigation__continent`} onClick={this.resetCountry}>{this.props.levels[0].name}</a>
@@ -118,6 +123,31 @@ class Navigation extends Component {
                   <div className={`${this.props.levels[1].code ? 'col-8 offset-1 py-2' : 'col-12 pt-2 pb-5'} d-flex flex-column justify-content-center`}>
                     { ( this.props.levels[1].gallery ) &&
                     <Slider dots={false} infinite={true} adaptiveHeight={true}
+                     afterChange={(index) => {
+                       this.setState({slide: index})
+                     }}
+                     onReInit={() => {
+                      if(this.props.levels[1].name != this.state.name){
+                        let track     = document.querySelector('.slick-track')
+                        let slides    = document.querySelectorAll('.slick-slide:not(.slide-cloned)')
+                        let slide     = document.querySelector(`.slick-slide[data-index="${this.state.slide}"]`)
+                        let current   = false
+                        setTimeout(() => {
+                          if(slides.length > 3) {
+                            Array.from(slides).find((sl, s) => { 
+                              if(sl.classList.contains('slick-current')){
+                                current = s
+                                return sl
+                              }
+                            })
+                          
+                            if(current){
+                              track.style.transform = `translate3d(${slide.offsetWidth * current * -1}px, 0, 0)`
+                            }
+                          }
+                        }, 600)
+                      }
+                    }}
                       nextArrow={
                       <button type="button" title="Next">
                         <div className="btn p-0 mb-0 text-white">
