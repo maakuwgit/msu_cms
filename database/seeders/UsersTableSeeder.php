@@ -42,5 +42,14 @@ class UsersTableSeeder extends Seeder
             'photo' => '//via.placeholder.com/100x100',
             'password' => bcrypt('B1u3W@t3R'),
         ]);
+        DB::table('users')->insert([
+            'username' => 'pphelps',
+            'first_name' => 'Paula',
+            'last_name' => 'Phelps',
+            'user_level_id' => 2, 
+            'email' => 'pphelps@bluewatertech.com',
+            'photo' => '//via.placeholder.com/100x100',
+            'password' => bcrypt('B1u3W@t3R'),
+        ]);
     }
 }
