@@ -113,6 +113,11 @@ h6, .h6 {
 }
 
 //Style the Bootstrap Modal to match the design
+.modal-dialog-scrollable .modal-body {
+  overflow: hidden;
+  overflow-y: auto;
+}
+
 .modal-dialog {
 	input[type=text],
 	input[type=url] {
