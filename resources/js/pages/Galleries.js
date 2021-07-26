@@ -27,7 +27,7 @@ class Galleries extends Component {
         <Headline key="galleries__headline" 
         hStyle={cms.components.headline.style+' bg-white'}
         headline={cms.galleries.headline} copy={cms.galleries.description}/>
-        <div className="px-3">
+        <div className="px-3 overflow-scroll h-100">
         { ( this.props.galleries ) &&
           this.props.galleries.map((gallery, g) => {
             let country = gallery.countries
