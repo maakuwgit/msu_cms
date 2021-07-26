@@ -25,13 +25,13 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('m1Ch!9@N')
         ]);
         DB::table('users')->insert([
-            'username' => 'manager',
-            'first_name' => 'Unammed',
-            'last_name' => 'User',
+            'username' => 'sscott',
+            'first_name' => 'Sarah',
+            'last_name' => 'Scott',
             'user_level_id' => 2, 
-            'email' => 'dorianmgrey@gmail.com',
+            'email' => 'sscott@broad.msu.edu',
             'photo' => env('APP_URL','laravel') . '/images/user__sparty.jpg',
-            'password' => bcrypt('m1Ch!9@N'),
+            'password' => bcrypt('Sp@rty!'),
         ]);
         DB::table('users')->insert([
             'username' => 'bseiber',
