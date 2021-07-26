@@ -133,7 +133,8 @@ class Navigation extends Component {
                         let slide     = document.querySelector(`.slick-slide[data-index="${this.state.slide}"]`)
                         let current   = false
                         setTimeout(() => {
-                          if(slides.length > 3) {
+                          if(slide && slides.length > 4) {
+                            console.log(slide, slides.length)
                             Array.from(slides).find((sl, s) => { 
                               if(sl.classList.contains('slick-current')){
                                 current = s
@@ -144,6 +145,9 @@ class Navigation extends Component {
                             if(current){
                               track.style.transform = `translate3d(${slide.offsetWidth * current * -1}px, 0, 0)`
                             }
+                          }else{
+                            console.log('unset track')
+                            track.style.transform = 'unset'
                           }
                         }, 600)
                       }
