@@ -927,9 +927,8 @@ class Admin extends Component {
       <BrowserRouter>
         <Sidebar show_frontend={false}/>
         <Topbar user_type={this.state.user ? this.state.user.user_level_id : false} username={this.state.user ? this.state.user.username : false} image={this.state.user ? this.state.user.photo : false}/>
-        <Header show_frontend={false}
-         show_menu={this.state.user ? this.state.user.user_level_id === 1 : false} 
-         hStyle={'bg-white'} 
+        <Header show_frontend={false} hStyle={'bg-white'}
+         user_type={this.state.user ? this.state.user.user_level_id : false} 
          figStyle={"py-0 ps-3 text-start text-uppercase my-auto ms-0 me-auto"}/>
         <Feedback feedback={this.state.feedback}/>
           { user_type === 1 ?

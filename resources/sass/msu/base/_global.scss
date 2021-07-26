@@ -136,18 +136,6 @@ label input + .icon {
   }
 }
 
-[data-scrollable] {
-  position: absolute;
-  padding-top: rem-calc(160);
-  padding-bottom: rem-calc(224);
-  height: 100vh;
-  overflow: scroll;
-
-  p {
-    font-size: $h3-font-size;
-  }
-}
-
 [data-search] {
   input, label {
     font-size: rem-calc(14);

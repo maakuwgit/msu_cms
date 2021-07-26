@@ -65,13 +65,13 @@ dl {
   }
 }
 
-[data-spy] {
+[data-bs-spy] {
+  overflow-y: scroll;
   max-height: calc(100% - #{rem-calc(128)});
 }
 
-[data-spy], 
+[data-bs-spy], 
 article.container {
-  overflow-y: scroll;
   height: 100%;
 }
 
