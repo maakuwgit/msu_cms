@@ -33,7 +33,7 @@ class Programs extends Component {
 
   render() {
     return (
-      <article key="article__programs" className={cms.theme.article}>
+      <article key="article__programs" className={cms.theme.article+' overflow-scroll h-100'}>
         <Headline key="programs__headline" add_new={{
           slug: 'New',
           callback: () => {

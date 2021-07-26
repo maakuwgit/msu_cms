@@ -17,5 +17,5 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/global.scss', 'public/css/global.css')
    .sass('resources/sass/cms.scss', 'public/css/cms.css')
    .sass('resources/sass/screen.scss', 'public/css/screen.css')
-   .sourceMaps(use_maps, 'source-map')
+   //.sourceMaps(use_maps, 'source-map')
    .version();
