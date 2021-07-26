@@ -180,7 +180,7 @@ class Dashboard extends Component {
             { this.state.continent &&
             <>
             { !this.state.country ?     
-            <div className={this.divStyle+' overflow-scroll h-100'}>
+            <div className={this.divStyle} style={{overflow:'hidden',overflowY:'scroll'}}>
               <Table dataSource={this.state.countries ? this.state.countries : false}
                 loading={this.state.countries.length ? false : true}
                 rowKey={(record) => {
