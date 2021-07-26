@@ -31,7 +31,7 @@ class Dashboard extends Component {
 
     this.countries        = []
 
-    this.divCss           = { overflow:'hidden',overflowY:'scroll' }
+    this.divCss           = { overflow:'hidden',overflowY:'auto' }
     this.divStyle         = "p-4 bg-tertiary h-100"
 
     this.checkContinent   = this.checkContinent.bind(this)
@@ -175,12 +175,12 @@ class Dashboard extends Component {
              selectCountry={this.selectCountry} selectContinent={this.selectContinent} 
              checkContinent={this.checkContinent} checkCountries={this.checkCountries}/>
           </section>
-          <section className={`flex-column align-items-stretch justify-contrent-stretch px-0 ps-md-3 pe-md-0 col-12 col-md-5 col-lg-4 mh-100 overflow-scroll ${levels.length > 0 ? 'd-flex' : 'd-none'}`}
-          >
+          <section className={`flex-column align-items-stretch justify-contrent-stretch px-0 ps-md-3 pe-md-0 col-12 col-md-5 col-lg-4 mh-100 ${levels.length > 0 ? 'd-flex' : 'd-none'}`}
+           style={this.divCss}>
             { this.state.continent &&
             <>
             { !this.state.country ?     
-            <div className={this.divStyle} style={{overflow:'hidden',overflowY:'scroll'}}>
+            <div className={this.divStyle} style={this.divCss}>
               <Table dataSource={this.state.countries ? this.state.countries : false}
                 loading={this.state.countries.length ? false : true}
                 rowKey={(record) => {
