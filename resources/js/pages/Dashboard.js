@@ -167,7 +167,7 @@ class Dashboard extends Component {
     return (
       <article key="dashboard__wrapper" className="container mx-0 px-2 pb-2">
         <div className="row mx-0 align-items-stretch justify-content-stretch h-100">
-          <section className={`col-12 flex-column px-0 mb-2 d-flex h-100${levels.length > 0 ? ' col-lg-7 col-xl-8' :''}`} style={{overflow:'hidden'}}>
+          <section className={`col-12 flex-column px-0 mb-2 d-flex h-100${levels.length > 0 ? ' col-md-7 col-lg-8' :''}`} style={{overflow:'hidden'}}>
             <Breadcrumb levels={levels} selectFilter={this.selectFilter} filter={this.state.filter}
              selectCountry={this.selectCountry} selectContinent={this.selectContinent}/>
             <World continent={this.state.continent} continents={this.props.continents}
@@ -175,7 +175,7 @@ class Dashboard extends Component {
              selectCountry={this.selectCountry} selectContinent={this.selectContinent} 
              checkContinent={this.checkContinent} checkCountries={this.checkCountries}/>
           </section>
-          <section className={`flex-column align-items-stretch justify-contrent-stretch px-0 ps-lg-3 pe-lg-0 col-12 col-lg-5 col-xl-4 mh-100 ${levels.length > 0 ? 'd-flex' : 'd-none'}`}
+          <section className={`flex-column align-items-stretch justify-contrent-stretch px-0 ps-md-3 pe-md-0 col-12 col-md-5 col-lg-4 mh-100 ${levels.length > 0 ? 'd-flex' : 'd-none'}`}
            style={this.divCss}>
             { this.state.continent &&
             <>
