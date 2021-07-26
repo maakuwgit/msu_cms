@@ -31,7 +31,7 @@ class Dashboard extends Component {
 
     this.countries        = []
 
-    this.divCss           = { overflow:'scroll' }
+    this.divCss           = { overflow:'hidden',overflowY:'scroll' }
     this.divStyle         = "p-4 bg-tertiary h-100"
 
     this.checkContinent   = this.checkContinent.bind(this)
