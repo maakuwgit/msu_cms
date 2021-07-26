@@ -2,7 +2,14 @@ composer.phar
 .env
 node_modules/*
 vendor/*
-storage/logs/*
-storage/framework/*
+storage/*
+!storage/.keep
+!storage/app/.keep
+!storage/framework/.keep
+!storage/logs/.keep
+!storage/framework/cache/.keep
+!storage/framework/sessions/.keep
+!storage/framework/testing/.keep
+!storage/framework/views/.keep
 composer.lock
 package-lock.json
