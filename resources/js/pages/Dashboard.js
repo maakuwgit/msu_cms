@@ -175,12 +175,12 @@ class Dashboard extends Component {
              selectCountry={this.selectCountry} selectContinent={this.selectContinent} 
              checkContinent={this.checkContinent} checkCountries={this.checkCountries}/>
           </section>
-          <section className={`flex-column align-items-stretch justify-contrent-stretch px-0 ps-md-3 pe-md-0 col-12 col-md-5 col-lg-4 mh-100 ${levels.length > 0 ? 'd-flex' : 'd-none'}`}
-           style={this.divCss}>
+          <section className={`flex-column align-items-stretch justify-contrent-stretch px-0 ps-md-3 pe-md-0 col-12 col-md-5 col-lg-4 mh-100 overflow-scroll ${levels.length > 0 ? 'd-flex' : 'd-none'}`}
+          >
             { this.state.continent &&
             <>
             { !this.state.country ?     
-            <div className={this.divStyle} style={{overflow:'scroll'}}>
+            <div className={this.divStyle+' overflow-scroll h-100'}>
               <Table dataSource={this.state.countries ? this.state.countries : false}
                 loading={this.state.countries.length ? false : true}
                 rowKey={(record) => {
