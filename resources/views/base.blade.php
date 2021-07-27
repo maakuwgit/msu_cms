@@ -21,10 +21,6 @@
         <link href="{{ asset('css/screen.css') }}" rel="stylesheet">
     </head>
     <body class="{{$route_name}}">
-        <x-sprite/>
-        @if (Auth::check())
-        <x-topbar/>
-        @endif
         <main class="d-flex flex-wrap"></main>
     </body>
 </html>

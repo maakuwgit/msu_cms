@@ -1,11 +1,10 @@
 import api from '../api.js'
-import {timedAlert, updateBodyStyle, randomID} from '../functions'
+import {timedAlert, updateBodyStyle} from '../functions'
 import {toggleCountries, zoomMap} from '../world'
 import {checkPrograms} from '../programs'
 import React, {Component} from "react"
 import Header from "../global/Header"
 import Footer from "../global/Footer"
-import Topbar from "../global/Topbar"
 import Modal from "../components/Modal"
 import Feedback from "../partials/Feedback"
 import World from '../components/World'

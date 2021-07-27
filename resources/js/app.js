@@ -18,18 +18,10 @@ import ReactDOM from 'react-dom';
 /**
  * Then we load up our views so we can use them based on where our URL.
  */
-import Admin from './global/Admin'
 import Screen from './global/Screen'
-import Topbar from './global/Topbar';
 
 let screen = document.querySelector('[data-screen] main')
-let admin = document.querySelector('[data-admin]')
-let topbar = document.querySelector('[data-topbar]')
-
-if( topbar ) ReactDOM.render(<Topbar />, topbar)
 
 if( screen ) {
     ReactDOM.render(<Screen />, screen)
-}else if(admin) {
-    ReactDOM.render(<Admin />, admin)
 }
