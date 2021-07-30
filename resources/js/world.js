@@ -19,7 +19,6 @@ export const toggleCountries = (status='on', current=false) => {
   if(current) {
     countries.forEach(c => {
       if(c !== current ) {
-        //status === 'off' ? c.classList.add('disabled') : c.classList.remove('disabled')
         c.classList.remove('selected')
       }
     })

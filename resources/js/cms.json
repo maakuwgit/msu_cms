@@ -9,71 +9,11 @@
   }, 
   "continents": { 
     "slug": "continents",
-    "label": "Continents",
-    "tooltip": "View all continents in a table, and all their corresponding countries", 
-    "headline": "Continents & Archipelagos",
-    "unfiltered" : [
-      {
-        "id": 0,
-        "name": "Africa",
-        "slug": "africa",
-        "countries_id": []
-      },
-      {
-        "id": 1,
-        "name": "Antartica",
-        "slug": "antartica",
-        "countries_id": []
-      },
-      {
-        "id": 2,
-        "name": "Asia",
-        "slug": "asia",
-        "countries_id": []
-      },
-      {
-        "id": 3,
-        "name": "Australia",
-        "slug": "oceania",
-        "countries_id": []
-      },
-      {
-        "id": 4,
-        "name": "Europe",
-        "slug": "europe",
-        "countries_id": []
-      },
-      {
-        "id": 5,
-        "name": "North America",
-        "slug": "north-america",
-        "countries_id": []
-      },
-      {
-        "id": 6,
-        "name": "South America",
-        "slug": "south-america",
-        "countries_id": [1,2,3,4,5,6]
-      }
-    ]
+    "label": "Continents"
   },
   "countries": { 
     "slug": "countries",
-    "label": "Countries",
-    "headline": "All Countries", 
-    "tooltip": "View all countries in an alphabetical list", 
-    "modal": {
-      "reinstate": "Reinstating a Country enables its highlight color and the ability to tap/click it on the map",
-      "suspend": "Suspending a Country retains it's programs, but removes its highlight and the ability to tap/click it on the map. Useful, for example, when travel to a country has been suspended/limited"
-    },
-    "unfiltered" : []
-  },
-  "filters": {
-    "": "Everywhere",
-    "countries--active": "Active Countries Only",
-    "countries--programs": "Countries with Programs",
-    "continents": "Continents",
-    "islands-archipelagos": "Islands"
+    "label": "Countries"
   },
   "footer": {
     "text": "MSUBROADABROAD",
@@ -85,8 +25,6 @@
   },
   "galleries": {
     "slug":"galleries",
-    "headline": "All Galleries", 
-    "tooltip": "View all galleries, by Country", 
     "label":"Galleries"
   },
   "greeting": {
@@ -96,13 +34,7 @@
   },
   "header": {
     "figStyle": "py-0 ps-3 text-start text-uppercase my-auto ms-0 me-auto"
-  },  
-  "headline": {
-    "hStyle": "sticky sticky-top col-12 mb-2 pt-4 px-3 pb-4 bg-white bg-white",
-    "btnStyle": "btn text-white ms-4 d-flex align-items-center", 
-    "btnLabelNew": "Add New",
-    "btnLabelDelete": "Delete"
-  },
+  }, 
   "navigation": {
     "linkStyle": "d-flex h4 text-uppercase fw-bold px-4 my-0 align-items-center",
     "sublinkStyle": "btn btn-list-item py-1 px-3 text-uppercase text-start border-0 h4 mb-0",
@@ -110,22 +42,15 @@
   },
   "programs": {
     "slug": "programs",
-    "label": "Programs",
-    "headline": "All Programs", 
-    "tooltip": "View all Programs in a table with multiple pages", 
-    "unfiltered": []
+    "label": "Programs"
   },
   "qrcode": {
-    "size": 65,
-    "title": "QR Code",
-    "description": "link to the an existing website detailing the selected countries programs and an image gallery"
+    "size": 65
   },
   "routes": ["world","continents","countries","programs","galleries","settings"],
   "settings": {
     "slug": "settings",
     "label": "Settings", 
-    "headline": "Settings",
-    "tooltip": "View all the current application settings", 
     "is_dev": true, 
     "options": [
       {
@@ -165,29 +90,8 @@
       "measurement_id": "G-0R88Z11R7S"
     }
   },
-  "theme": {
-    "primary": "Pine",
-    "secondary": "Seafoam",
-    "tertiary": "Aluminum",
-    "article": "container ms-0 bg-white"
-  },
-  "upload": {
-      "btn": {
-          "label": "Upload"
-      },
-      "prefix": "Upload a new",
-      "label": "Click or drag file to here to upload", 
-      "suffix": "file",
-      "supports": "Supports file upload", 
-      "types": {
-          "csv": [".csv"],
-          "spreadsheet": [".xlsx",".xls"]
-      }
-  },
   "world": {
     "slug": "", 
-    "headline": "Everywhere", 
-    "description": "Edit programs, galleries, and countries from a map view", 
     "label": "World", 
     "figStyle": "w-100 h-100 d-flex align-items-center justify-content-center px-4 bg-aluminum", 
     "svgStyle": "w-100 h-100 py-2", 

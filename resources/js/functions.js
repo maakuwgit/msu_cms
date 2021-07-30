@@ -1,5 +1,3 @@
-import api from './api'
-
 export const getPaths = () => {
   return window.location.pathname.split('/').map(path => path)
 }
@@ -56,48 +54,6 @@ export const closeModal = (callback) => {
   if(callback) callback()
 }
 
-export const getCookie = (cname) => {
-  let name = cname + "="
-  let decodedCookie = decodeURIComponent(document.cookie)
-  let ca = decodedCookie.split(';')
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i]
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1)
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length)
-    }
-  }
-  return ""
-}
-
-export const getLogo = (callback) => {
-  api.get('/assets/logos/1')
-  .then( response => {
-    callback && callback(response.data)
-  })
-  .finally( () => {
-    return true
-  })
-  .catch( error => {
-    return `Settings error occurred: ${error}`
-  })
-}
-
-export const getSettings = (callback) => {
-  axios.get('/resource/settings')
-  .then( response => {
-    callback && callback(response.data)
-  })
-  .finally( () => {
-    return true
-  })
-  .catch(error => {
-    return error.response ? error.response.statusText : error
-  })
-}
-
 //After a specified time, close the warning/error alert aside
 export const timedAlert = (callback = false, time = 3600) => {
   var alerts = document.querySelector('[data-error]')
@@ -124,93 +80,4 @@ export const timedAlert = (callback = false, time = 3600) => {
       }
     }
   }
-}
-
-//Order an array of objects by a specific key
-export const dynamicSort = (property) => {
-  let sortOrder = 1
-
-  if(property[0] === "-") {
-    sortOrder = -1
-    property = property.substr(1)
-  }
-
-  return function (a,b) {
-    if(sortOrder === -1){
-        return b[property].localeCompare(a[property])
-    }else{
-        return a[property].localeCompare(b[property])
-    }        
-  }
-}
-
-//Convert date formats to something readable
-export const standardizeDate = (date, use_time=false) => {
-  let months = [`Jan`,`Feb`,`Mar`,`Apr`,`May`,`Jun`,`Jul`,`Aug`,`Sep`,`Oct`,`Nov`,`Dec`]
-  let formatted = new Date(date)
-  let month = formatted.getMonth()
-  let day = formatted.getDate()
-  let suffix = formatted.getHours() > 12 ? 'PM' : 'AM'
-  let hour = formatted.getHours() > 12 ? formatted.getHours() - 12 : formatted.getHours()
-  let year = formatted.getFullYear()
-  let time = use_time ? ` ${hour}:${formatted.getMinutes()}${suffix}` : ''
-  let fulldate = use_time ? `${month}/${day}/${year}${time}` : `${months[month]}. ${day}, ${year}`
-  return fulldate
-}
-
-//Sort a set of alphanumeric strings
-export const sortAlpha = (a, b) => {
-  if (a === undefined || a === null) {
-      return -1
-  }
-  if (b === undefined || b === null) {
-      return 1
-  }
-  return a.localeCompare(b)
-}
-
-//Sort a set of numbers
-export const sortNums = (a, b) => {
-  if (a === null || b === null) {
-      return 1
-  }
-  if (a > b ) { 
-      return 1
-  } else if (b > a ) {
-      return -1
-  } else {
-      return 0
-  }
-}
-
-  //Sort a set of dates
-export const sortDate = (a, b) => {
-  return a - b
-}
-
-//Sort a set of boolean vales
-export const sortBool = (a, b) => {
-  if (a === b) {
-      return 0
-  } else if (a === true) {
-      return -1
-  } else {
-      return 1
-  }
-}
-
-export const checkEqual = (a, b) => {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
-  
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-    // Please note that calling sort on an array will modify that array.
-    // you might want to clone your array first.
-  
-    for (var i = 0; i < a.length; ++i) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
 }

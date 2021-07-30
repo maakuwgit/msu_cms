@@ -21,6 +21,7 @@
         <link href="{{ asset('css/screen.css') }}" rel="stylesheet">
     </head>
     <body class="{{$route_name}}">
+        <x-sprite/>
         <main class="d-flex flex-wrap"></main>
     </body>
 </html>

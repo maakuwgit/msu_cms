@@ -1,5 +1,5 @@
 import api from '../api.js'
-import {timedAlert, updateBodyStyle} from '../functions'
+import {timedAlert} from '../functions'
 import {toggleCountries, zoomMap} from '../world'
 import {checkPrograms} from '../programs'
 import React, {Component} from "react"
@@ -25,7 +25,6 @@ class Screen extends Component {
       continents: [],
       country: false, 
       gallery: false, 
-      selectedPrograms: [],
       has_server: true,
       loading: false, 
       modal: {
@@ -42,30 +41,19 @@ class Screen extends Component {
     }
 
     this.countries = []
-    this.programs = []
+    this.continents = []
 
     this.resetAlert       = this.resetAlert.bind(this)
-
-    this.getUser          = this.getUser.bind(this)
 
     // Continents Methods
     this.checkContinent   = this.checkContinent.bind(this)
     this.selectContinent  = this.selectContinent.bind(this)
-    this.getContinents    = this.getContinents.bind(this)
+    this.setContinent    = this.setContinent.bind(this)
 
     //Country Methods
-    this.getCountries     = this.getCountries.bind(this)
     this.checkCountries   = this.checkCountries.bind(this)
     this.selectCountry    = this.selectCountry.bind(this)
-
-    // Program Methods
-    this.getPrograms      = this.getPrograms.bind(this)
-
-    // Gallery Methods
-    this.getGalleries     = this.getGalleries.bind(this)
-
-    //Media Methods
-    this.getMedia         = this.getMedia.bind(this)
+    this.setCountry     = this.setCountry.bind(this)
   
     //Modal Methods
     this.resetModal       = this.resetModal.bind(this)
@@ -120,7 +108,6 @@ class Screen extends Component {
       let continent = tag ? tag.parentElement : false
       this.setState({
         country: country, 
-        selectedPrograms: [], 
         programs: country.programs,
         gallery: country.gallery
       })
@@ -132,8 +119,7 @@ class Screen extends Component {
       this.setState({
         country: false,
         programs: false,
-        gallery: false, 
-        selectedPrograms: []
+        gallery: false
       })
     }
   }
@@ -146,21 +132,20 @@ class Screen extends Component {
   }
 
   //Set the modal in the state object from this or a child component (modal is reusable)
-  setModal(type='edit', headline='', copy='', ctas=false, inputs=[], on_submit=false, image='', credit=false){
-    if(type === 'preview') {
-      $('#main__modal_window').modal('show')
-    }
+  setModal(image='', credit=false){
+    $('#main__modal_window').modal('show')
+
     this.setState({
       modal: {
-        type: type,
-        headline: headline,
-        copy: copy,
-        ctas: ctas,
+        type: 'preview',
+        headline: '',
+        copy: '',
+        ctas: false,
         image: image, 
         credit: credit, 
-        inputs: inputs,
-        nStyle: type === 'delete' ? 'justify-content-center' : false,
-        on_submit: on_submit
+        inputs: [],
+        nStyle: false,
+        on_submit: false
       }
     })
   }
@@ -178,167 +163,45 @@ class Screen extends Component {
     })
   }
 
-  //Basic calls, requiring no login
-  getContinents() {
-    this.setState({loading:true})
-    api.get('/cms/continents')
-    .then(response => {
-      this.resetAlert()
-      this.setState({
-        continents: response.data,
-        feedback: {
-          msg: 'Continents successfully loaded!',
-          style: 'success'
-        },
-        has_server: true
-      })
-    })
-    .catch(error => {
-      this.setState({
-        feedback: {
-          msg: `And error occurred when loading the Continents! ${error.data}`,
-          style: 'danger'
-        }
-      })
-    })
-  }
+  setContinent(continent) {
+    let act = ''
+    let exists = this.continents.length ? false : this.continents.filter(c => c.id === continent.id)
+    if(exists.length){
+      this.continents = this.continents.map(c => c.id === continent.id ? continent : c)
+      act = 'updated'
+    }else{
+      this.continents.push(continent)
+      act = 'added'
+    }
 
-
-  getCountries(){
-    this.setState({loading:true})
-    api.get('/cms/countries')
-    .then(response => {
-      this.countries = response.data
-    })
-    .finally(() => {
-      this.resetAlert()
-      this.setState({
-        countries: this.countries,
-        feedback: {
-          msg: 'Countries successfully loaded!',
-          style: 'success'
-        }
-      })
-    })
-    .catch(error => {
-      this.setState({
-        feedback: {
-          msg: `And error occurred when loading the Countries! ${error.data}`,
-          style: 'danger'
-        }
-      })
-    })
-  }
-
-  getPrograms(){
-    this.setState({loading:true})
-    api.get('/cms/programs')
-    .then(response => {
-      this.resetAlert()
-      this.setState({
-        programs: response.data,
-        feedback: {
-          msg: 'Programs successfully loaded!',
-          style: 'success'
-        },
-        is_loaded: true
-      })
-      this.programs = response.data
-    })
-    .finally(
-      updateBodyStyle()
-    )
-    .catch(error => {
-      this.setState({
-        feedback: {
-          msg: `And error occurred when loading the Programs! ${error.data}`,
-          style: 'danger'
-        }
-      })
-    })
-  }
-
-  getGalleries(callback=false){
-    this.setState({loading:true})
-    api.get('/cms/galleries')
-    .then(response => {
-      this.resetAlert()
-      this.setState({
-        galleries: response.data,
-        feedback: {
-          msg: 'Galleries successfully loaded!',
-          style: 'success'
-        }
-      })
-      //Push the galleries we just got into the existing Countries
-      if(this.countries.length){
-        this.countries.forEach(cou => {
-          let gall = response.data.filter(g => g.country_id === cou.id)
-          cou.gallery = gall.length ? gall[0] : false
-        })
-        this.setState({countries: this.countries})
-        if(callback) callback()
+    this.resetAlert()
+    this.setState({
+      continents: this.continents,
+      feedback: {
+        msg: continent.name+' successfully '+act+'!',
+        style: 'success'
       }
     })
-    .finally(() => {
-        updateBodyStyle()
-      }
-    )
-    .catch(error => {
-      this.setState({
-        feedback: {
-          msg: `And error occurred when loading the Galleries! ${error.data}`,
-          style: 'danger'
-        }
-      })
-    })
   }
-  
-  getMedia(){
-    this.setState({loading:true})
-    api.get('/cms/media')
-    .then(response => {
-      let list = response.data.map(media => {
-        return ( {
-          id: media.id,
-          uid: media.id,
-          name: 'no name',
-          status: 'done',
-          gallery_id: media.gallery_id, 
-          caption: media.caption, 
-          poster: media.poster, 
-          thumbUrl: media.thumbUrl, 
-          url: media.url
-        } )
-      })
-      //Push the galleries we just got into the existing Countries
-      if(this.countries){
-        this.countries.forEach(cou => {
-          if(cou.gallery) {
-            let media = list.filter(m => m.gallery_id === cou.gallery.id)
-            cou.media = media.length ? media : false
-          }
-        })
-        this.resetAlert()
-        this.setState({
-          media: list,
-          countries: this.countries, 
-          feedback: {
-            msg: 'Media successfully loaded!',
-            style: 'success'
-          },
-          is_loaded: true
-        })
+
+  setCountry(country){
+    let act = ''
+    let exists = this.countries.length ? false : this.countries.filter(c => c.id === country.id)
+    if(exists.length){
+      this.countries = this.countries.map(c => c.id === country.id ? country : c)
+      act = 'updated'
+    }else{
+      this.countries.push(country)
+      act = 'added'
+    }
+
+    this.resetAlert()
+    this.setState({
+      countries: this.countries,
+      feedback: {
+        msg: country.name+' successfully '+act+'!',
+        style: 'success'
       }
-    })
-    .finally( updateBodyStyle() )
-    .catch(error => {
-      this.setState({
-        feedback: {
-          msg: `An error occurred when loading Media! ${error.data}`,
-          style: 'danger'
-        }
-      })
     })
   }
 
@@ -349,45 +212,36 @@ class Screen extends Component {
         sl.classList.add('btn')
         sl.addEventListener('click', (e) => {
           let target = e.target.querySelector('img')
-          if(target) this.setModal("preview",'','', [], false, false, target.dataset.src, target.title)
+          if(target) this.setModal(target.dataset.src, target.title)
         })
       })
     }
   }
 
-  getUser(){
-    this.setState({loading:true})
-    api.get('/user')
-    .then(response => {
+  componentDidMount() {
+    api.get('/database')
+    .finally(() => {
       this.resetAlert()
       this.setState({
-        user: response.data,
         feedback: {
-          msg: 'User successfully loaded!',
+          msg: 'New screen added to the System',
           style: 'success'
         },
-        is_loaded: true
       })
     })
-    .finally(
-      updateBodyStyle()
-    )
-    .catch(error => {
-      this.setState({
-        feedback: {
-          msg: `And error occurred when loading User! ${error.data}`,
-          style: 'danger'
-        }
-      })
-    })
-  }
 
-  componentDidMount() {
-    this.getUser()
-    this.getGalleries(this.getMedia)
-    this.getPrograms()
-    this.getCountries()
-    this.getContinents()
+    //Dev Note: this next line is temporary
+    this.setState({has_server: true})
+
+    Echo.channel(`continents`)
+    .listen('ContinentsUpdated', (e) => {
+      this.setContinent(e.continents)
+    })
+
+    Echo.channel(`countries`)
+    .listen('CountriesUpdated', (e) => {
+      this.setCountry(e.countries)
+    })
   }
 
   render(){
@@ -397,10 +251,7 @@ class Screen extends Component {
 
     return (
       <>
-        { this.state.user &&
-        <Topbar user_type={this.state.user ? this.state.user.user_level_id : false} username={this.state.user.username} image={this.state.user.photo}/>
-        }
-        <Header show_frontend={true} user_type={this.state.user ? this.state.user.user_level_id : false}/>
+        <Header show_frontend={true} user_type={false}/>
         <Feedback feedback={this.state.feedback}/>
         <article key="map__wrapper" 
         className="d-flex m-0 px-0 align-items-stretch justify-content-stretch h-100 w-100 flex-column bg-aluminum">
@@ -415,18 +266,10 @@ class Screen extends Component {
         <Modal 
           id="main__modal_window"  
           loading={this.state.loading}
-          copy={this.state.modal.copy} 
-          headline={this.state.modal.headline}
           image={this.state.modal.image} 
           credit={this.state.modal.credit} 
           type={this.state.modal.type}
-          ctas={this.state.modal.ctas}
-          nStyle={this.state.modal.nStyle} 
-          inputs={this.state.modal.inputs} 
-          resetModal={this.resetModal} 
-          deleteMedia={this.deleteMedia}  
-          uploadMedia={this.uploadMedia} 
-          on_submit={this.state.modal.on_submit}/>
+          resetModal={this.resetModal} />
         <Footer show_frontend={true}/>
       </>
     )

@@ -13,15 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            UsersTableSeeder::class, 
-            UserLevelTableSeeder::class,
-            ContinentsTableSeeder::class,
-            CountriesTableSeeder::class,
-            CountriesProgramsTableSeeder::class,
-            GalleriesTableSeeder::class,
-            MediaTableSeeder::class,
-            ProgramsTableSeeder::class
-        ]);
+        //
     }
 }
